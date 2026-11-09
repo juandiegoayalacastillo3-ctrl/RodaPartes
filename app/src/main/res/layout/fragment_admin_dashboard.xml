@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dashboard principal del administrador -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/esp_l">
+
+        <TextView
+            android:id="@+id/tvHello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.RodaPartes.Title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/esp_l"
+            android:text="@string/admin_dashboard_sub"
+            android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="2">
+
+            <include
+                android:id="@+id/statUsers"
+                layout="@layout/view_stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="6dp"
+                android:layout_marginBottom="@dimen/esp_m" />
+
+            <include
+                android:id="@+id/statSellers"
+                layout="@layout/view_stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="6dp"
+                android:layout_marginBottom="@dimen/esp_m" />
+
+            <include
+                android:id="@+id/statProducts"
+                layout="@layout/view_stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginEnd="6dp" />
+
+            <include
+                android:id="@+id/statSales"
+                layout="@layout/view_stat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:layout_marginStart="6dp" />
+        </GridLayout>
+
+        <TextView
+            style="@style/RodaPartes.SectionTitle"
+            android:text="@string/admin_pending" />
+
+        <!-- Cada fila lleva a la sección donde se resuelve -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include
+                    android:id="@+id/pendingSellers"
+                    layout="@layout/view_pending_row" />
+
+                <View style="@style/RodaPartes.Divider" />
+
+                <include
+                    android:id="@+id/pendingProducts"
+                    layout="@layout/view_pending_row" />
+
+                <View style="@style/RodaPartes.Divider" />
+
+                <include
+                    android:id="@+id/pendingReversals"
+                    layout="@layout/view_pending_row" />
+
+                <View style="@style/RodaPartes.Divider" />
+
+                <include
+                    android:id="@+id/pendingRetracts"
+                    layout="@layout/view_pending_row" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/esp_l">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/esp_l">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/admin_chart_title"
+                    android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle" />
+
+                <com.rodapartes.app.ui.common.BarChartView
+                    android:id="@+id/chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:layout_marginTop="@dimen/esp_m"
+                    app:barColor="@color/pizarra"
+                    app:barMutedColor="@color/pizarra_claro"
+                    app:labelColor="@color/texto_3" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

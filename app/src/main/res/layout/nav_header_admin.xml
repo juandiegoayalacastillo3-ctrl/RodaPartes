@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Encabezado del menú lateral del administrador -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="180dp"
+    android:background="@drawable/bg_drawer_header"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="@dimen/esp_l">
+
+    <FrameLayout
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_circle_white">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_shield"
+            app:tint="@color/pizarra" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvAdminName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/esp_m"
+        android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle"
+        android:textColor="@color/blanco"
+        tools:text="Ana Ruiz" />
+
+    <TextView
+        android:id="@+id/tvAdminEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+        android:textColor="@color/pizarra_claro"
+        tools:text="ana.ruiz@rodapartes.co" />
+</LinearLayout>

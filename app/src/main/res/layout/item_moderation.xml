@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Publicación por moderar o reportada (RF-ADP-01, RF-ADP-03) -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/esp_m"
+    app:cardCornerRadius="14dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/esp_m">
+
+        <FrameLayout
+            android:id="@+id/tile"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            tools:background="@drawable/bg_tile_electrico">
+
+            <ImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:alpha="0.75"
+                android:importantForAccessibility="no"
+                app:tint="@color/asfalto_suave"
+                tools:src="@drawable/ic_cat_electrico" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                style="@style/RodaPartes.Badge"
+                android:layout_gravity="top|end"
+                android:layout_margin="@dimen/esp_s"
+                tools:text="En revisión" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/esp_s"
+            android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle"
+            tools:text="Bombillo LED H4" />
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+            tools:text="MotoCentro 80 · $ 24.000 · Eléctrico · Genérico" />
+
+        <TextView
+            android:id="@+id/tvReport"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/esp_xs"
+            android:drawablePadding="6dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/peligro"
+            android:textSize="13sp"
+            android:fontFamily="sans-serif-medium"
+            app:drawableStartCompat="@drawable/ic_flag"
+            app:drawableTint="@color/peligro"
+            tools:text="3 reportes · posible imitación" />
+
+        <LinearLayout
+            android:id="@+id/groupActions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/esp_m"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnApprove"
+                style="@style/Widget.RodaPartes.Button.Small"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/exito"
+                android:text="@string/action_approve" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnReject"
+                style="@style/Widget.RodaPartes.Button.Small.Danger"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:text="@string/action_reject" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
