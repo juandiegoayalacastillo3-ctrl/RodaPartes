@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ítem del carrito -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/esp_s"
+    app:cardCornerRadius="14dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/esp_m">
+
+        <FrameLayout
+            android:id="@+id/tile"
+            android:layout_width="@dimen/miniatura"
+            android:layout_height="@dimen/miniatura"
+            tools:background="@drawable/bg_tile_frenos">
+
+            <ImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                app:tint="@color/asfalto_suave"
+                tools:src="@drawable/ic_cat_frenos" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/esp_m"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Body"
+                android:textStyle="bold"
+                tools:text="Pastillas de freno delanteras" />
+
+            <TextView
+                android:id="@+id/tvUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+                tools:text="$ 38.900 c/u" />
+
+            <include
+                android:id="@+id/stepper"
+                layout="@layout/view_stepper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="end"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/btnDelete"
+                android:layout_width="@dimen/area_tactil"
+                android:layout_height="@dimen/area_tactil"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/cd_delete"
+                android:src="@drawable/ic_delete"
+                app:tint="@color/peligro" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvSubtotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Price"
+                android:textSize="17sp"
+                tools:text="$ 77.800" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

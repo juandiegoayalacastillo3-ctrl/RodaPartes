@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Contenido del diálogo cuando el pago queda aprobado -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/esp_xl"
+    android:paddingTop="@dimen/esp_xl"
+    android:paddingEnd="@dimen/esp_xl"
+    android:paddingBottom="@dimen/esp_s">
+
+    <FrameLayout
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/bg_circle_white"
+        android:backgroundTint="@color/exito_claro">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_check"
+            app:tint="@color/exito" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/esp_l"
+        android:text="@string/payment_ok_title"
+        android:textAppearance="@style/TextAppearance.RodaPartes.Title" />
+
+    <TextView
+        android:id="@+id/tvOrderCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/esp_xs"
+        android:textAppearance="@style/TextAppearance.RodaPartes.Ref"
+        tools:text="Orden RP-1043" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/esp_m"
+        android:gravity="center"
+        android:text="@string/payment_ok_body"
+        android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+</LinearLayout>

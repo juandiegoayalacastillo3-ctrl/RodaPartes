@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Inicio del comprador (RF-INI-01, 03, 04) -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/esp_xl">
+
+        <!-- Encabezado naranja con dirección y buscador -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_header_round"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/esp_l"
+            android:paddingTop="@dimen/esp_m"
+            android:paddingEnd="@dimen/esp_l"
+            android:paddingBottom="@dimen/esp_xl">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/area_tactil"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/icono_s"
+                    android:layout_height="@dimen/icono_s"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_location"
+                    app:tint="@color/blanco" />
+
+                <TextView
+                    android:id="@+id/tvDeliverTo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/esp_s"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/home_deliver_to"
+                    android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+                    android:textColor="@color/blanco" />
+
+                <ImageButton
+                    android:id="@+id/btnNotifications"
+                    android:layout_width="@dimen/area_tactil"
+                    android:layout_height="@dimen/area_tactil"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/cd_notifications"
+                    android:src="@drawable/ic_bell"
+                    app:tint="@color/blanco" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvGreeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_greeting_guest"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Display"
+                android:textColor="@color/blanco"
+                android:textSize="26sp" />
+
+            <!-- Buscador "falso": al tocarlo abre la pestaña Buscar -->
+            <LinearLayout
+                android:id="@+id/searchPill"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/area_tactil"
+                android:layout_marginTop="@dimen/esp_m"
+                android:background="@drawable/bg_search_pill"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/esp_l"
+                android:paddingEnd="@dimen/esp_l">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_search"
+                    app:tint="@color/texto_3" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/esp_m"
+                    android:layout_weight="1"
+                    android:text="@string/search_hint"
+                    android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+                    android:textColor="@color/texto_3" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_scan"
+                    app:tint="?attr/colorPrimary" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Mi moto: resalta los productos compatibles -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardMoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/esp_l"
+            android:layout_marginTop="@dimen/esp_l"
+            android:layout_marginEnd="@dimen/esp_l"
+            app:cardBackgroundColor="?attr/colorPrimaryContainer"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/esp_m">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_moto"
+                    app:tint="?attr/colorPrimary" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/esp_m"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_my_moto"
+                        android:textAppearance="@style/TextAppearance.RodaPartes.Mini"
+                        android:textColor="?attr/colorOnPrimaryContainer" />
+
+                    <TextView
+                        android:id="@+id/tvMoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/moto_default"
+                        android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle"
+                        android:textColor="?attr/colorOnPrimaryContainer" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_see_compatible"
+                    android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+                    android:textColor="?attr/colorPrimary"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Categorías -->
+        <TextView
+            style="@style/RodaPartes.SectionTitle"
+            android:layout_marginStart="@dimen/esp_l"
+            android:layout_marginTop="@dimen/esp_l"
+            android:text="@string/home_categories" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingStart="@dimen/esp_l"
+            android:paddingEnd="@dimen/esp_l"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/llCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <!-- Destacados -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/esp_l"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/esp_l"
+            android:paddingEnd="@dimen/esp_s">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/home_featured"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSeeAll"
+                style="@style/Widget.RodaPartes.Button.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/action_see_all" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFeatured"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:paddingStart="@dimen/esp_m"
+            android:paddingEnd="@dimen/esp_m" />
+
+        <!-- Tiendas cercanas (geolocalización, RF-INI-03) -->
+        <TextView
+            style="@style/RodaPartes.SectionTitle"
+            android:layout_marginStart="@dimen/esp_l"
+            android:text="@string/home_nearby" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardNearby"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/esp_l"
+            android:layout_marginEnd="@dimen/esp_l">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="130dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/cd_map"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/bg_map" />
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="60dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_location"
+                        app:tint="?attr/colorPrimary" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="90dp"
+                        android:layout_marginTop="30dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_location"
+                        app:tint="@color/teal" />
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="50dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_location"
+                        app:tint="@color/teal" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/esp_m">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_nearby_count"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_nearby_detail"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnMap"
+                        style="@style/Widget.RodaPartes.Button.Small.Outlined"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_see_map" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Acceso rápido a una categoría en la pantalla de inicio -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="76dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="@dimen/esp_s"
+    android:background="?attr/selectableItemBackground"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/esp_xs"
+    android:paddingBottom="@dimen/esp_xs">
+
+    <FrameLayout
+        android:id="@+id/tile"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        tools:background="@drawable/bg_tile_frenos">
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            app:tint="@color/asfalto_suave"
+            tools:src="@drawable/ic_cat_frenos" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+        android:textColor="@color/texto"
+        tools:text="Frenos" />
+</LinearLayout>

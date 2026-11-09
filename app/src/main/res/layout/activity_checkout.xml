@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Checkout: dirección con mapa/ubicación (RF-PAG-02) y resumen previo al pago (RF-PAG-01) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.buyer.CheckoutActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="@string/checkout_title" />
+
+    <!-- Indicador de pasos del flujo de compra -->
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progress="66"
+        app:indicatorColor="?attr/colorPrimary"
+        app:trackColor="?attr/colorPrimaryContainer"
+        app:trackThickness="4dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/esp_l">
+
+            <TextView
+                style="@style/RodaPartes.SectionTitle"
+                android:layout_marginTop="0dp"
+                android:text="@string/checkout_address" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/alto_mapa">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/cd_map"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/bg_map" />
+
+                    <ImageView
+                        android:id="@+id/ivPin"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="18dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_location"
+                        app:tint="?attr/colorPrimary" />
+
+                    <TextView
+                        android:id="@+id/tvMapAddress"
+                        style="@style/RodaPartes.Badge"
+                        android:layout_gravity="bottom|start"
+                        android:layout_margin="@dimen/esp_s"
+                        android:drawablePadding="4dp"
+                        android:elevation="2dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/texto"
+                        android:textSize="12sp"
+                        app:drawableStartCompat="@drawable/ic_location_small"
+                        tools:text="Calle 80 # 69-22, Bogotá" />
+                </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMyLocation"
+                style="@style/Widget.RodaPartes.Button.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_m"
+                android:text="@string/checkout_use_location"
+                app:icon="@drawable/ic_location"
+                app:iconGravity="textStart" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_m"
+                android:hint="@string/field_address"
+                app:startIconDrawable="@drawable/ic_home">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPostalAddress"
+                    android:text="@string/address_default" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_m"
+                android:hint="@string/field_address_detail">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:text="@string/address_detail_default" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                style="@style/RodaPartes.SectionTitle"
+                android:text="@string/checkout_shipping_method" />
+
+            <RadioGroup
+                android:id="@+id/rgShipping"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@+id/rbDelivery">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/rbDelivery"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/area_tactil"
+                    android:text="@string/checkout_delivery"
+                    android:textAppearance="@style/TextAppearance.RodaPartes.Body" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/rbPickup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/area_tactil"
+                    android:text="@string/checkout_pickup"
+                    android:textAppearance="@style/TextAppearance.RodaPartes.Body" />
+            </RadioGroup>
+
+            <!-- Resumen de la compra antes de pagar -->
+            <TextView
+                style="@style/RodaPartes.SectionTitle"
+                android:text="@string/checkout_summary" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/esp_l">
+
+                    <TextView
+                        android:id="@+id/tvSellerLegal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+                        tools:text="Vende: MotoCentro 80 · NIT 901.234.567-8" />
+
+                    <TextView
+                        android:id="@+id/tvItems"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/esp_s"
+                        android:textAppearance="@style/TextAppearance.RodaPartes.Body"
+                        tools:text="3 productos" />
+
+                    <TextView
+                        android:id="@+id/tvEta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/esp_xs"
+                        android:drawablePadding="6dp"
+                        android:gravity="center_vertical"
+                        android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+                        app:drawableStartCompat="@drawable/ic_truck_small"
+                        tools:text="Llega mañana antes de las 6:00 p. m." />
+
+                    <View
+                        style="@style/RodaPartes.Divider"
+                        android:layout_marginTop="@dimen/esp_m"
+                        android:layout_marginBottom="@dimen/esp_m" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/cart_subtotal"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+
+                        <TextView
+                            android:id="@+id/tvSubtotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Body" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/esp_xs"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/cart_shipping"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+
+                        <TextView
+                            android:id="@+id/tvShipping"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Body" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/esp_s"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/cart_total"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle" />
+
+                        <TextView
+                            android:id="@+id/tvTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Price" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/esp_s"
+                        android:text="@string/checkout_retract_note"
+                        android:textAppearance="@style/TextAppearance.RodaPartes.Mini" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnGoPay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/esp_l"
+        android:text="@string/checkout_go_pay" />
+</LinearLayout>

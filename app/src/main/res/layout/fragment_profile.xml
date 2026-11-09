@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Perfil del comprador (RF-PER-01 a 06, RF-USU-04) -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/esp_xl">
+
+        <!-- Encabezado con avatar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_header_round"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/esp_xl"
+            android:paddingBottom="@dimen/esp_xl">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivAvatar"
+                android:layout_width="@dimen/avatar"
+                android:layout_height="@dimen/avatar"
+                android:background="@color/blanco"
+                android:padding="20dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_person"
+                app:contentPadding="0dp"
+                app:shapeAppearanceOverlay="@style/Shape.RodaPartes.Circulo"
+                app:tint="?attr/colorPrimary"
+                android:contentDescription="@string/cd_avatar" />
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_m"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Title"
+                android:textColor="@color/blanco"
+                tools:text="Juan Pérez" />
+
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+                android:textColor="@color/blanco"
+                tools:text="juan@correo.com" />
+        </LinearLayout>
+
+        <!-- Cuenta -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/esp_l"
+            android:layout_marginTop="@dimen/esp_l"
+            android:layout_marginEnd="@dimen/esp_l">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/rowEdit"
+                    style="@style/RodaPartes.Row">
+
+                    <ImageView
+                        android:layout_width="@dimen/icono"
+                        android:layout_height="@dimen/icono"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_person"
+                        app:tint="?attr/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/esp_l"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_my_data"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Body" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_my_data_sub"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_chevron"
+                        app:tint="@color/texto_3" />
+                </LinearLayout>
+
+                <View style="@style/RodaPartes.Divider" />
+
+                <LinearLayout
+                    android:id="@+id/rowOrders"
+                    style="@style/RodaPartes.Row">
+
+                    <ImageView
+                        android:layout_width="@dimen/icono"
+                        android:layout_height="@dimen/icono"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_bag"
+                        app:tint="?attr/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/esp_l"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/nav_orders"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Body" />
+
+                        <TextView
+                            android:id="@+id/tvOrdersSub"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+                            tools:text="3 pedidos · 1 en camino" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_chevron"
+                        app:tint="@color/texto_3" />
+                </LinearLayout>
+
+                <View style="@style/RodaPartes.Divider" />
+
+                <LinearLayout
+                    android:id="@+id/rowAddresses"
+                    style="@style/RodaPartes.Row">
+
+                    <ImageView
+                        android:layout_width="@dimen/icono"
+                        android:layout_height="@dimen/icono"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_location"
+                        app:tint="?attr/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/esp_l"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_addresses"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Body" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_addresses_sub"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_chevron"
+                        app:tint="@color/texto_3" />
+                </LinearLayout>
+
+                <View style="@style/RodaPartes.Divider" />
+
+                <LinearLayout
+                    android:id="@+id/rowMoto"
+                    style="@style/RodaPartes.Row">
+
+                    <ImageView
+                        android:layout_width="@dimen/icono"
+                        android:layout_height="@dimen/icono"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_moto"
+                        app:tint="?attr/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/esp_l"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/home_my_moto"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Body" />
+
+                        <TextView
+                            android:id="@+id/tvMotoSub"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/moto_default"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_chevron"
+                        app:tint="@color/texto_3" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Seguridad y preferencias -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/esp_l"
+            android:layout_marginTop="@dimen/esp_m"
+            android:layout_marginEnd="@dimen/esp_l">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    style="@style/RodaPartes.Row"
+                    android:clickable="false">
+
+                    <ImageView
+                        android:layout_width="@dimen/icono"
+                        android:layout_height="@dimen/icono"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_fingerprint"
+                        app:tint="?attr/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/esp_l"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_fingerprint"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Body" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_fingerprint_sub"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/swFingerprint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/profile_fingerprint" />
+                </LinearLayout>
+
+                <View style="@style/RodaPartes.Divider" />
+
+                <LinearLayout
+                    style="@style/RodaPartes.Row"
+                    android:clickable="false">
+
+                    <ImageView
+                        android:layout_width="@dimen/icono"
+                        android:layout_height="@dimen/icono"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_bell"
+                        app:tint="?attr/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/esp_l"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_promos"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Body" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_promos_sub"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+                    </LinearLayout>
+
+                    <com.google.android.material.materialswitch.MaterialSwitch
+                        android:id="@+id/swPromos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/profile_promos" />
+                </LinearLayout>
+
+                <View style="@style/RodaPartes.Divider" />
+
+                <LinearLayout
+                    android:id="@+id/rowPrivacy"
+                    style="@style/RodaPartes.Row">
+
+                    <ImageView
+                        android:layout_width="@dimen/icono"
+                        android:layout_height="@dimen/icono"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_policy"
+                        app:tint="?attr/colorPrimary" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/esp_l"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_privacy"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Body" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/profile_privacy_sub"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_chevron"
+                        app:tint="@color/texto_3" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogout"
+            style="@style/Widget.RodaPartes.Button.Outlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/esp_l"
+            android:layout_marginTop="@dimen/esp_xl"
+            android:layout_marginEnd="@dimen/esp_l"
+            android:text="@string/action_logout"
+            app:icon="@drawable/ic_logout"
+            app:iconGravity="textStart" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDeleteAccount"
+            style="@style/Widget.RodaPartes.Button.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/esp_s"
+            android:text="@string/profile_delete_account"
+            android:textColor="@color/peligro" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

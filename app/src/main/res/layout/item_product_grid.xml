@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tarjeta de producto del catálogo (grilla de 2 columnas) -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="14dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/esp_m">
+
+        <!-- "Foto" del producto: degradado por categoría + ícono -->
+        <FrameLayout
+            android:id="@+id/tile"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/alto_tile"
+            android:layout_margin="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@drawable/bg_tile_frenos">
+
+            <ImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_gravity="center"
+                android:alpha="0.75"
+                android:importantForAccessibility="no"
+                app:tint="@color/asfalto_suave"
+                tools:src="@drawable/ic_cat_frenos" />
+
+            <TextView
+                android:id="@+id/tvType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|bottom"
+                android:layout_margin="@dimen/esp_s"
+                android:background="@drawable/bg_badge"
+                android:fontFamily="sans-serif-medium"
+                android:paddingStart="8dp"
+                android:paddingTop="2dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="2dp"
+                android:textColor="@color/texto"
+                android:textSize="@dimen/txt_mini"
+                tools:text="Original" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/esp_m"
+            android:layout_marginTop="@dimen/esp_s"
+            android:layout_marginEnd="@dimen/esp_m"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:minLines="2"
+            android:textAppearance="@style/TextAppearance.RodaPartes.Body"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tile"
+            tools:text="Pastillas de freno delanteras" />
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/esp_m"
+            android:layout_marginTop="@dimen/esp_xs"
+            android:textAppearance="@style/TextAppearance.RodaPartes.Price"
+            android:textSize="19sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvName"
+            tools:text="$ 38.900" />
+
+        <TextView
+            android:id="@+id/tvSeller"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/esp_m"
+            android:layout_marginEnd="@dimen/esp_m"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.RodaPartes.Mini"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPrice"
+            tools:text="MotoCentro 80 · 2,1 km" />
+
+        <TextView
+            android:id="@+id/tvCompatible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/esp_m"
+            android:layout_marginTop="6dp"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical"
+            android:text="@string/product_fits_short"
+            android:textColor="@color/exito"
+            android:textSize="@dimen/txt_mini"
+            android:fontFamily="sans-serif-medium"
+            app:drawableStartCompat="@drawable/ic_check_small"
+            app:drawableTint="@color/exito"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvSeller" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

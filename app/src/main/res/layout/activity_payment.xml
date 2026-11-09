@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pasarela de pagos Wompi: tarjeta, PSE o Nequi (RF-PAG-03) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.buyer.PaymentActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="@string/payment_title" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:progress="100"
+        app:indicatorColor="?attr/colorPrimary"
+        app:trackColor="?attr/colorPrimaryContainer"
+        app:trackThickness="4dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/esp_l">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_thumb"
+                android:backgroundTint="@color/exito_claro"
+                android:drawablePadding="@dimen/esp_s"
+                android:gravity="center"
+                android:padding="@dimen/esp_m"
+                android:text="@string/payment_secure"
+                android:textColor="@color/exito"
+                android:textSize="14sp"
+                android:fontFamily="sans-serif-medium"
+                app:drawableStartCompat="@drawable/ic_shield_small" />
+
+            <TextView
+                style="@style/RodaPartes.SectionTitle"
+                android:layout_marginTop="@dimen/esp_l"
+                android:text="@string/payment_method" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleMethod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:checkedButton="@+id/btnCard"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCard"
+                    style="@style/Widget.RodaPartes.Button.Toggle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/payment_card"
+                    app:icon="@drawable/ic_card" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnPse"
+                    style="@style/Widget.RodaPartes.Button.Toggle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/payment_pse"
+                    app:icon="@drawable/ic_bank" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnNequi"
+                    style="@style/Widget.RodaPartes.Button.Toggle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/payment_nequi"
+                    app:icon="@drawable/ic_wallet" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <!-- ===== Tarjeta ===== -->
+            <LinearLayout
+                android:id="@+id/groupCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Vista previa de la tarjeta que se actualiza al escribir -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="170dp"
+                    android:layout_marginTop="@dimen/esp_l"
+                    android:background="@drawable/bg_card_preview"
+                    android:padding="@dimen/esp_l">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="30dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_card"
+                        app:tint="@color/naranja" />
+
+                    <TextView
+                        android:id="@+id/tvCardNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:fontFamily="monospace"
+                        android:letterSpacing="0.08"
+                        android:text="@string/card_number_placeholder"
+                        android:textColor="@color/blanco"
+                        android:textSize="19sp" />
+
+                    <TextView
+                        android:id="@+id/tvCardName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|start"
+                        android:text="@string/card_name_placeholder"
+                        android:textAllCaps="true"
+                        android:textColor="@color/texto_3"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvCardExp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom|end"
+                        android:fontFamily="monospace"
+                        android:text="@string/card_exp_placeholder"
+                        android:textColor="@color/texto_3"
+                        android:textSize="12sp" />
+                </FrameLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilCardNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/esp_l"
+                    android:hint="@string/field_card_number"
+                    app:startIconDrawable="@drawable/ic_card">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etCardNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="0123456789 "
+                        android:inputType="number"
+                        android:maxLength="19" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilCardName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/esp_m"
+                    android:hint="@string/field_card_name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etCardName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName|textCapCharacters" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/esp_m"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilExp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/esp_s"
+                        android:layout_weight="1"
+                        android:hint="@string/field_card_exp">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etExp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:digits="0123456789/"
+                            android:inputType="number"
+                            android:maxLength="5" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tilCvv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/esp_s"
+                        android:layout_weight="1"
+                        android:hint="@string/field_card_cvv"
+                        app:endIconMode="password_toggle">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etCvv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="numberPassword"
+                            android:maxLength="4" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/esp_s"
+                    android:drawablePadding="6dp"
+                    android:text="@string/payment_token_note"
+                    android:textAppearance="@style/TextAppearance.RodaPartes.Mini"
+                    app:drawableStartCompat="@drawable/ic_lock_small" />
+            </LinearLayout>
+
+            <!-- ===== PSE ===== -->
+            <LinearLayout
+                android:id="@+id/groupPse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilBank"
+                    style="@style/Widget.RodaPartes.TextInput.Dropdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/esp_l"
+                    android:hint="@string/field_bank">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/actBank"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        app:simpleItems="@array/bancos_pse" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilDocument"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/esp_m"
+                    android:hint="@string/field_document"
+                    app:startIconDrawable="@drawable/ic_badge">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDocument"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/esp_s"
+                    android:text="@string/payment_pse_note"
+                    android:textAppearance="@style/TextAppearance.RodaPartes.Mini" />
+            </LinearLayout>
+
+            <!-- ===== Nequi ===== -->
+            <LinearLayout
+                android:id="@+id/groupNequi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilNequi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/esp_l"
+                    android:hint="@string/field_nequi_phone"
+                    app:prefixText="@string/phone_prefix"
+                    app:startIconDrawable="@drawable/ic_phone">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNequi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:maxLength="10" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/esp_s"
+                    android:text="@string/payment_nequi_note"
+                    android:textAppearance="@style/TextAppearance.RodaPartes.Mini" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/superficie"
+        android:elevation="12dp"
+        android:orientation="vertical"
+        android:padding="@dimen/esp_l">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/payment_total"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle" />
+
+            <TextView
+                android:id="@+id/tvTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Price"
+                tools:text="$ 157.900" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/esp_m"
+            app:icon="@drawable/ic_shield"
+            app:iconGravity="textStart"
+            app:iconTint="@color/blanco"
+            tools:text="Pagar $ 157.900" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Detalle de producto. CoordinatorLayout con barra inferior fija para agregar al carrito. -->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.buyer.ProductDetailActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="@string/detail_title" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="96dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/esp_l">
+
+            <!-- Galería (en esta fase: ilustración por categoría) -->
+            <FrameLayout
+                android:id="@+id/tile"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                tools:background="@drawable/bg_tile_frenos">
+
+                <ImageView
+                    android:id="@+id/ivIcon"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_gravity="center"
+                    android:alpha="0.75"
+                    android:importantForAccessibility="no"
+                    app:tint="@color/asfalto_suave"
+                    tools:src="@drawable/ic_cat_frenos" />
+
+                <TextView
+                    android:id="@+id/tvPhotos"
+                    style="@style/RodaPartes.Badge"
+                    android:layout_gravity="end|bottom"
+                    android:layout_margin="@dimen/esp_m"
+                    android:textColor="@color/texto"
+                    tools:text="1 / 3 fotos" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_l"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvType"
+                    style="@style/RodaPartes.Badge"
+                    tools:text="Genérico (compatible)" />
+
+                <TextView
+                    android:id="@+id/tvRef"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/esp_s"
+                    android:textAppearance="@style/TextAppearance.RodaPartes.Ref"
+                    tools:text="REF PF-AKT125-D" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_s"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Title"
+                tools:text="Pastillas de freno delanteras" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_xs"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.RodaPartes.Price"
+                    android:textSize="30sp"
+                    tools:text="$ 38.900" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/esp_s"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/price_with_tax"
+                    android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+            </LinearLayout>
+
+            <!-- Compatibilidad con la moto guardada -->
+            <TextView
+                android:id="@+id/tvFit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_m"
+                android:background="@drawable/bg_badge"
+                android:drawablePadding="@dimen/esp_s"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_vertical"
+                android:padding="@dimen/esp_m"
+                android:textSize="14sp"
+                app:drawableStartCompat="@drawable/ic_moto"
+                tools:text="Compatible con AKT NKD 125" />
+
+            <!-- Datos clave en una grilla de 3 columnas -->
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_m"
+                android:columnCount="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginEnd="@dimen/esp_s"
+                    android:background="@drawable/bg_thumb"
+                    android:orientation="vertical"
+                    android:padding="@dimen/esp_m">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_stock"
+                        android:textAppearance="@style/TextAppearance.RodaPartes.Mini" />
+
+                    <TextView
+                        android:id="@+id/tvStock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle"
+                        tools:text="14 und" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginEnd="@dimen/esp_s"
+                    android:background="@drawable/bg_thumb"
+                    android:orientation="vertical"
+                    android:padding="@dimen/esp_m">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_warranty"
+                        android:textAppearance="@style/TextAppearance.RodaPartes.Mini" />
+
+                    <TextView
+                        android:id="@+id/tvWarranty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle"
+                        tools:text="3 meses" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:background="@drawable/bg_thumb"
+                    android:orientation="vertical"
+                    android:padding="@dimen/esp_m">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/detail_category"
+                        android:textAppearance="@style/TextAppearance.RodaPartes.Mini" />
+
+                    <TextView
+                        android:id="@+id/tvCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle"
+                        tools:text="Frenos" />
+                </LinearLayout>
+            </GridLayout>
+
+            <TextView
+                style="@style/RodaPartes.SectionTitle"
+                android:text="@string/detail_description" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Body"
+                android:textColor="@color/texto_2"
+                tools:text="Pastillas semimetálicas..." />
+
+            <TextView
+                android:id="@+id/tvCompatList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_s"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+                tools:text="Sirve para: AKT NKD 125, TVS Raider 125" />
+
+            <!-- Identidad del vendedor antes de comprar (Ley 1480, art. 50) -->
+            <TextView
+                style="@style/RodaPartes.SectionTitle"
+                android:text="@string/detail_seller" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/esp_m">
+
+                    <FrameLayout
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
+                        android:background="@drawable/bg_avatar">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_gravity="center"
+                            android:importantForAccessibility="no"
+                            android:src="@drawable/ic_store"
+                            app:tint="?attr/colorPrimary" />
+                    </FrameLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/esp_m"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvSeller"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle"
+                            tools:text="MotoCentro 80" />
+
+                        <TextView
+                            android:id="@+id/tvSellerInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+                            tools:text="NIT 901.234.567-8 · a 2,1 km" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnReport"
+                style="@style/Widget.RodaPartes.Button.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_s"
+                android:text="@string/detail_report"
+                android:textColor="@color/texto_2"
+                app:icon="@drawable/ic_flag"
+                app:iconTint="@color/texto_3" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Barra inferior fija: cantidad + agregar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/superficie"
+        android:elevation="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/esp_m">
+
+        <include
+            android:id="@+id/stepper"
+            layout="@layout/view_stepper" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAdd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/esp_m"
+            android:layout_weight="1"
+            android:text="@string/detail_add"
+            app:icon="@drawable/ic_cart"
+            app:iconTint="@color/blanco" />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
