@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Tarjeta de cifra (paneles de vendedor y administrador). Franja lateral del color del rol. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_stat_accent"
+    android:orientation="vertical"
+    android:paddingStart="@dimen/esp_l"
+    android:paddingTop="@dimen/esp_m"
+    android:paddingEnd="@dimen/esp_m"
+    android:paddingBottom="@dimen/esp_m">
+
+    <TextView
+        android:id="@+id/tvValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.RodaPartes.Figure"
+        tools:text="$ 2,4 M" />
+
+    <TextView
+        android:id="@+id/tvLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+        tools:text="Ventas del mes" />
+</LinearLayout>
