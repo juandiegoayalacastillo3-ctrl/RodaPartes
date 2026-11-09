@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Producto en "Mis productos" del vendedor, con editar y eliminar -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/esp_s"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="14dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/esp_m"
+        android:paddingTop="@dimen/esp_m"
+        android:paddingBottom="@dimen/esp_m">
+
+        <FrameLayout
+            android:id="@+id/tile"
+            android:layout_width="@dimen/miniatura"
+            android:layout_height="@dimen/miniatura"
+            tools:background="@drawable/bg_tile_aceite">
+
+            <ImageView
+                android:id="@+id/ivIcon"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:importantForAccessibility="no"
+                app:tint="@color/asfalto_suave"
+                tools:src="@drawable/ic_cat_aceite" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/esp_m"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Body"
+                android:textStyle="bold"
+                tools:text="Aceite 20W-50 4T 1 L" />
+
+            <TextView
+                android:id="@+id/tvInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+                tools:text="$ 32.500 · Stock 3" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvStatus"
+                    style="@style/RodaPartes.Badge"
+                    tools:text="Publicado" />
+
+                <TextView
+                    android:id="@+id/tvLowStock"
+                    style="@style/RodaPartes.Badge"
+                    android:layout_marginStart="6dp"
+                    android:backgroundTint="@color/aviso_claro"
+                    android:text="@string/seller_low_stock_badge"
+                    android:textColor="@color/aviso" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnEdit"
+            android:layout_width="@dimen/area_tactil"
+            android:layout_height="@dimen/area_tactil"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/action_edit"
+            android:src="@drawable/ic_edit"
+            app:tint="?attr/colorPrimary" />
+
+        <ImageButton
+            android:id="@+id/btnDelete"
+            android:layout_width="@dimen/area_tactil"
+            android:layout_height="@dimen/area_tactil"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/action_delete"
+            android:src="@drawable/ic_delete"
+            app:tint="@color/peligro" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

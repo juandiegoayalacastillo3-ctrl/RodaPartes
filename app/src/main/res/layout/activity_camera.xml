@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Interfaz de la cámara: tomar foto del producto o escanear código de barras/referencia.
+    En esta entrega es la interfaz; la vista previa real (PreviewView de CameraX) y el
+    análisis con ML Kit se conectan en la fase de funcionalidad (RF-PRO-02, RF-PRO-03).
+-->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/camara_fondo"
+    tools:context=".ui.seller.CameraActivity">
+
+    <ImageButton
+        android:id="@+id/btnClose"
+        android:layout_width="@dimen/area_tactil"
+        android:layout_height="@dimen/area_tactil"
+        android:layout_margin="@dimen/esp_s"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/action_close"
+        android:src="@drawable/ic_close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/blanco" />
+
+    <ImageButton
+        android:id="@+id/btnFlash"
+        android:layout_width="@dimen/area_tactil"
+        android:layout_height="@dimen/area_tactil"
+        android:layout_margin="@dimen/esp_s"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/cd_flash"
+        android:src="@drawable/ic_flash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/blanco" />
+
+    <!-- Marco del visor -->
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/bg_scan_frame"
+        app:layout_constraintBottom_toTopOf="@id/tvHint"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnClose"
+        app:layout_constraintVertical_bias="0.4">
+
+        <!-- Código de barras de muestra dentro del visor -->
+        <ImageView
+            android:id="@+id/ivBarcode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="36dp"
+            android:alpha="0.35"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_barcode" />
+
+        <View
+            android:id="@+id/scanLine"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"
+            android:background="@drawable/bg_scan_line" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvHint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/esp_xl"
+        android:text="@string/camera_hint_scan"
+        android:textColor="@color/texto_3"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/llModes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Modos de la cámara -->
+    <LinearLayout
+        android:id="@+id/llModes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/esp_l"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/btnShutter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tabPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/area_tactil"
+            android:gravity="center"
+            android:paddingStart="@dimen/esp_l"
+            android:paddingEnd="@dimen/esp_l"
+            android:text="@string/camera_photo"
+            android:textColor="@color/texto_3"
+            android:fontFamily="sans-serif-medium" />
+
+        <TextView
+            android:id="@+id/tabScan"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/area_tactil"
+            android:gravity="center"
+            android:paddingStart="@dimen/esp_l"
+            android:paddingEnd="@dimen/esp_l"
+            android:text="@string/camera_scan"
+            android:textColor="@color/scan_linea"
+            android:fontFamily="sans-serif-medium" />
+
+        <TextView
+            android:id="@+id/tabGallery"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/area_tactil"
+            android:gravity="center"
+            android:paddingStart="@dimen/esp_l"
+            android:paddingEnd="@dimen/esp_l"
+            android:text="@string/camera_gallery"
+            android:textColor="@color/texto_3"
+            android:fontFamily="sans-serif-medium" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btnShutter"
+        android:layout_width="76dp"
+        android:layout_height="76dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/bg_shutter"
+        android:contentDescription="@string/cd_shutter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

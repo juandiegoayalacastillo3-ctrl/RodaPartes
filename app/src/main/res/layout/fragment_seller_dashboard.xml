@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Panel del vendedor: indicadores, gráfico de 7 días y pedidos recientes -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:subtitleTextColor="@color/teal_claro"
+        app:title="@string/seller_panel_title" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/esp_l">
+
+            <!-- Grilla 2×2 de indicadores -->
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                android:useDefaultMargins="false">
+
+                <include
+                    android:id="@+id/statSales"
+                    layout="@layout/view_stat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginBottom="@dimen/esp_m" />
+
+                <include
+                    android:id="@+id/statOrders"
+                    layout="@layout/view_stat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginBottom="@dimen/esp_m" />
+
+                <include
+                    android:id="@+id/statDispatch"
+                    layout="@layout/view_stat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginEnd="6dp" />
+
+                <include
+                    android:id="@+id/statLowStock"
+                    layout="@layout/view_stat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="6dp" />
+            </GridLayout>
+
+            <!-- Gráfico de barras propio (BarChartView) -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_l">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/esp_l">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/seller_chart_title"
+                        android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle" />
+
+                    <TextView
+                        android:id="@+id/tvChartTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+
+                    <com.rodapartes.app.ui.common.BarChartView
+                        android:id="@+id/chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="@dimen/esp_m"
+                        app:barColor="@color/teal"
+                        app:barCornerRadius="6dp"
+                        app:barMutedColor="@color/teal_claro"
+                        app:labelColor="@color/texto_3" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Alerta de stock bajo (RF-PRO-07) -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardLowStock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_m"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/aviso_claro"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/esp_m">
+
+                    <ImageView
+                        android:layout_width="@dimen/icono"
+                        android:layout_height="@dimen/icono"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_warning"
+                        app:tint="@color/aviso" />
+
+                    <TextView
+                        android:id="@+id/tvLowStock"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/esp_m"
+                        android:layout_weight="1"
+                        android:textColor="@color/aviso"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:importantForAccessibility="no"
+                        android:src="@drawable/ic_chevron"
+                        app:tint="@color/aviso" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_l"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/seller_recent_orders"
+                    android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnAllOrders"
+                    style="@style/Widget.RodaPartes.Button.Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/action_see_all" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llRecent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

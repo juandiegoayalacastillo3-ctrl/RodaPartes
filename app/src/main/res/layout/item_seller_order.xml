@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Pedido recibido por el vendedor, con acciones según su estado (RF-COM-03) -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/esp_s"
+    app:cardCornerRadius="14dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/esp_m">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvCode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Subtitle"
+                tools:text="#RP-1042" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                style="@style/RodaPartes.Badge"
+                tools:text="Nuevo" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvBuyer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/esp_xs"
+            android:textAppearance="@style/TextAppearance.RodaPartes.Body"
+            android:textSize="14sp"
+            tools:text="Laura Gómez · 3 ítems · $ 157.900" />
+
+        <TextView
+            android:id="@+id/tvSummary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+            tools:text="Pastillas de freno, Aceite 20W-50 ×2" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:drawablePadding="4dp"
+            android:gravity="center_vertical"
+            android:textAppearance="@style/TextAppearance.RodaPartes.Small"
+            app:drawableStartCompat="@drawable/ic_location_small"
+            tools:text="Calle 80 # 69-22 · 2,1 km" />
+
+        <!-- Acciones para pedidos nuevos -->
+        <LinearLayout
+            android:id="@+id/groupNew"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/esp_m"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAccept"
+                style="@style/Widget.RodaPartes.Button.Small"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:text="@string/action_accept" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnReject"
+                style="@style/Widget.RodaPartes.Button.Small.Danger"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_weight="1"
+                android:text="@string/action_reject" />
+        </LinearLayout>
+
+        <!-- Avanzar al siguiente estado -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnNext"
+            style="@style/Widget.RodaPartes.Button.Small.Outlined"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/esp_m"
+            app:icon="@drawable/ic_truck"
+            app:iconGravity="textStart"
+            tools:text="Marcar como enviado" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
