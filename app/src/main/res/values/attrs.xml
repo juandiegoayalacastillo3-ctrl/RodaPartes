@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Atributos propios de la vista personalizada BarChartView (gráfico de ventas) -->
+    <declare-styleable name="BarChartView">
+        <attr name="barColor" format="color" />
+        <attr name="barMutedColor" format="color" />
+        <attr name="labelColor" format="color" />
+        <attr name="barCornerRadius" format="dimension" />
+    </declare-styleable>
+</resources>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Código de barras de muestra que se ve dentro del visor del escáner -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="@color/blanco"
+        android:pathData="M2.0,4h1.5v40h-1.5zM4.5,4h2v40h-2zM8.5,4h1v40h-1zM10.5,4h3v40h-3zM14.5,4h1.5v40h-1.5zM18.0,4h1v40h-1zM21.0,4h1v40h-1zM23.0,4h1v40h-1zM25.5,4h2v40h-2zM28.5,4h1v40h-1zM30.5,4h3v40h-3zM35.0,4h1v40h-1zM38.0,4h1v40h-1zM40.0,4h3v40h-3zM44.0,4h3v40h-3z" />
+</vector>

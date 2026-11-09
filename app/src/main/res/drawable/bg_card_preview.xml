@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Vista previa de la tarjeta de crédito en la pasarela -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient android:angle="315" android:startColor="@color/asfalto_suave" android:endColor="@color/asfalto" />
+            <corners android:radius="18dp" />
+        </shape>
+    </item>
+    <item android:left="180dp" android:top="-60dp" android:right="-60dp" android:bottom="40dp">
+        <shape android:shape="oval">
+            <stroke android:width="10dp" android:color="#33E8590C" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fondo de la splash: asfalto + anillo de la marca centrado -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/asfalto" />
+    <item
+        android:width="160dp"
+        android:height="160dp"
+        android:drawable="@drawable/ic_logo_mark"
+        android:gravity="center" />
+</layer-list>

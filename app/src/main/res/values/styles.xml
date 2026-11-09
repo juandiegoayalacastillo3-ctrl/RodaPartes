@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- ================= Tipografía =================
+         Títulos en sans-serif-condensed (aire de catálogo técnico de repuestos),
+         cuerpo en sans-serif y las referencias de pieza en monospace. -->
+    <style name="TextAppearance.RodaPartes.Display" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/txt_display</item>
+        <item name="android:textColor">@color/texto</item>
+        <item name="android:letterSpacing">-0.01</item>
+    </style>
+
+    <style name="TextAppearance.RodaPartes.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/txt_titulo</item>
+        <item name="android:textColor">@color/texto</item>
+    </style>
+
+    <style name="TextAppearance.RodaPartes.Subtitle" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">@dimen/txt_subtitulo</item>
+        <item name="android:textColor">@color/texto</item>
+    </style>
+
+    <style name="TextAppearance.RodaPartes.Body" parent="TextAppearance.Material3.BodyLarge">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">@dimen/txt_cuerpo</item>
+        <item name="android:textColor">@color/texto</item>
+        <item name="android:lineSpacingMultiplier">1.15</item>
+    </style>
+
+    <style name="TextAppearance.RodaPartes.Small" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">@dimen/txt_pequeno</item>
+        <item name="android:textColor">@color/texto_2</item>
+    </style>
+
+    <style name="TextAppearance.RodaPartes.Mini" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">@dimen/txt_mini</item>
+        <item name="android:textColor">@color/texto_3</item>
+    </style>
+
+    <style name="TextAppearance.RodaPartes.Price" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/txt_precio</item>
+        <item name="android:textColor">@color/texto</item>
+    </style>
+
+    <style name="TextAppearance.RodaPartes.Figure" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/txt_cifra</item>
+        <item name="android:textColor">@color/texto</item>
+    </style>
+
+    <style name="TextAppearance.RodaPartes.Ref" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/texto_2</item>
+    </style>
+
+    <!-- Título de la barra superior -->
+    <style name="TextAppearance.RodaPartes.ToolbarTitle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:textColor">@color/blanco</item>
+    </style>
+
+    <style name="RodaPartes.DialogTitle" parent="MaterialAlertDialog.Material3.Title.Text">
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!-- ================= Formas ================= -->
+    <style name="Shape.RodaPartes.Campo" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radio_campo</item>
+    </style>
+    <style name="Shape.RodaPartes.Tarjeta" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/radio_tarjeta</item>
+    </style>
+    <style name="Shape.RodaPartes.Dialogo" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
+    </style>
+    <!-- Esquina cortada: guiño a una placa/etiqueta de repuesto -->
+    <style name="Shape.RodaPartes.Etiqueta" parent="">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSizeTopRight">14dp</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+    </style>
+    <style name="Shape.RodaPartes.Circulo" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- ================= Botones ================= -->
+    <style name="Widget.RodaPartes.Button" parent="Widget.Material3.Button">
+        <item name="android:minHeight">@dimen/alto_boton</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="cornerRadius">@dimen/radio_boton</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="Widget.RodaPartes.Button.Outlined" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">@dimen/alto_boton</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="cornerRadius">@dimen/radio_boton</item>
+        <item name="strokeColor">?attr/colorPrimary</item>
+        <item name="strokeWidth">@dimen/borde_grueso</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+
+    <style name="Widget.RodaPartes.Button.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:minHeight">@dimen/area_tactil</item>
+    </style>
+
+    <!-- Acciones destructivas: borde y texto rojo -->
+    <style name="Widget.RodaPartes.Button.Danger" parent="Widget.RodaPartes.Button.Outlined">
+        <item name="strokeColor">@color/peligro</item>
+        <item name="android:textColor">@color/peligro</item>
+        <item name="rippleColor">@color/peligro_claro</item>
+    </style>
+
+    <!-- Botón oscuro (ej. Google) -->
+    <style name="Widget.RodaPartes.Button.Dark" parent="Widget.RodaPartes.Button.Outlined">
+        <item name="strokeColor">@color/asfalto</item>
+        <item name="android:textColor">@color/asfalto</item>
+        <item name="iconTint">@null</item>
+    </style>
+
+    <!-- Botón pequeño para acciones dentro de tarjetas -->
+    <style name="Widget.RodaPartes.Button.Small" parent="Widget.RodaPartes.Button">
+        <item name="android:minHeight">40dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="cornerRadius">10dp</item>
+    </style>
+    <style name="Widget.RodaPartes.Button.Small.Outlined" parent="Widget.RodaPartes.Button.Outlined">
+        <item name="android:minHeight">40dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="cornerRadius">10dp</item>
+    </style>
+    <style name="Widget.RodaPartes.Button.Small.Danger" parent="Widget.RodaPartes.Button.Danger">
+        <item name="android:minHeight">40dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="cornerRadius">10dp</item>
+    </style>
+
+    <!-- Botón cuadrado de ícono (+ / − del carrito) -->
+    <style name="Widget.RodaPartes.Button.Stepper" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minWidth">40dp</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:insetLeft">0dp</item>
+        <item name="android:insetRight">0dp</item>
+        <item name="iconPadding">0dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconTint">@color/texto</item>
+        <item name="strokeColor">@color/borde</item>
+        <item name="cornerRadius">10dp</item>
+    </style>
+
+    <style name="Widget.RodaPartes.Fab" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="tint">@color/blanco</item>
+        <item name="shapeAppearanceOverlay">@style/Shape.RodaPartes.Etiqueta</item>
+    </style>
+
+    <!-- ================= Campos de texto ================= -->
+    <style name="Widget.RodaPartes.TextInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">@dimen/radio_campo</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/radio_campo</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/radio_campo</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/radio_campo</item>
+        <item name="boxStrokeColor">@color/sel_input_stroke</item>
+        <item name="boxStrokeWidth">@dimen/borde_fino</item>
+        <item name="boxStrokeWidthFocused">@dimen/borde_grueso</item>
+        <item name="boxBackgroundColor">@color/superficie</item>
+        <item name="hintTextColor">?attr/colorPrimary</item>
+        <item name="startIconTint">@color/texto_3</item>
+        <item name="endIconTint">@color/texto_2</item>
+    </style>
+
+    <style name="Widget.RodaPartes.TextInput.Dropdown" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxCornerRadiusTopStart">@dimen/radio_campo</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/radio_campo</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/radio_campo</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/radio_campo</item>
+        <item name="boxStrokeColor">@color/sel_input_stroke</item>
+        <item name="boxBackgroundColor">@color/superficie</item>
+        <item name="hintTextColor">?attr/colorPrimary</item>
+    </style>
+
+    <!-- Buscador: campo con fondo blanco y esquinas de píldora -->
+    <style name="Widget.RodaPartes.TextInput.Search" parent="Widget.RodaPartes.TextInput">
+        <item name="boxCornerRadiusTopStart">24dp</item>
+        <item name="boxCornerRadiusTopEnd">24dp</item>
+        <item name="boxCornerRadiusBottomStart">24dp</item>
+        <item name="boxCornerRadiusBottomEnd">24dp</item>
+        <item name="hintEnabled">false</item>
+        <item name="startIconDrawable">@drawable/ic_search</item>
+    </style>
+
+    <!-- ================= Chips (filtros) ================= -->
+    <style name="Widget.RodaPartes.Chip" parent="Widget.Material3.Chip.Filter">
+        <item name="chipBackgroundColor">@color/sel_chip_bg</item>
+        <item name="android:textColor">@color/sel_chip_text</item>
+        <item name="chipStrokeColor">@color/sel_chip_stroke</item>
+        <item name="chipStrokeWidth">@dimen/borde_fino</item>
+        <item name="chipCornerRadius">@dimen/radio_chip</item>
+        <item name="checkedIconVisible">false</item>
+        <item name="chipMinHeight">36dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.RodaPartes.ChipText</item>
+    </style>
+    <style name="TextAppearance.RodaPartes.ChipText" parent="TextAppearance.Material3.LabelLarge">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <!-- ================= Tarjetas ================= -->
+    <style name="Widget.RodaPartes.Card" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardBackgroundColor">@color/superficie</item>
+        <item name="cardCornerRadius">@dimen/radio_tarjeta</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeColor">@color/borde</item>
+        <item name="strokeWidth">@dimen/borde_fino</item>
+    </style>
+
+    <!-- Tarjeta de estadística con borde superior de color del rol -->
+    <style name="Widget.RodaPartes.Card.Stat" parent="Widget.RodaPartes.Card">
+        <item name="cardCornerRadius">12dp</item>
+    </style>
+
+    <!-- ================= Navegación ================= -->
+    <style name="Widget.RodaPartes.BottomNav" parent="Widget.Material3.BottomNavigationView">
+        <item name="backgroundTint">@color/superficie</item>
+        <item name="itemIconTint">@color/sel_nav_item</item>
+        <item name="itemTextColor">@color/sel_nav_item</item>
+        <item name="itemActiveIndicatorStyle">@style/RodaPartes.NavIndicator</item>
+        <item name="itemTextAppearanceActive">@style/TextAppearance.RodaPartes.NavLabel</item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.RodaPartes.NavLabel</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="elevation">8dp</item>
+    </style>
+    <style name="RodaPartes.NavIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">?attr/colorPrimaryContainer</item>
+        <item name="android:width">56dp</item>
+        <item name="android:height">30dp</item>
+    </style>
+    <style name="TextAppearance.RodaPartes.NavLabel" parent="TextAppearance.Material3.LabelMedium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <style name="Widget.RodaPartes.Toolbar" parent="Widget.Material3.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="titleTextAppearance">@style/TextAppearance.RodaPartes.ToolbarTitle</item>
+        <item name="navigationIconTint">@color/blanco</item>
+        <item name="android:minHeight">?attr/actionBarSize</item>
+    </style>
+
+    <!-- ================= Controles ================= -->
+    <style name="Widget.RodaPartes.Switch" parent="Widget.Material3.CompoundButton.MaterialSwitch">
+        <item name="thumbTint">@color/sel_switch_thumb</item>
+        <item name="trackTint">@color/sel_switch_track</item>
+        <item name="trackDecorationTint">@android:color/transparent</item>
+    </style>
+    <style name="Widget.RodaPartes.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/sel_check</item>
+    </style>
+    <style name="Widget.RodaPartes.Radio" parent="Widget.Material3.CompoundButton.RadioButton">
+        <item name="buttonTint">@color/sel_check</item>
+    </style>
+
+    <!-- ================= Etiquetas de estado ================= -->
+    <style name="RodaPartes.Badge" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:paddingTop">3dp</item>
+        <item name="android:paddingBottom">3dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">@dimen/txt_mini</item>
+        <item name="android:background">@drawable/bg_badge</item>
+    </style>
+
+    <!-- Fila de opciones (perfil, ajustes) -->
+    <style name="RodaPartes.Row" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">60dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingStart">@dimen/esp_l</item>
+        <item name="android:paddingEnd">@dimen/esp_l</item>
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+    </style>
+    <style name="RodaPartes.Divider" parent="">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/borde</item>
+    </style>
+
+    <!-- Encabezado de sección dentro de una pantalla -->
+    <style name="RodaPartes.SectionTitle" parent="">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAppearance">@style/TextAppearance.RodaPartes.Subtitle</item>
+        <item name="android:layout_marginTop">@dimen/esp_xl</item>
+        <item name="android:layout_marginBottom">@dimen/esp_s</item>
+    </style>
+
+    <!-- Botón de un grupo de selección (rol, método de pago, tipo de producto) -->
+    <style name="Widget.RodaPartes.Button.Toggle" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minHeight">56dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="backgroundTint">@color/sel_toggle_bg</item>
+        <item name="android:textColor">@color/sel_toggle_text</item>
+        <item name="iconTint">@color/sel_toggle_text</item>
+        <item name="strokeColor">@color/sel_toggle_stroke</item>
+        <item name="strokeWidth">@dimen/borde_grueso</item>
+        <item name="cornerRadius">@dimen/radio_boton</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+    </style>
+</resources>

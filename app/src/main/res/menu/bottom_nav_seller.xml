@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Navegación inferior del Vendedor -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_panel"
+        android:icon="@drawable/ic_chart"
+        android:title="@string/nav_panel" />
+    <item
+        android:id="@+id/nav_products"
+        android:icon="@drawable/ic_box"
+        android:title="@string/nav_products" />
+    <item
+        android:id="@+id/nav_seller_orders"
+        android:icon="@drawable/ic_receipt"
+        android:title="@string/nav_seller_orders" />
+    <item
+        android:id="@+id/nav_store"
+        android:icon="@drawable/ic_store"
+        android:title="@string/nav_store" />
+</menu>

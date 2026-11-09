@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Categorías del catálogo maestro (RF-ADP-02) -->
+    <string-array name="categorias">
+        <item>Frenos</item>
+        <item>Aceites</item>
+        <item>Cascos</item>
+        <item>Eléctrico</item>
+        <item>Motor</item>
+        <item>Llantas</item>
+    </string-array>
+
+    <!-- Modelos de moto para la compatibilidad -->
+    <string-array name="modelos_moto">
+        <item>AKT NKD 125</item>
+        <item>Bajaj Pulsar 135</item>
+        <item>TVS Raider 125</item>
+        <item>Yamaha FZ 2.0</item>
+        <item>Honda CB 125F</item>
+        <item>Suzuki Gixxer 150</item>
+        <item>Todas las motos</item>
+    </string-array>
+
+    <string-array name="roles">
+        <item>Comprador</item>
+        <item>Vendedor</item>
+        <item>Administrador</item>
+    </string-array>
+
+    <string-array name="estados_usuario">
+        <item>Activo</item>
+        <item>Pendiente</item>
+        <item>Suspendido</item>
+    </string-array>
+
+    <!-- Bancos para PSE -->
+    <string-array name="bancos_pse">
+        <item>Bancolombia</item>
+        <item>Banco de Bogotá</item>
+        <item>Davivienda</item>
+        <item>BBVA Colombia</item>
+        <item>Banco de Occidente</item>
+        <item>Nequi</item>
+    </string-array>
+
+    <string-array name="motivos_rechazo">
+        <item>Fotos poco claras o de otro producto</item>
+        <item>Precio o información incompleta</item>
+        <item>Uso engañoso de una marca</item>
+        <item>Categoría incorrecta</item>
+    </string-array>
+
+    <string-array name="dias_semana">
+        <item>L</item>
+        <item>M</item>
+        <item>X</item>
+        <item>J</item>
+        <item>V</item>
+        <item>S</item>
+        <item>D</item>
+    </string-array>
+
+    <string-array name="meses_corto">
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Ago</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+    </string-array>
+
+    <!-- Bitácora de auditoría de ejemplo (RF-ADU-06) -->
+    <string-array name="bitacora_demo">
+        <item>09 nov · 8:41 · Ana Ruiz aprobó al vendedor MotoCentro 80</item>
+        <item>08 nov · 17:20 · Ana Ruiz suspendió a Carlos Méndez</item>
+        <item>08 nov · 11:05 · Ana Ruiz retiró «Casco réplica marca X»</item>
+        <item>07 nov · 15:47 · Ana Ruiz cambió el rol de Pedro López a Comprador</item>
+        <item>06 nov · 09:12 · Ana Ruiz creó la categoría Llantas</item>
+    </string-array>
+</resources>

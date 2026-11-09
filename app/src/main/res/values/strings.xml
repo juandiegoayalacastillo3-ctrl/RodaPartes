@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Textos de la app en español de Colombia (RNF-USA-04) -->
+<resources>
+    <!-- ===== Marca ===== -->
+    <string name="app_name">RodaPartes</string>
+    <string name="brand_part1">Roda</string>
+    <string name="brand_part2">Partes</string>
+    <string name="tagline">Repuestos y accesorios para tu moto</string>
+    <string name="version_label">Versión 1.0 · Interfaces</string>
+
+    <!-- ===== Acciones comunes ===== -->
+    <string name="action_accept">Aceptar</string>
+    <string name="action_add">Agregar</string>
+    <string name="action_approve">Aprobar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_close">Cerrar</string>
+    <string name="action_confirm">Confirmar</string>
+    <string name="action_continue">Continuar</string>
+    <string name="action_delete">Eliminar</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_logout">Cerrar sesión</string>
+    <string name="action_not_now">Ahora no</string>
+    <string name="action_reactivate">Reactivar</string>
+    <string name="action_reject">Rechazar</string>
+    <string name="action_save_changes">Guardar cambios</string>
+    <string name="action_see_all">Ver todo</string>
+    <string name="action_send">Enviar</string>
+    <string name="action_suspend">Suspender</string>
+    <string name="action_understood">Entendido</string>
+    <string name="action_view">Ver</string>
+    <string name="saved_ok">Cambios guardados</string>
+    <string name="deleted_ok">Se eliminó «%1$s»</string>
+    <string name="today">Hoy</string>
+    <string name="free">Gratis</string>
+    <string name="percent">%1$d %%</string>
+    <string name="state_active">activa</string>
+    <string name="state_inactive">inactiva</string>
+
+    <!-- ===== Accesibilidad (contentDescription) ===== -->
+    <string name="cd_logo">Logo de RodaPartes</string>
+    <string name="cd_avatar">Foto de perfil</string>
+    <string name="cd_delete">Quitar del carrito</string>
+    <string name="cd_flash">Linterna</string>
+    <string name="cd_less">Restar uno</string>
+    <string name="cd_more">Sumar uno</string>
+    <string name="cd_map">Mapa de la zona</string>
+    <string name="cd_notifications">Notificaciones</string>
+    <string name="cd_open_menu">Abrir menú</string>
+    <string name="cd_scan">Escanear código con la cámara</string>
+    <string name="cd_shutter">Capturar</string>
+
+    <!-- ===== Navegación ===== -->
+    <string name="nav_home">Inicio</string>
+    <string name="nav_search">Buscar</string>
+    <string name="nav_cart">Carrito</string>
+    <string name="nav_orders">Mis compras</string>
+    <string name="nav_profile">Perfil</string>
+    <string name="nav_panel">Panel</string>
+    <string name="nav_products">Productos</string>
+    <string name="nav_seller_orders">Pedidos</string>
+    <string name="nav_store">Mi tienda</string>
+    <string name="nav_users">Usuarios</string>
+    <string name="nav_sales">Ventas</string>
+    <string name="drawer_audit">Bitácora de auditoría</string>
+    <string name="drawer_policies">Políticas y términos</string>
+
+    <!-- ===== Campos de formulario ===== -->
+    <string name="field_email">Correo electrónico</string>
+    <string name="field_password">Contraseña</string>
+    <string name="field_full_name">Nombre completo</string>
+    <string name="field_phone">Celular</string>
+    <string name="phone_prefix">+57 </string>
+    <string name="currency_prefix">$ </string>
+    <string name="field_store_name">Nombre comercial</string>
+    <string name="field_store_address">Dirección del local</string>
+    <string name="field_nit">NIT del establecimiento</string>
+    <string name="field_schedule">Horario de atención</string>
+    <string name="field_address">Dirección de entrega</string>
+    <string name="field_address_detail">Detalle (apto, torre, referencia)</string>
+    <string name="field_card_number">Número de la tarjeta</string>
+    <string name="field_card_name">Nombre como aparece en la tarjeta</string>
+    <string name="field_card_exp">Vence (MM/AA)</string>
+    <string name="field_card_cvv">CVV</string>
+    <string name="field_bank">Banco</string>
+    <string name="field_document">Número de documento</string>
+    <string name="field_document_nit">Documento o NIT</string>
+    <string name="field_nequi_phone">Celular registrado en Nequi</string>
+    <string name="field_product_name">Nombre del producto</string>
+    <string name="field_description">Descripción</string>
+    <string name="field_price">Precio con IVA</string>
+    <string name="field_stock">Stock</string>
+    <string name="field_min_stock">Mínimo</string>
+    <string name="field_category">Categoría</string>
+    <string name="field_ref">Referencia o código de barras</string>
+    <string name="field_role">Rol</string>
+    <string name="field_status">Estado</string>
+    <string name="password_rule">Mínimo 8 caracteres, con letras y números</string>
+
+    <!-- ===== Errores ===== -->
+    <string name="error_required">Completa este campo</string>
+    <string name="error_email">Escribe un correo válido, por ejemplo nombre@correo.com</string>
+    <string name="error_phone">El celular debe tener 10 dígitos</string>
+    <string name="error_login_generic">Correo o contraseña incorrectos</string>
+    <string name="error_terms">Para crear la cuenta debes aceptar la política de tratamiento de datos</string>
+    <string name="error_card">Revisa el número de la tarjeta</string>
+    <string name="error_exp">Usa el formato MM/AA</string>
+    <string name="error_price">El precio debe ser mayor que cero</string>
+
+    <!-- ===== Login ===== -->
+    <string name="login_title">Ingresa a tu cuenta</string>
+    <string name="login_subtitle">Compra repuestos o administra tu tienda</string>
+    <string name="login_forgot">¿Olvidaste tu contraseña?</string>
+    <string name="login_button">Ingresar</string>
+    <string name="login_locked">Demasiados intentos. Espera %1$d s</string>
+    <string name="login_or">o continúa con</string>
+    <string name="login_google">Google</string>
+    <string name="login_google_demo">Ingreso con Google (demostración)</string>
+    <string name="login_fingerprint">Huella</string>
+    <string name="login_no_account">¿No tienes cuenta?</string>
+    <string name="login_register">Crear cuenta</string>
+    <string name="login_guest">Ver el catálogo sin cuenta</string>
+    <string name="login_demo_hint">Cuentas de prueba (cualquier contraseña de 8+ caracteres con letras y números):\n• comprador@rodapartes.co\n• vendedor@rodapartes.co\n• admin@rodapartes.co</string>
+    <string name="guest_title">Inicia sesión para continuar</string>
+    <string name="guest_message">Para usar el carrito, ver tus compras y tu perfil necesitas una cuenta.</string>
+
+    <!-- ===== Huella ===== -->
+    <string name="bio_title">Verifica tu identidad</string>
+    <string name="bio_subtitle">Usa tu huella para entrar a RodaPartes</string>
+    <string name="bio_use_password">Usar contraseña</string>
+    <string name="bio_not_enabled">Activa el ingreso con huella desde tu perfil después de iniciar sesión</string>
+    <string name="bio_not_available">Este dispositivo no tiene una huella registrada</string>
+    <string name="bio_confirm_title">Confirma tu contraseña</string>
+    <string name="bio_confirm_msg">Para activar el ingreso con huella primero confirma que eres tú.</string>
+    <string name="bio_enabled">Ingreso con huella activado</string>
+
+    <!-- ===== Registro ===== -->
+    <string name="register_title">Crear cuenta</string>
+    <string name="register_as">Quiero registrarme como</string>
+    <string name="role_buyer">Comprador</string>
+    <string name="role_seller">Vendedor</string>
+    <string name="register_seller_review">El administrador revisa el RUT/NIT antes de que puedas publicar</string>
+    <string name="register_terms">Acepto los términos y la política de tratamiento de datos (Ley 1581 de 2012)</string>
+    <string name="register_promos">Quiero recibir promociones (opcional)</string>
+    <string name="register_button">Registrarme</string>
+    <string name="register_have_account">Ya tengo cuenta</string>
+    <string name="register_seller_dialog_title">Tu tienda quedó registrada</string>
+    <string name="register_seller_dialog_msg">Mientras el administrador revisa tus documentos puedes ir cargando tus productos como borrador.</string>
+
+    <!-- ===== Recuperar contraseña ===== -->
+    <string name="recover_toolbar">Recuperar contraseña</string>
+    <string name="recover_title">¿Olvidaste tu contraseña?</string>
+    <string name="recover_body">Escribe el correo con el que te registraste y te enviaremos un enlace para crear una nueva.</string>
+    <string name="recover_send">Enviar enlace</string>
+    <string name="recover_sent_title">Revisa tu correo</string>
+    <string name="recover_sent_body">Si %1$s tiene una cuenta, te llegará un enlace de un solo uso. Vence en 30 minutos.</string>
+    <string name="recover_back">Volver a iniciar sesión</string>
+    <string name="recover_resend">Reenviar enlace</string>
+    <string name="recover_resend_in">Reenviar en %1$d s</string>
+
+    <!-- ===== Inicio (comprador) ===== -->
+    <string name="home_deliver_to">Entregar en: Calle 80 # 69-22</string>
+    <string name="home_greeting">Hola, %1$s</string>
+    <string name="home_greeting_guest">Repuestos para tu moto</string>
+    <string name="search_hint">Buscar repuesto, marca o referencia</string>
+    <string name="home_my_moto">Mi moto</string>
+    <string name="moto_default">AKT NKD 125</string>
+    <string name="home_see_compatible">Ver compatibles</string>
+    <string name="home_categories">Categorías</string>
+    <string name="home_featured">Destacados</string>
+    <string name="home_nearby">Tiendas cerca de ti</string>
+    <string name="home_nearby_count">4 tiendas a menos de 6 km</string>
+    <string name="home_nearby_detail">La más cercana: MotoCentro 80, a 2,1 km</string>
+    <string name="home_see_map">Ver mapa</string>
+    <string name="home_no_notifications">No tienes notificaciones nuevas</string>
+    <string name="home_map_soon">El mapa interactivo se conecta con Google Maps en la siguiente fase</string>
+
+    <!-- ===== Catálogo ===== -->
+    <string name="catalog_title">Buscar repuestos</string>
+    <string name="catalog_only_compatible">Solo compatibles</string>
+    <string name="catalog_only_compatible_moto">Solo para mi %1$s</string>
+    <string name="catalog_empty_title">No encontramos ese repuesto</string>
+    <string name="catalog_empty_body">Prueba con otra referencia, quita el filtro de compatibilidad o elige otra categoría.</string>
+    <string name="filter_all">Todo</string>
+    <string name="type_original">Original</string>
+    <string name="type_generic">Genérico (compatible)</string>
+    <string name="type_generic_short">Genérico</string>
+    <string name="seller_distance">%1$s · %2$s</string>
+    <string name="product_fits_short">Le sirve a tu moto</string>
+    <string name="cat_frenos">Frenos</string>
+    <string name="cat_aceites">Aceites</string>
+    <string name="cat_cascos">Cascos</string>
+    <string name="cat_electrico">Eléctrico</string>
+    <string name="cat_llantas">Llantas</string>
+
+    <!-- ===== Detalle de producto ===== -->
+    <string name="detail_title">Detalle</string>
+    <string name="detail_photos">%1$d fotos</string>
+    <string name="ref_label">REF %1$s</string>
+    <string name="price_with_tax">IVA incluido</string>
+    <string name="detail_fits">Compatible con tu %1$s</string>
+    <string name="detail_not_fits">El vendedor no confirma que sirva para tu %1$s</string>
+    <string name="detail_stock">Stock</string>
+    <string name="detail_units">%1$d und</string>
+    <string name="detail_out">Agotado</string>
+    <string name="detail_warranty">Garantía</string>
+    <string name="detail_no_warranty">Sin garantía</string>
+    <string name="detail_category">Categoría</string>
+    <string name="detail_description">Descripción</string>
+    <string name="detail_fits_list">Sirve para: %1$s</string>
+    <string name="detail_seller">Vendedor</string>
+    <string name="detail_seller_info">%1$s · a %2$s</string>
+    <string name="detail_report">Reportar publicación</string>
+    <string name="detail_report_sent">Gracias. El administrador revisará la publicación.</string>
+    <string name="detail_add">Agregar al carrito</string>
+    <string name="detail_added">Agregaste %1$d al carrito</string>
+    <string name="detail_go_cart">Ver carrito</string>
+
+    <!-- ===== Carrito ===== -->
+    <string name="cart_title">Mi carrito</string>
+    <string name="cart_sold_by">Vendido por: %1$s</string>
+    <string name="cart_clear">Vaciar carrito</string>
+    <string name="cart_clear_title">¿Vaciar el carrito?</string>
+    <string name="cart_clear_msg">Se quitarán todos los productos. Esta acción no se puede deshacer.</string>
+    <string name="cart_subtotal">Subtotal</string>
+    <string name="cart_shipping">Envío</string>
+    <string name="cart_total">Total</string>
+    <string name="cart_tax_note">Precios con IVA incluido. El total final lo confirma el servidor.</string>
+    <string name="cart_checkout">Continuar al pago</string>
+    <string name="cart_unit_price">%1$s c/u</string>
+    <string name="cart_max_stock">Solo hay %1$d unidades disponibles</string>
+    <string name="cart_removed">Quitaste %1$s del carrito</string>
+    <string name="cart_empty_title">Tu carrito está vacío</string>
+    <string name="cart_empty_body">Busca por referencia o por tu moto y agrega lo que necesites.</string>
+    <string name="cart_empty_action">Buscar repuestos</string>
+
+    <!-- ===== Checkout ===== -->
+    <string name="checkout_title">Entrega</string>
+    <string name="checkout_address">Dirección de entrega</string>
+    <string name="checkout_use_location">Usar mi ubicación actual</string>
+    <string name="checkout_locating">Buscando tu ubicación…</string>
+    <string name="address_default">Calle 80 # 69-22, Bogotá</string>
+    <string name="address_detail_default">Apto 502, torre 2</string>
+    <string name="address_current">Cra 69 # 80-15, Bogotá (ubicación actual)</string>
+    <string name="address_distance">%1$s · %2$s</string>
+    <string name="checkout_shipping_method">Método de envío</string>
+    <string name="checkout_delivery">Domicilio en 24 h · $ 9.000</string>
+    <string name="checkout_pickup">Recoger en la tienda · Gratis</string>
+    <string name="checkout_summary">Resumen de la compra</string>
+    <string name="checkout_seller_legal">Vende: %1$s · %2$s</string>
+    <string name="checkout_eta_delivery">Llega mañana antes de las 6:00 p. m.</string>
+    <string name="checkout_eta_pickup">Lista para recoger hoy desde las 2:00 p. m.</string>
+    <string name="checkout_retract_note">Tienes 5 días hábiles para retractarte de la compra (Ley 1480 de 2011, art. 47).</string>
+    <string name="checkout_go_pay">Ir a pagar</string>
+
+    <!-- ===== Pago ===== -->
+    <string name="payment_title">Pago</string>
+    <string name="payment_secure">Pago seguro con Wompi</string>
+    <string name="payment_method">Método de pago</string>
+    <string name="payment_card">Tarjeta</string>
+    <string name="payment_pse">PSE</string>
+    <string name="payment_nequi">Nequi</string>
+    <string name="card_number_placeholder">•••• •••• •••• ••••</string>
+    <string name="card_name_placeholder">NOMBRE DEL TITULAR</string>
+    <string name="card_exp_placeholder">MM/AA</string>
+    <string name="payment_token_note">Los datos de la tarjeta los procesa la pasarela; la app solo guarda el token.</string>
+    <string name="payment_pse_note">Te llevaremos a la página de tu banco para autorizar el pago.</string>
+    <string name="payment_nequi_note">Recibirás una notificación en tu app Nequi para aceptar el pago.</string>
+    <string name="payment_total">Total a pagar</string>
+    <string name="payment_pay">Pagar %1$s</string>
+    <string name="payment_processing">Procesando el pago…</string>
+    <string name="payment_ok_title">¡Pago aprobado!</string>
+    <string name="payment_ok_body">Te avisaremos cada vez que el vendedor actualice el estado del pedido. La factura electrónica queda en Mis compras.</string>
+    <string name="payment_see_orders">Ver mis compras</string>
+
+    <!-- ===== Órdenes ===== -->
+    <string name="order_code">#%1$s</string>
+    <string name="order_parties">%1$s → %2$s</string>
+    <string name="order_detail_msg">Vendedor: %1$s\nProductos: %2$s\nTotal: %3$s\nEstado: %4$s\nEntrega: %5$s</string>
+    <string name="order_retract">Solicitar retracto</string>
+    <string name="order_retract_sent">Solicitud enviada. El reembolso se hace en máximo 15 días calendario.</string>
+    <string name="orders_empty_title">Aún no tienes compras</string>
+    <string name="orders_empty_body">Cuando compres algo lo verás aquí con su estado.</string>
+    <string name="filter_in_progress">En curso</string>
+    <string name="filter_delivered">Entregadas</string>
+    <string name="order_mark_as">Marcar como %1$s</string>
+    <string name="order_status_changed">#%1$s ahora está: %2$s. Le avisamos al comprador.</string>
+    <string name="order_reject_title">¿Rechazar el pedido?</string>
+    <string name="order_reject_msg">El pedido #%1$s se cancelará y el pago se devolverá al comprador.</string>
+    <string name="order_admin_msg">Comprador: %1$s\nVendedor: %2$s\nProductos: %3$s\nTotal: %4$s\nEstado: %5$s</string>
+    <string name="order_admin_legal_msg">Comprador: %1$s\nProductos: %2$s\nValor: %3$s\n\n%4$s</string>
+    <string name="legal_retract">Retracto (Ley 1480, art. 47): el dinero debe devolverse en máximo 15 días calendario por el medio que eligió el comprador (Ley 2439 de 2024).</string>
+    <string name="legal_reversal">Reversión del pago (Ley 1480, art. 51 y Decreto 587 de 2016): se coordina con el emisor y la pasarela usando el ID de la transacción.</string>
+    <string name="order_refund">Aprobar devolución</string>
+    <string name="order_refunded">Devolución aprobada para #%1$s</string>
+
+    <!-- ===== Perfil (comprador) ===== -->
+    <string name="profile_my_data">Mis datos</string>
+    <string name="profile_my_data_sub">Nombre, celular, foto y moto</string>
+    <string name="profile_addresses">Mis direcciones</string>
+    <string name="profile_addresses_sub">2 guardadas</string>
+    <string name="profile_addresses_msg">Tus direcciones se eligen y editan en el paso de Entrega</string>
+    <string name="profile_orders_sub">%1$d pedidos · %2$d en camino</string>
+    <string name="profile_fingerprint">Ingreso con huella</string>
+    <string name="profile_fingerprint_sub">Entra sin escribir la contraseña</string>
+    <string name="profile_promos">Promociones</string>
+    <string name="profile_promos_sub">Notificaciones y correos de ofertas</string>
+    <string name="profile_privacy">Privacidad y datos</string>
+    <string name="profile_privacy_sub">Autorizaciones Ley 1581</string>
+    <string name="profile_delete_account">Eliminar mi cuenta</string>
+    <string name="profile_change_photo">Cambiar foto</string>
+    <string name="profile_email_helper">Para cambiar el correo debes verificarlo primero</string>
+    <string name="privacy_detail">Autorizaste el tratamiento de tus datos (política v1.2).\n\nPromociones: %1$s.\n\nPuedes pedir la actualización o supresión de tus datos en cualquier momento.</string>
+    <string name="delete_account_title">¿Eliminar tu cuenta?</string>
+    <string name="delete_account_msg">Se cerrarán tus sesiones y se borrarán tus datos personales. Solo guardamos lo que exige la ley para la facturación.</string>
+    <string name="delete_account_title2">Confirma una vez más</string>
+    <string name="delete_account_msg2">Esta acción no se puede deshacer.</string>
+
+    <!-- ===== Vendedor ===== -->
+    <string name="seller_panel_title">Panel de ventas</string>
+    <string name="stat_sales_month">Ventas del mes</string>
+    <string name="stat_orders_month">Pedidos del mes</string>
+    <string name="stat_to_dispatch">Por despachar</string>
+    <string name="stat_low_stock">Con stock bajo</string>
+    <string name="seller_chart_title">Ventas de los últimos 7 días</string>
+    <string name="seller_chart_total">%1$s en la semana</string>
+    <string name="seller_low_stock_alert">Se están acabando: %1$s</string>
+    <string name="seller_low_stock_badge">Stock bajo</string>
+    <string name="seller_recent_orders">Pedidos recientes</string>
+    <string name="seller_products_title">Mis productos</string>
+    <string name="seller_search_hint">Buscar en mi inventario</string>
+    <string name="seller_product_info">%1$s · Stock %2$d</string>
+    <string name="seller_products_empty">No hay productos aquí</string>
+    <string name="seller_products_empty_body">Toca el botón + para publicar tu primer repuesto.</string>
+    <string name="seller_orders_title">Pedidos recibidos</string>
+    <string name="seller_orders_empty">Sin pedidos en este estado</string>
+    <string name="seller_orders_empty_body">Cuando un comprador pague, el pedido aparecerá como nuevo.</string>
+    <string name="filter_published">Publicados</string>
+    <string name="filter_review">En revisión</string>
+    <string name="filter_no_stock">Sin stock</string>
+    <string name="delete_product_title">¿Eliminar el producto?</string>
+    <string name="delete_product_msg">«%1$s» dejará de verse en el catálogo. Si tiene compras, se conserva en el historial.</string>
+
+    <!-- Formulario de producto -->
+    <string name="form_new_title">Nuevo producto</string>
+    <string name="form_edit_title">Editar producto</string>
+    <string name="form_photos_count">Fotos (%1$d de %2$d)</string>
+    <string name="form_take_photo">Tomar foto</string>
+    <string name="form_remove_photo">Quitar foto</string>
+    <string name="form_max_photos">Puedes subir máximo 6 fotos</string>
+    <string name="form_ref_helper">Toca el ícono para escanearla con la cámara</string>
+    <string name="form_code_read">Código leído: %1$s</string>
+    <string name="form_type">Tipo de repuesto</string>
+    <string name="form_compatibility">Compatibilidad</string>
+    <string name="form_compatibility_help">Marca las motos a las que les sirve</string>
+    <string name="form_new_note">Las publicaciones nuevas pasan por revisión del administrador antes de verse en el catálogo.</string>
+    <string name="form_review_note">Si cambias el nombre o las fotos, la publicación vuelve a revisión. El precio y el stock se actualizan de una vez.</string>
+    <string name="form_save_draft">Guardar borrador</string>
+    <string name="form_publish">Guardar y publicar</string>
+    <string name="form_save_changes">Guardar cambios</string>
+    <string name="form_need_photo">Agrega al menos una foto para publicar</string>
+    <string name="form_need_model">Marca al menos una moto compatible</string>
+    <string name="form_sent_title">Enviado a revisión</string>
+    <string name="form_sent_msg">Te avisaremos cuando el administrador lo apruebe.</string>
+    <string name="form_draft_title">Borrador guardado</string>
+    <string name="form_draft_msg">Solo tú puedes verlo hasta que lo publiques.</string>
+
+    <!-- Cámara -->
+    <string name="camera_photo">Foto</string>
+    <string name="camera_scan">Escanear</string>
+    <string name="camera_gallery">Galería</string>
+    <string name="camera_hint_scan">Apunta al código de barras o a la referencia</string>
+    <string name="camera_hint_photo">Centra el repuesto sobre un fondo claro</string>
+
+    <!-- Mi tienda -->
+    <string name="store_title">Mi tienda</string>
+    <string name="store_verified">Verificado</string>
+    <string name="store_location">Ubicación del local</string>
+    <string name="store_address_default">Av. Calle 80 # 70-15, Bogotá</string>
+    <string name="store_schedule_default">Lunes a sábado, 8:00 a. m. a 6:00 p. m.</string>
+    <string name="store_phone_default">601 744 1200</string>
+    <string name="store_payout">Cuenta para recibir pagos</string>
+    <string name="store_payout_ok">Registrada en la pasarela</string>
+    <string name="store_payout_msg">Por seguridad, cambiar la cuenta bancaria o el NIT pasa a revisión del administrador antes de aplicarse.</string>
+
+    <!-- ===== Administrador ===== -->
+    <string name="admin_title">Administración</string>
+    <string name="admin_dashboard_sub">Esto es lo que pasa hoy en la plataforma</string>
+    <string name="admin_pending">Pendientes</string>
+    <string name="admin_chart_title">Ventas de los últimos 6 meses</string>
+    <string name="admin_moderation_title">Moderación de productos</string>
+    <string name="stat_users">Usuarios</string>
+    <string name="stat_sellers">Vendedores</string>
+    <string name="stat_products">Productos</string>
+    <string name="pending_sellers">Vendedores por aprobar</string>
+    <string name="pending_sellers_sub">Revisar RUT y NIT</string>
+    <string name="pending_products">Productos por moderar</string>
+    <string name="pending_products_sub">Nuevos, editados y reportados</string>
+    <string name="pending_reversals">Solicitudes de reversión</string>
+    <string name="pending_reversals_sub">Ley 1480, art. 51</string>
+    <string name="pending_retracts">Retractos abiertos</string>
+    <string name="pending_retracts_sub">Reembolso en máximo 15 días</string>
+    <string name="policies_msg">Términos y condiciones y política de tratamiento de datos, versión vigente 1.2 (6 de octubre de 2026).\n\nCada usuario acepta la versión vigente al registrarse y queda guardada la fecha y la versión.</string>
+
+    <!-- Usuarios -->
+    <string name="users_search_hint">Nombre, correo o documento</string>
+    <string name="users_empty">No hay usuarios con ese filtro</string>
+    <string name="users_empty_body">Revisa lo que escribiste o cambia el rol.</string>
+    <string name="user_line">%1$s · %2$s</string>
+    <string name="user_new_title">Nuevo usuario</string>
+    <string name="user_edit_title">Editar usuario</string>
+    <string name="user_create">Crear usuario</string>
+    <string name="user_created">Usuario creado</string>
+    <string name="user_rut_file">RUT_%1$s.pdf</string>
+    <string name="user_rut_open">Abriendo el documento en el visor seguro…</string>
+    <string name="user_audit_note">Cada cambio de rol o estado queda en la bitácora de auditoría.</string>
+    <string name="user_approved">Usuario aprobado</string>
+    <string name="user_suspended">Usuario suspendido y sesiones cerradas</string>
+    <string name="user_suspend_title">¿Suspender este usuario?</string>
+    <string name="user_suspend_msg">Se cerrarán sus sesiones activas y no podrá ingresar hasta que lo reactives.</string>
+    <string name="user_delete">Eliminar usuario (borrado lógico)</string>
+    <string name="user_delete_title">¿Eliminar el usuario?</string>
+    <string name="user_delete_msg">Se anonimizarán los datos de %1$s. Se conservan solo los registros de compras exigidos por la ley.</string>
+    <string name="reauth_title">Confirma tu identidad</string>
+    <string name="reauth_msg">Crear o asignar un administrador exige volver a escribir tu contraseña.</string>
+
+    <!-- Moderación -->
+    <string name="filter_to_review">Por revisar</string>
+    <string name="filter_reported">Reportados</string>
+    <string name="filter_rejected">Rechazados</string>
+    <string name="moderation_info">%1$s · %2$s · %3$s · %4$s</string>
+    <string name="moderation_keep">Mantener</string>
+    <string name="moderation_remove">Retirar</string>
+    <string name="moderation_reject_title">Motivo del rechazo</string>
+    <string name="moderation_remove_title">Motivo del retiro</string>
+    <string name="moderation_approved">«%1$s» quedó publicado</string>
+    <string name="moderation_rejected">Rechazado: %1$s. Le avisamos al vendedor.</string>
+    <string name="moderation_empty">Todo al día</string>
+    <string name="moderation_empty_body">No hay publicaciones en esta lista.</string>
+
+    <!-- Reporte de ventas -->
+    <string name="sales_title">Reporte de ventas</string>
+    <string name="period_week">Semana</string>
+    <string name="period_month">Mes</string>
+    <string name="period_semester">6 meses</string>
+    <string name="stat_sales_total">Ventas totales</string>
+    <string name="stat_orders">Órdenes</string>
+    <string name="stat_ticket">Ticket promedio</string>
+    <string name="stat_commission">Comisión (8 %)</string>
+    <string name="chart_week">Ventas por día (millones)</string>
+    <string name="chart_month">Ventas por semana (millones)</string>
+    <string name="chart_semester">Ventas por mes (millones)</string>
+    <string name="sales_by_category">Participación por categoría</string>
+    <string name="sales_orders">Compras, retractos y reversiones</string>
+    <string name="sales_export">Exportar reporte</string>
+    <string name="sales_exported">Reporte exportado (se genera en el servidor en la siguiente fase)</string>
+
+    <!-- ===== Plurales ===== -->
+    <plurals name="products_count">
+        <item quantity="one">%1$d producto</item>
+        <item quantity="other">%1$d productos</item>
+    </plurals>
+    <plurals name="order_date_items">
+        <item quantity="one">%1$s · %2$d ítem</item>
+        <item quantity="other">%1$s · %2$d ítems</item>
+    </plurals>
+    <plurals name="months">
+        <item quantity="one">%1$d mes</item>
+        <item quantity="other">%1$d meses</item>
+    </plurals>
+    <plurals name="reports">
+        <item quantity="one">%1$d reporte · posible imitación</item>
+        <item quantity="other">%1$d reportes · posible imitación</item>
+    </plurals>
+    <plurals name="seller_order_line">
+        <item quantity="one">%1$s · %2$d ítem · %3$s</item>
+        <item quantity="other">%1$s · %2$d ítems · %3$s</item>
+    </plurals>
+</resources>

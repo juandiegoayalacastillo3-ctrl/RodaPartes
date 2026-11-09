@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 12+ muestra su propia splash del sistema: se le pone el color y el ícono de la marca
+     para que empate con SplashActivity y no aparezca el ícono blanco por defecto. -->
+<resources>
+    <style name="Theme.RodaPartes.Splash">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="android:statusBarColor">@color/asfalto</item>
+        <item name="android:navigationBarColor">@color/asfalto</item>
+        <item name="android:windowLightNavigationBar">false</item>
+        <item name="android:windowSplashScreenBackground">@color/asfalto</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_logo_mark</item>
+    </style>
+</resources>

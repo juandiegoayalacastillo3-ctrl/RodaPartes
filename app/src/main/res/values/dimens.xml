@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Espaciado (múltiplos de 4dp) -->
+    <dimen name="esp_xs">4dp</dimen>
+    <dimen name="esp_s">8dp</dimen>
+    <dimen name="esp_m">12dp</dimen>
+    <dimen name="esp_l">16dp</dimen>
+    <dimen name="esp_xl">24dp</dimen>
+    <dimen name="esp_xxl">32dp</dimen>
+
+    <!-- Radios: tarjetas más redondas que campos, botones intermedios -->
+    <dimen name="radio_campo">10dp</dimen>
+    <dimen name="radio_boton">12dp</dimen>
+    <dimen name="radio_tarjeta">16dp</dimen>
+    <dimen name="radio_chip">20dp</dimen>
+
+    <!-- Tamaños -->
+    <dimen name="alto_boton">52dp</dimen>
+    <dimen name="area_tactil">48dp</dimen>   <!-- RNF-USA-03 -->
+    <dimen name="icono">24dp</dimen>
+    <dimen name="icono_s">18dp</dimen>
+    <dimen name="avatar">88dp</dimen>
+    <dimen name="miniatura">56dp</dimen>
+    <dimen name="alto_tile">120dp</dimen>
+    <dimen name="alto_mapa">170dp</dimen>
+    <dimen name="borde_grueso">2dp</dimen>
+    <dimen name="borde_fino">1dp</dimen>
+
+    <!-- Texto -->
+    <dimen name="txt_display">30sp</dimen>
+    <dimen name="txt_titulo">22sp</dimen>
+    <dimen name="txt_subtitulo">17sp</dimen>
+    <dimen name="txt_cuerpo">15sp</dimen>
+    <dimen name="txt_pequeno">13sp</dimen>
+    <dimen name="txt_mini">11sp</dimen>
+    <dimen name="txt_precio">24sp</dimen>
+    <dimen name="txt_cifra">26sp</dimen>
+</resources>

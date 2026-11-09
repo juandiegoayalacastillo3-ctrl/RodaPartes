@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Tema base + un tema por rol. Cada rol solo cambia la familia de color primario,
+    así los mismos layouts (tarjetas, botones, chips, navegación) toman el color del
+    rol automáticamente usando ?attr/colorPrimary.
+-->
+<resources>
+
+    <style name="Theme.RodaPartes" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Color (por defecto: comprador / marca) -->
+        <item name="colorPrimary">@color/naranja</item>
+        <item name="colorOnPrimary">@color/blanco</item>
+        <item name="colorPrimaryContainer">@color/naranja_claro</item>
+        <item name="colorOnPrimaryContainer">@color/naranja_oscuro</item>
+        <item name="colorPrimaryDark">@color/naranja_oscuro</item>
+        <item name="colorSecondary">@color/asfalto</item>
+        <item name="colorOnSecondary">@color/blanco</item>
+        <item name="colorSecondaryContainer">@color/naranja_claro</item>
+        <item name="colorSurface">@color/superficie</item>
+        <item name="colorOnSurface">@color/texto</item>
+        <item name="colorOnSurfaceVariant">@color/texto_2</item>
+        <item name="colorOutline">@color/borde</item>
+        <item name="colorError">@color/peligro</item>
+        <item name="android:colorBackground">@color/fondo</item>
+        <item name="android:windowBackground">@color/fondo</item>
+        <item name="android:textColorPrimary">@color/texto</item>
+        <item name="android:textColorSecondary">@color/texto_2</item>
+
+        <!-- Barras del sistema -->
+        <item name="android:statusBarColor">@color/asfalto</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:navigationBarColor">@color/superficie</item>
+        <item name="android:windowLightNavigationBar">true</item>
+
+        <!-- Estilos por defecto de componentes -->
+        <item name="materialButtonStyle">@style/Widget.RodaPartes.Button</item>
+        <item name="materialButtonOutlinedStyle">@style/Widget.RodaPartes.Button.Outlined</item>
+        <item name="borderlessButtonStyle">@style/Widget.RodaPartes.Button.Text</item>
+        <item name="textInputStyle">@style/Widget.RodaPartes.TextInput</item>
+        <item name="chipStyle">@style/Widget.RodaPartes.Chip</item>
+        <item name="materialCardViewStyle">@style/Widget.RodaPartes.Card</item>
+        <item name="bottomNavigationStyle">@style/Widget.RodaPartes.BottomNav</item>
+        <item name="toolbarStyle">@style/Widget.RodaPartes.Toolbar</item>
+        <item name="materialSwitchStyle">@style/Widget.RodaPartes.Switch</item>
+        <item name="materialAlertDialogTheme">@style/ThemeOverlay.RodaPartes.Dialog</item>
+        <item name="checkboxStyle">@style/Widget.RodaPartes.CheckBox</item>
+        <item name="radioButtonStyle">@style/Widget.RodaPartes.Radio</item>
+        <item name="floatingActionButtonStyle">@style/Widget.RodaPartes.Fab</item>
+
+        <!-- Forma general -->
+        <item name="shapeAppearanceSmallComponent">@style/Shape.RodaPartes.Campo</item>
+        <item name="shapeAppearanceMediumComponent">@style/Shape.RodaPartes.Tarjeta</item>
+    </style>
+
+    <!-- Rol Comprador: naranja -->
+    <style name="Theme.RodaPartes.Buyer">
+        <item name="colorPrimary">@color/naranja</item>
+        <item name="colorPrimaryContainer">@color/naranja_claro</item>
+        <item name="colorOnPrimaryContainer">@color/naranja_oscuro</item>
+        <item name="colorPrimaryDark">@color/naranja_oscuro</item>
+        <item name="android:statusBarColor">@color/naranja_oscuro</item>
+    </style>
+
+    <!-- Rol Vendedor: verde azulado -->
+    <style name="Theme.RodaPartes.Seller">
+        <item name="colorPrimary">@color/teal</item>
+        <item name="colorPrimaryContainer">@color/teal_claro</item>
+        <item name="colorOnPrimaryContainer">@color/teal_oscuro</item>
+        <item name="colorPrimaryDark">@color/teal_oscuro</item>
+        <item name="colorSecondaryContainer">@color/teal_claro</item>
+        <item name="android:statusBarColor">@color/teal_oscuro</item>
+    </style>
+
+    <!-- Rol Administrador: azul pizarra -->
+    <style name="Theme.RodaPartes.Admin">
+        <item name="colorPrimary">@color/pizarra</item>
+        <item name="colorPrimaryContainer">@color/pizarra_claro</item>
+        <item name="colorOnPrimaryContainer">@color/pizarra_oscuro</item>
+        <item name="colorPrimaryDark">@color/pizarra_oscuro</item>
+        <item name="colorSecondaryContainer">@color/pizarra_claro</item>
+        <item name="android:statusBarColor">@color/pizarra_oscuro</item>
+    </style>
+
+    <!-- Splash: fondo asfalto con el anillo de la marca -->
+    <style name="Theme.RodaPartes.Splash">
+        <item name="android:windowBackground">@drawable/bg_splash</item>
+        <item name="android:statusBarColor">@color/asfalto</item>
+        <item name="android:navigationBarColor">@color/asfalto</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <!-- Cámara: todo oscuro -->
+    <style name="Theme.RodaPartes.Camera" parent="Theme.RodaPartes.Seller">
+        <item name="android:windowBackground">@color/camara_fondo</item>
+        <item name="android:statusBarColor">@color/camara_fondo</item>
+        <item name="android:navigationBarColor">@color/camara_fondo</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
+    <!-- Diálogos con esquinas más redondas -->
+    <style name="ThemeOverlay.RodaPartes.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="shapeAppearanceOverlay">@style/Shape.RodaPartes.Dialogo</item>
+        <item name="colorSurface">@color/superficie</item>
+        <item name="materialAlertDialogTitleTextStyle">@style/RodaPartes.DialogTitle</item>
+    </style>
+</resources>
