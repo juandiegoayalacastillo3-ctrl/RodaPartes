@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Registro con elección de rol (RF-AUT-01) y autorización de datos (Ley 1581) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.auth.RegisterActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="@string/register_title" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/esp_xl">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/field_full_name"
+                app:startIconDrawable="@drawable/ic_person">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName|textCapWords" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_m"
+                android:hint="@string/field_email"
+                app:startIconDrawable="@drawable/ic_mail">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_m"
+                android:hint="@string/field_phone"
+                app:prefixText="@string/phone_prefix"
+                app:startIconDrawable="@drawable/ic_phone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:maxLength="10" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_m"
+                android:hint="@string/field_password"
+                app:endIconMode="password_toggle"
+                app:helperText="@string/password_rule"
+                app:startIconDrawable="@drawable/ic_lock">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                style="@style/RodaPartes.SectionTitle"
+                android:layout_marginTop="@dimen/esp_l"
+                android:text="@string/register_as" />
+
+            <!-- Selección de rol: grupo de botones de selección única -->
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/toggleRole"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:checkedButton="@+id/btnRoleBuyer"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRoleBuyer"
+                    style="@style/Widget.RodaPartes.Button.Toggle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/role_buyer"
+                    app:icon="@drawable/ic_bag" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRoleSeller"
+                    style="@style/Widget.RodaPartes.Button.Toggle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/role_seller"
+                    app:icon="@drawable/ic_store" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <!-- Solo para vendedores: datos del establecimiento (RF-ADU-04) -->
+            <LinearLayout
+                android:id="@+id/groupSeller"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilStore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/esp_m"
+                    android:hint="@string/field_store_name"
+                    app:startIconDrawable="@drawable/ic_store">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etStore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textCapWords" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilNit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/esp_m"
+                    android:hint="@string/field_nit"
+                    app:helperText="@string/register_seller_review"
+                    app:startIconDrawable="@drawable/ic_badge">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etNit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <!-- Autorizaciones: nunca vienen marcadas (Ley 1581 / Ley 2300) -->
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/cbTerms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_l"
+                android:checked="false"
+                android:text="@string/register_terms"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/cbPromos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="@string/register_promos"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_l"
+                android:text="@string/register_button" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnHaveAccount"
+                style="@style/Widget.RodaPartes.Button.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/esp_s"
+                android:text="@string/register_have_account" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
