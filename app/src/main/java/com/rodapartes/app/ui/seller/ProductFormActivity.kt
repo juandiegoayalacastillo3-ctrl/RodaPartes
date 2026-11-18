@@ -118,7 +118,7 @@ class ProductFormActivity : AppCompatActivity() {
             chip.isChecked = p.compatible.contains(chip.text.toString())
         }
         photos.clear()
-        photos += p.photos
+        photos.addAll(p.photos)
         renderPhotos()
         binding.tvReviewNote.text = getString(R.string.form_review_note)
         binding.btnPublish.text = getString(R.string.form_save_changes)

@@ -77,5 +77,5 @@ dependencies {
     implementation("io.coil-kt:coil:2.7.0")
 
     // Guardado cifrado de credenciales para el ingreso con huella (Android Keystore)
-    implementation("androidx.security:security-crypto:1.0.0")
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
 }
