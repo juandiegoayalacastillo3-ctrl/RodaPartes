@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rodapartes.app.R
 import com.rodapartes.app.data.Category
-import com.rodapartes.app.data.MockData
+import com.google.firebase.firestore.ListenerRegistration
+import com.rodapartes.app.data.CartItem
+import com.rodapartes.app.data.CartRepository
 import com.rodapartes.app.databinding.ActivityBuyerBinding
 import com.rodapartes.app.ui.auth.LoginActivity
 import com.rodapartes.app.util.Session
@@ -21,7 +23,11 @@ import com.rodapartes.app.util.color
 class BuyerActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityBuyerBinding
-    private lateinit var session: Session
+
+    /** Carrito actual (lo comparten el badge, el detalle y el checkout). */
+    var cart: List<CartItem> = emptyList()
+        private set
+    private var cartListener: ListenerRegistration? = null
 
     // Filtros que se le pasan al catálogo cuando se abre desde el inicio
     private var pendingCategory: Category? = null
@@ -33,10 +39,17 @@ class BuyerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityBuyerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        session = Session(this)
+
+        // Escucha el carrito en Firestore para mantener el número del ícono al día
+        Session.user?.let { user ->
+            cartListener = CartRepository.listen(user.uid) { items ->
+                cart = items
+                updateCartBadge()
+            }
+        }
 
         binding.bottomNav.setOnItemSelectedListener { item ->
-            if (item.itemId in tabsNeedLogin && !session.loggedIn) {
+            if (item.itemId in tabsNeedLogin && !Session.isLoggedIn) {
                 askLogin()
                 false
             } else {
@@ -58,9 +71,9 @@ class BuyerActivity : AppCompatActivity() {
         binding.bottomNav.selectedItemId = intent.getIntExtra(EXTRA_TAB, R.id.nav_home)
     }
 
-    override fun onResume() {
-        super.onResume()
-        updateCartBadge()
+    override fun onDestroy() {
+        cartListener?.remove()
+        super.onDestroy()
     }
 
     private fun show(itemId: Int) {
@@ -93,7 +106,7 @@ class BuyerActivity : AppCompatActivity() {
 
     /** Número de productos en el ícono del carrito. */
     fun updateCartBadge() {
-        val count = MockData.cartCount()
+        val count = cart.sumOf { it.qty }.toInt()
         if (count > 0) {
             binding.bottomNav.getOrCreateBadge(R.id.nav_cart).apply {
                 number = count
@@ -106,6 +119,7 @@ class BuyerActivity : AppCompatActivity() {
         }
     }
 
+    /** Diálogo para invitados que intentan usar algo que exige cuenta. */
     fun askLogin() {
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.guest_title)

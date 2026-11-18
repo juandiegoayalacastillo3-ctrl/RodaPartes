@@ -10,12 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rodapartes.app.R
-import com.rodapartes.app.data.MockData
+import com.google.firebase.firestore.ListenerRegistration
+import com.rodapartes.app.data.OrderRepository
+import com.rodapartes.app.util.LocationHelper
+import com.rodapartes.app.util.Session
+import com.rodapartes.app.util.safeLaunch
+import com.rodapartes.app.util.viewScope
 import com.rodapartes.app.data.Order
 import com.rodapartes.app.data.OrderStatus
 import com.rodapartes.app.databinding.FragmentListBinding
 import com.rodapartes.app.databinding.ItemSellerOrderBinding
-import com.rodapartes.app.ui.common.km
 import com.rodapartes.app.util.Money
 import com.rodapartes.app.util.applyStatus
 import com.rodapartes.app.util.snack
@@ -29,6 +33,8 @@ class SellerOrdersFragment : Fragment(R.layout.fragment_list) {
     private var items: List<Order> = emptyList()
     private val adapter = Adapter()
     private var filter: OrderStatus? = null
+    private var all: List<Order> = emptyList()
+    private var listener: ListenerRegistration? = null
 
     private val tabs = listOf(null, OrderStatus.NUEVO, OrderStatus.PREPARACION, OrderStatus.ENVIADO, OrderStatus.ENTREGADO)
 
@@ -53,26 +59,33 @@ class SellerOrdersFragment : Fragment(R.layout.fragment_list) {
 
         binding.rvList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvList.adapter = adapter
-        refresh()
+
+        // Pedidos recibidos por la tienda en tiempo real (orders donde sellerId = uid)
+        listener = OrderRepository.listenBySeller(Session.user?.uid.orEmpty()) { list ->
+            all = list
+            if (_binding != null) refresh()
+        }
     }
 
+    /** Aplica el filtro de estado a los pedidos recibidos. */
     private fun refresh() {
-        items = MockData.sellerOrders().filter { filter == null || it.status == filter }
+        items = all.filter { filter == null || it.statusEnum == filter }
         adapter.notifyDataSetChanged()
         binding.empty.root.visible(items.isEmpty())
         binding.empty.ivEmpty.setImageResource(R.drawable.ic_receipt)
         binding.empty.tvEmptyTitle.text = getString(R.string.seller_orders_empty)
         binding.empty.tvEmptyBody.text = getString(R.string.seller_orders_empty_body)
-        (activity as? SellerActivity)?.updateOrdersBadge()
     }
 
+    /** Guarda el nuevo estado en Firestore; el comprador lo ve al instante en "Mis compras". */
     private fun changeStatus(order: Order, status: OrderStatus) {
-        order.status = status
-        refresh()
-        // En producción: notificación push al comprador en cada cambio (FCM)
-        binding.root.snack(getString(R.string.order_status_changed, order.code, status.label))
+        viewScope.safeLaunch(binding.root) {
+            OrderRepository.setStatus(order.id, status)
+            binding.root.snack(getString(R.string.order_status_changed, order.code, status.label))
+        }
     }
 
+    /** Rechazar un pedido nuevo lo deja CANCELADO (el reembolso se gestiona con ePayco). */
     private fun reject(order: Order) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.order_reject_title)
@@ -94,14 +107,20 @@ class SellerOrdersFragment : Fragment(R.layout.fragment_list) {
             val o = items[position]
             with(holder.b) {
                 tvCode.text = getString(R.string.order_code, o.code)
-                tvStatus.applyStatus(o.status)
-                tvBuyer.text = resources.getQuantityString(R.plurals.seller_order_line, o.items, o.buyer, o.items, Money.format(o.total))
+                tvStatus.applyStatus(o.statusEnum)
+                tvBuyer.text = resources.getQuantityString(R.plurals.seller_order_line, o.itemCount, o.buyerName, o.itemCount, Money.format(o.total))
                 tvSummary.text = o.summary
-                tvAddress.text = getString(R.string.address_distance, o.address, km(o.distanceKm))
+                tvAddress.text = listOf(o.address, o.addressDetail).filter { it.isNotBlank() }.joinToString(" · ")
+                // Con coordenadas, tocar la dirección abre Google Maps para llevar el pedido
+                val lat = o.lat
+                val lng = o.lng
+                tvAddress.setOnClickListener {
+                    if (lat != null && lng != null) LocationHelper.openInMaps(requireContext(), lat, lng, o.buyerName)
+                }
 
-                groupNew.visible(o.status == OrderStatus.NUEVO)
-                val next = o.status.next()
-                btnNext.visible(o.status == OrderStatus.PREPARACION || o.status == OrderStatus.ENVIADO)
+                groupNew.visible(o.statusEnum == OrderStatus.NUEVO)
+                val next = o.statusEnum.next()
+                btnNext.visible(o.statusEnum == OrderStatus.PREPARACION || o.statusEnum == OrderStatus.ENVIADO)
                 btnNext.text = getString(R.string.order_mark_as, next.label.lowercase())
 
                 btnAccept.setOnClickListener { changeStatus(o, OrderStatus.PREPARACION) }
@@ -112,6 +131,7 @@ class SellerOrdersFragment : Fragment(R.layout.fragment_list) {
     }
 
     override fun onDestroyView() {
+        listener?.remove()
         super.onDestroyView()
         _binding = null
     }

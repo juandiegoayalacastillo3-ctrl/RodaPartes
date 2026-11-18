@@ -75,6 +75,7 @@
                             tools:text="NIT 901.234.567-8" />
 
                         <TextView
+                            android:id="@+id/tvVerified"
                             style="@style/RodaPartes.Badge"
                             android:layout_marginStart="@dimen/esp_s"
                             android:backgroundTint="@color/exito_claro"
@@ -114,6 +115,24 @@
                         app:tint="?attr/colorPrimary" />
                 </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <!-- Captura la ubicación del local con el GPS (Fused Location + Geocoder) -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnStoreLocation"
+                style="@style/Widget.RodaPartes.Button.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_m"
+                android:text="@string/store_use_location"
+                app:icon="@drawable/ic_location"
+                app:iconGravity="textStart" />
+
+            <TextView
+                android:id="@+id/tvStoreCoords"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/esp_xs"
+                android:textAppearance="@style/TextAppearance.RodaPartes.Small" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilStoreName"

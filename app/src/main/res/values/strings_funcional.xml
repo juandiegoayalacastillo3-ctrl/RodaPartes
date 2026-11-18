@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Textos agregados en la Actividad 5 (app funcional con Firebase, ePayco y geolocalización) -->
+<resources>
+    <string name="loading">Un momento…</string>
+
+    <!-- Huella -->
+    <string name="bio_offer_title">¿Entrar con huella la próxima vez?</string>
+    <string name="bio_offer_msg">Tu contraseña queda guardada cifrada en este celular y solo se usa cuando tu huella es correcta.</string>
+    <string name="bio_offer_yes">Activar huella</string>
+
+    <!-- Ubicación -->
+    <string name="location_denied">Sin el permiso de ubicación puedes escribir la dirección a mano</string>
+    <string name="location_unavailable">No pudimos obtener tu ubicación. Activa el GPS e intenta de nuevo</string>
+    <string name="home_choose_moto">Elige tu moto en el perfil</string>
+    <string name="home_deliver_to_value">Entregar en: %1$s</string>
+    <string name="home_map_label">Mi ubicación</string>
+    <string name="home_map_need_location">Activa la ubicación desde «Usar mi ubicación actual» en la entrega</string>
+    <plurals name="stores_count">
+        <item quantity="one">%1$d tienda vende en RodaPartes</item>
+        <item quantity="other">%1$d tiendas venden en RodaPartes</item>
+    </plurals>
+
+    <!-- Catálogo y detalle -->
+    <string name="seller_out_of_stock">%1$s · agotado</string>
+    <string name="detail_not_found">Este producto ya no está disponible</string>
+    <string name="detail_no_moto">Guarda tu moto en el perfil para saber si le sirve</string>
+    <string name="detail_no_photos">Sin fotos</string>
+    <string name="detail_photo_counter">%1$d / %2$d · toca para ver la siguiente</string>
+    <string name="detail_seller_verified">Tienda verificada por RodaPartes</string>
+
+    <!-- Checkout -->
+    <string name="checkout_no_location">Toca «Usar mi ubicación actual» o escribe la dirección</string>
+    <string name="checkout_coords">%1$s\n%2$s</string>
+    <string name="checkout_pickup_short">Recoge en la tienda</string>
+    <string name="checkout_seller_legal_simple">Vende: %1$s</string>
+
+    <!-- Pago con ePayco -->
+    <string name="payment_methods_epayco">Tarjeta de crédito o débito, PSE, Nequi, Daviplata o efectivo. Eliges el medio en la ventana de ePayco.</string>
+    <string name="payment_invoice">Factura %1$s</string>
+    <string name="payment_items_line">%1$s · %2$s</string>
+    <string name="payment_description">Compra de %1$d repuestos en RodaPartes</string>
+    <string name="payment_pay_epayco">Pagar %1$s con ePayco</string>
+    <string name="payment_validating">Confirmando el pago con ePayco…</string>
+    <string name="payment_test_note">Modo pruebas de ePayco: usa la tarjeta 4575 6231 8229 0326, fecha 12/2030 y CVV 123. No se cobra dinero real.</string>
+    <string name="payment_cancelled">Cerraste el pago sin terminarlo</string>
+    <string name="payment_load_error">No se pudo abrir ePayco: %1$s</string>
+    <string name="payment_ok_codes">Órdenes %1$s\nReferencia ePayco %2$s</string>
+    <string name="payment_pending_title">Pago pendiente</string>
+    <string name="payment_pending_msg">ePayco todavía está procesando el pago (ref. %1$s). Tu carrito sigue guardado; cuando se apruebe vuelve a intentarlo.</string>
+    <string name="payment_rejected_title">El pago no se aprobó</string>
+    <string name="payment_rejected_msg">ePayco respondió: %1$s (ref. %2$s). No se hizo ningún cobro y tu carrito sigue guardado.</string>
+
+    <!-- Vendedor -->
+    <string name="seller_pending_subtitle">%1$s · en revisión</string>
+    <string name="form_uploading">Subiendo fotos…</string>
+    <string name="form_saved_title">Cambios guardados</string>
+    <string name="form_saved_msg">El producto sigue publicado con el nuevo precio y stock.</string>
+    <string name="store_use_location">Usar la ubicación actual del local</string>
+    <string name="store_coords">Ubicación guardada: %1$s · toca para abrir en Maps</string>
+    <string name="store_no_location">Todavía no has guardado la ubicación del local</string>
+    <string name="store_in_review">En revisión</string>
+    <string name="store_no_nit">Sin NIT registrado</string>
+
+    <!-- Administrador -->
+    <string name="stat_products_published">Productos publicados</string>
+    <string name="stat_sales_30">Ventas últimos 30 días</string>
+    <string name="sales_no_data">Aún no hay ventas en este periodo</string>
+    <string name="audit_empty">Todavía no hay acciones registradas</string>
+
+    <!-- Fuente de las fotos -->
+    <string-array name="photo_sources">
+        <item>Tomar foto con la cámara</item>
+        <item>Elegir de la galería</item>
+    </string-array>
+</resources>

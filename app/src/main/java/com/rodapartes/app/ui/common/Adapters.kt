@@ -1,39 +1,35 @@
 package com.rodapartes.app.ui.common
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.rodapartes.app.R
-import com.rodapartes.app.data.MockData
 import com.rodapartes.app.data.Order
 import com.rodapartes.app.data.Product
 import com.rodapartes.app.databinding.ItemOrderBinding
 import com.rodapartes.app.databinding.ItemProductGridBinding
+import com.rodapartes.app.util.Dates
 import com.rodapartes.app.util.Money
 import com.rodapartes.app.util.applyStatus
+import com.rodapartes.app.util.bindProductImage
 import com.rodapartes.app.util.visible
-import java.util.Locale
 
-/** Pinta la "foto" de un producto: degradado de su categoría + ícono. */
-fun bindTile(tile: View, icon: ImageView, product: Product) {
-    tile.setBackgroundResource(product.category.tileRes)
-    icon.setImageResource(product.category.iconRes)
-}
-
-fun km(value: Double): String = String.format(Locale("es", "CO"), "%.1f km", value)
-
-/** Grilla de productos del catálogo (comprador). */
+/**
+ * Grilla de productos del catálogo (comprador).
+ * @param myMoto moto guardada en el perfil para marcar los productos compatibles.
+ */
 class ProductGridAdapter(
     private var items: List<Product>,
+    private var myMoto: String,
     private val onClick: (Product) -> Unit
 ) : RecyclerView.Adapter<ProductGridAdapter.VH>() {
 
     class VH(val b: ItemProductGridBinding) : RecyclerView.ViewHolder(b.root)
 
-    fun submit(newItems: List<Product>) {
+    /** Reemplaza la lista (llega del listener de Firestore). */
+    fun submit(newItems: List<Product>, moto: String = myMoto) {
         items = newItems
+        myMoto = moto
         notifyDataSetChanged()
     }
 
@@ -46,12 +42,12 @@ class ProductGridAdapter(
         val p = items[position]
         val ctx = holder.itemView.context
         with(holder.b) {
-            bindTile(tile, ivIcon, p)
+            bindProductImage(tile, ivIcon, ivPhoto, p.categoryEnum, p.mainPhoto)
             tvType.text = ctx.getString(if (p.original) R.string.type_original else R.string.type_generic_short)
             tvName.text = p.name
             tvPrice.text = Money.format(p.price)
-            tvSeller.text = ctx.getString(R.string.seller_distance, p.seller, km(p.distanceKm))
-            tvCompatible.visible(p.fits(MockData.myMoto))
+            tvSeller.text = if (p.stock > 0) p.sellerName else ctx.getString(R.string.seller_out_of_stock, p.sellerName)
+            tvCompatible.visible(p.fits(myMoto))
             root.contentDescription = "${p.name}, ${Money.format(p.price)}"
             root.setOnClickListener { onClick(p) }
         }
@@ -79,15 +75,20 @@ class OrderAdapter(
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val o = items[position]
-        val ctx = holder.itemView.context
-        with(holder.b) {
-            tvCode.text = ctx.getString(R.string.order_code, o.code)
-            tvStatus.applyStatus(o.status)
-            tvParties.text = if (showBuyer) ctx.getString(R.string.order_parties, o.buyer, o.seller) else o.seller
-            tvSummary.text = o.summary
-            tvDate.text = ctx.resources.getQuantityString(R.plurals.order_date_items, o.items, o.date, o.items)
-            tvTotal.text = Money.format(o.total)
-            root.setOnClickListener { onClick(o) }
-        }
+        holder.b.bindOrder(o, showBuyer)
+        holder.b.root.setOnClickListener { onClick(o) }
     }
+}
+
+/** Llena la tarjeta de una orden (se reutiliza en listas y en los paneles). */
+fun ItemOrderBinding.bindOrder(o: Order, showBuyer: Boolean) {
+    val ctx = root.context
+    tvCode.text = ctx.getString(R.string.order_code, o.code)
+    tvStatus.applyStatus(o.statusEnum)
+    tvParties.text = if (showBuyer) ctx.getString(R.string.order_parties, o.buyerName, o.sellerName) else o.sellerName
+    tvSummary.text = o.summary
+    tvDate.text = ctx.resources.getQuantityString(
+        R.plurals.order_date_items, o.itemCount, Dates.short(o.createdAt?.toDate()), o.itemCount
+    )
+    tvTotal.text = Money.format(o.total)
 }

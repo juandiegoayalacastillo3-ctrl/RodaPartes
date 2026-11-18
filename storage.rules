@@ -1,0 +1,24 @@
+// Reglas de Firebase Storage para RodaPartes: solo imágenes de máximo 5 MB.
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // Fotos de productos: públicas para el catálogo; las sube un usuario con sesión
+    match /products/{productId}/{file} {
+      allow read: if true;
+      allow create, update: if request.auth != null
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+      allow delete: if request.auth != null;
+    }
+
+    // Foto de perfil: solo el dueño la cambia
+    match /users/{uid}/{file} {
+      allow read: if true;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.size < 5 * 1024 * 1024
+        && request.resource.contentType.matches('image/.*');
+      allow delete: if request.auth != null && request.auth.uid == uid;
+    }
+  }
+}

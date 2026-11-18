@@ -1,61 +1,65 @@
 package com.rodapartes.app.util
 
 import android.content.Context
-import com.rodapartes.app.data.Role
+import android.content.SharedPreferences
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
+import com.rodapartes.app.data.AppUser
+import com.rodapartes.app.data.Fire
 
 /**
- * Sesión local mínima (SharedPreferences) para el demo del frontend.
- * En la fase de backend el rol vendrá del custom claim del token de Firebase (RF-AUT-07)
- * y el token se guardará cifrado con el Android Keystore (RNF-SEG-03).
+ * Datos de la sesión actual.
+ *
+ * - [user] es el perfil leído de Firestore (users/{uid}) al iniciar sesión. Se guarda en memoria
+ *   para no consultar la base de datos en cada pantalla.
+ * - La sesión de Firebase Auth persiste sola entre aperturas de la app.
  */
-class Session(context: Context) {
+object Session {
 
-    private val prefs = context.getSharedPreferences("rodapartes_session", Context.MODE_PRIVATE)
+    /** Perfil del usuario con sesión iniciada; null si es invitado. */
+    var user: AppUser? = null
 
-    var role: Role?
-        get() = prefs.getString(KEY_ROLE, null)?.let { Role.valueOf(it) }
-        set(value) = prefs.edit().putString(KEY_ROLE, value?.name).apply()
+    val isLoggedIn get() = Fire.auth.currentUser != null && user != null
 
-    var name: String
-        get() = prefs.getString(KEY_NAME, "Juan Pérez") ?: "Juan Pérez"
-        set(value) = prefs.edit().putString(KEY_NAME, value).apply()
+    fun clear() {
+        user = null
+    }
+}
 
-    var email: String
-        get() = prefs.getString(KEY_EMAIL, "juan@correo.com") ?: "juan@correo.com"
-        set(value) = prefs.edit().putString(KEY_EMAIL, value).apply()
+/**
+ * Almacén cifrado para el ingreso con huella (RF-AUT-04, RNF-SEG-03).
+ *
+ * Cuando el usuario activa la huella, su correo y contraseña se guardan con
+ * EncryptedSharedPreferences, que cifra con una llave del Android Keystore (AES-256).
+ * La llave nunca sale del dispositivo. La huella en sí jamás llega a la app: BiometricPrompt
+ * solo responde "éxito" o "error" y, con éxito, se usan estas credenciales para iniciar sesión.
+ */
+class SecureStore(context: Context) {
 
-    var phone: String
-        get() = prefs.getString(KEY_PHONE, "300 123 4567") ?: "300 123 4567"
-        set(value) = prefs.edit().putString(KEY_PHONE, value).apply()
+    private val prefs: SharedPreferences = EncryptedSharedPreferences.create(
+        context,
+        "rodapartes_secure",
+        MasterKey.Builder(context).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build(),
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
 
-    /** Ingreso con huella activado desde el perfil (RF-PER-05). */
-    var biometricEnabled: Boolean
-        get() = prefs.getBoolean(KEY_BIO, false)
-        set(value) = prefs.edit().putBoolean(KEY_BIO, value).apply()
+    /** ¿Hay credenciales guardadas para entrar con huella? */
+    val biometricEnabled: Boolean get() = prefs.contains(KEY_EMAIL) && prefs.contains(KEY_PASSWORD)
 
-    /** Consentimiento aparte para promociones (Ley 2300 de 2023). */
-    var promos: Boolean
-        get() = prefs.getBoolean(KEY_PROMOS, false)
-        set(value) = prefs.edit().putBoolean(KEY_PROMOS, value).apply()
+    val email: String? get() = prefs.getString(KEY_EMAIL, null)
+    val password: String? get() = prefs.getString(KEY_PASSWORD, null)
 
-    /** Cierra sesión pero conserva el último rol para el ingreso con huella. */
-    fun logout() {
-        prefs.edit().putBoolean(KEY_LOGGED, false).apply()
+    fun enableBiometric(email: String, password: String) {
+        prefs.edit().putString(KEY_EMAIL, email).putString(KEY_PASSWORD, password).apply()
     }
 
-    var loggedIn: Boolean
-        get() = prefs.getBoolean(KEY_LOGGED, false)
-        set(value) = prefs.edit().putBoolean(KEY_LOGGED, value).apply()
-
-    fun clearAll() = prefs.edit().clear().apply()
+    fun disableBiometric() {
+        prefs.edit().remove(KEY_EMAIL).remove(KEY_PASSWORD).apply()
+    }
 
     private companion object {
-        const val KEY_ROLE = "role"
-        const val KEY_NAME = "name"
-        const val KEY_EMAIL = "email"
-        const val KEY_PHONE = "phone"
-        const val KEY_BIO = "biometric"
-        const val KEY_PROMOS = "promos"
-        const val KEY_LOGGED = "logged"
+        const val KEY_EMAIL = "bio_email"
+        const val KEY_PASSWORD = "bio_password"
     }
 }

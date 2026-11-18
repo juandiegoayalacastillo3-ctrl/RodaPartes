@@ -10,12 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rodapartes.app.R
-import com.rodapartes.app.data.MockData
+import com.google.firebase.firestore.ListenerRegistration
+import com.rodapartes.app.data.AuditRepository
+import com.rodapartes.app.data.ProductRepository
+import com.rodapartes.app.util.bindProductImage
+import com.rodapartes.app.util.safeLaunch
+import com.rodapartes.app.util.viewScope
 import com.rodapartes.app.data.Product
 import com.rodapartes.app.data.ProductStatus
 import com.rodapartes.app.databinding.FragmentListBinding
 import com.rodapartes.app.databinding.ItemModerationBinding
-import com.rodapartes.app.ui.common.bindTile
 import com.rodapartes.app.util.Money
 import com.rodapartes.app.util.applyStatus
 import com.rodapartes.app.util.snack
@@ -29,6 +33,8 @@ class AdminProductsFragment : Fragment(R.layout.fragment_list) {
     private var items: List<Product> = emptyList()
     private val adapter = Adapter()
     private var tab = 0 // 0 por revisar, 1 reportados, 2 publicados, 3 rechazados
+    private var all: List<Product> = emptyList()
+    private var listener: ListenerRegistration? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,16 +58,22 @@ class AdminProductsFragment : Fragment(R.layout.fragment_list) {
 
         binding.rvList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvList.adapter = adapter
-        refresh()
+
+        // Todas las publicaciones en tiempo real (colección products)
+        listener = ProductRepository.listenAll { list ->
+            all = list
+            if (_binding != null) refresh()
+        }
     }
 
+    /** Filtra por pestaña: por revisar, reportados, publicados o rechazados. */
     private fun refresh() {
-        items = MockData.products.filter {
+        items = all.filter {
             when (tab) {
                 1 -> it.reports > 0
-                2 -> it.status == ProductStatus.PUBLICADO && it.reports == 0
-                3 -> it.status == ProductStatus.RECHAZADO
-                else -> it.status == ProductStatus.EN_REVISION
+                2 -> it.statusEnum == ProductStatus.PUBLICADO && it.reports == 0L
+                3 -> it.statusEnum == ProductStatus.RECHAZADO
+                else -> it.statusEnum == ProductStatus.EN_REVISION
             }
         }
         adapter.notifyDataSetChanged()
@@ -71,11 +83,13 @@ class AdminProductsFragment : Fragment(R.layout.fragment_list) {
         binding.empty.tvEmptyBody.text = getString(R.string.moderation_empty_body)
     }
 
+    /** Aprueba la publicación: queda visible en el catálogo (RF-ADP-01). */
     private fun approve(p: Product) {
-        p.status = ProductStatus.PUBLICADO
-        p.reports = 0
-        refresh()
-        binding.root.snack(getString(R.string.moderation_approved, p.name))
+        viewScope.safeLaunch(binding.root) {
+            ProductRepository.setStatus(p.id, ProductStatus.PUBLICADO)
+            AuditRepository.log("Aprobó «${p.name}» de ${p.sellerName}")
+            binding.root.snack(getString(R.string.moderation_approved, p.name))
+        }
     }
 
     /** Rechazar o retirar pide un motivo; el vendedor recibe la notificación. */
@@ -86,10 +100,12 @@ class AdminProductsFragment : Fragment(R.layout.fragment_list) {
             .setTitle(if (p.reports > 0) R.string.moderation_remove_title else R.string.moderation_reject_title)
             .setSingleChoiceItems(reasons, selected) { _, which -> selected = which }
             .setPositiveButton(R.string.action_reject) { _, _ ->
-                p.status = ProductStatus.RECHAZADO
-                p.reports = 0
-                refresh()
-                binding.root.snack(getString(R.string.moderation_rejected, reasons[selected]))
+                val reason = reasons[selected]
+                viewScope.safeLaunch(binding.root) {
+                    ProductRepository.setStatus(p.id, ProductStatus.RECHAZADO, reason)
+                    AuditRepository.log("Rechazó «${p.name}» de ${p.sellerName}: $reason")
+                    binding.root.snack(getString(R.string.moderation_rejected, reason))
+                }
             }
             .setNegativeButton(R.string.action_cancel, null)
             .show()
@@ -106,14 +122,14 @@ class AdminProductsFragment : Fragment(R.layout.fragment_list) {
         override fun onBindViewHolder(holder: VH, position: Int) {
             val p = items[position]
             with(holder.b) {
-                bindTile(tile, ivIcon, p)
-                tvStatus.applyStatus(p.status)
+                bindProductImage(tile, ivIcon, ivPhoto, p.categoryEnum, p.mainPhoto)
+                tvStatus.applyStatus(p.statusEnum)
                 tvName.text = p.name
-                tvInfo.text = getString(R.string.moderation_info, p.seller, Money.format(p.price), p.category.label,
+                tvInfo.text = getString(R.string.moderation_info, p.sellerName, Money.format(p.price), p.categoryEnum.label,
                     getString(if (p.original) R.string.type_original else R.string.type_generic_short))
                 tvReport.visible(p.reports > 0)
-                tvReport.text = resources.getQuantityString(R.plurals.reports, p.reports, p.reports)
-                groupActions.visible(p.status == ProductStatus.EN_REVISION || p.reports > 0)
+                tvReport.text = resources.getQuantityString(R.plurals.reports, p.reports.toInt(), p.reports)
+                groupActions.visible(p.statusEnum == ProductStatus.EN_REVISION || p.reports > 0)
                 btnApprove.text = getString(if (p.reports > 0) R.string.moderation_keep else R.string.action_approve)
                 btnReject.text = getString(if (p.reports > 0) R.string.moderation_remove else R.string.action_reject)
                 btnApprove.setOnClickListener { approve(p) }
@@ -123,6 +139,7 @@ class AdminProductsFragment : Fragment(R.layout.fragment_list) {
     }
 
     override fun onDestroyView() {
+        listener?.remove()
         super.onDestroyView()
         _binding = null
     }

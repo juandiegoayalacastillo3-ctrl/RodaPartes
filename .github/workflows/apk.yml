@@ -21,14 +21,20 @@ jobs:
       - name: Compilar APK
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug
+          set -o pipefail
+          ./gradlew assembleDebug --console=plain 2>&1 | tee build.log
           cp app/build/outputs/apk/debug/app-debug.apk RodaPartes.apk
+      - name: Mostrar errores de compilación
+        if: failure()
+        run: |
+          grep -E "^e: |error:|What went wrong|AAPT|Unresolved|Could not" -A2 build.log | head -60 > errores.txt || true
+          while IFS= read -r line; do echo "::error::$line"; done < <(head -45 errores.txt)
       - uses: actions/upload-artifact@v4
         with:
           name: RodaPartes-apk
           path: RodaPartes.apk
       - uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0
-          name: RodaPartes APK
+          tag_name: v2.0
+          name: RodaPartes 2.0 (app funcional)
           files: RodaPartes.apk

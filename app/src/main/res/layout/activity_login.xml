@@ -167,22 +167,10 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnGoogle"
-                        style="@style/Widget.RodaPartes.Button.Dark"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/esp_s"
-                        android:layout_weight="1"
-                        android:text="@string/login_google"
-                        app:icon="@drawable/ic_google"
-                        app:iconTint="@null" />
-
-                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnFingerprint"
                         style="@style/Widget.RodaPartes.Button.Outlined"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/esp_s"
                         android:layout_weight="1"
                         android:text="@string/login_fingerprint"
                         app:icon="@drawable/ic_fingerprint"

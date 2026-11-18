@@ -119,7 +119,7 @@
     <string name="login_no_account">¿No tienes cuenta?</string>
     <string name="login_register">Crear cuenta</string>
     <string name="login_guest">Ver el catálogo sin cuenta</string>
-    <string name="login_demo_hint">Cuentas de prueba (cualquier contraseña de 8+ caracteres con letras y números):\n• comprador@rodapartes.co\n• vendedor@rodapartes.co\n• admin@rodapartes.co</string>
+    <string name="login_demo_hint">¿Primera vez? Crea tu cuenta como comprador o vendedor. Las cuentas de administrador las crea otro administrador.</string>
     <string name="guest_title">Inicia sesión para continuar</string>
     <string name="guest_message">Para usar el carrito, ver tus compras y tu perfil necesitas una cuenta.</string>
 
@@ -138,7 +138,7 @@
     <string name="register_as">Quiero registrarme como</string>
     <string name="role_buyer">Comprador</string>
     <string name="role_seller">Vendedor</string>
-    <string name="register_seller_review">El administrador revisa el RUT/NIT antes de que puedas publicar</string>
+    <string name="register_seller_review">El administrador revisa tu NIT antes de aprobar la tienda</string>
     <string name="register_terms">Acepto los términos y la política de tratamiento de datos (Ley 1581 de 2012)</string>
     <string name="register_promos">Quiero recibir promociones (opcional)</string>
     <string name="register_button">Registrarme</string>
@@ -152,13 +152,13 @@
     <string name="recover_body">Escribe el correo con el que te registraste y te enviaremos un enlace para crear una nueva.</string>
     <string name="recover_send">Enviar enlace</string>
     <string name="recover_sent_title">Revisa tu correo</string>
-    <string name="recover_sent_body">Si %1$s tiene una cuenta, te llegará un enlace de un solo uso. Vence en 30 minutos.</string>
+    <string name="recover_sent_body">Si %1$s tiene una cuenta, te llegará un enlace para crear una contraseña nueva. Revisa también la carpeta de spam.</string>
     <string name="recover_back">Volver a iniciar sesión</string>
     <string name="recover_resend">Reenviar enlace</string>
     <string name="recover_resend_in">Reenviar en %1$d s</string>
 
     <!-- ===== Inicio (comprador) ===== -->
-    <string name="home_deliver_to">Entregar en: Calle 80 # 69-22</string>
+    <string name="home_deliver_to">Entregar en: activa tu ubicación en Entrega</string>
     <string name="home_greeting">Hola, %1$s</string>
     <string name="home_greeting_guest">Repuestos para tu moto</string>
     <string name="search_hint">Buscar repuesto, marca o referencia</string>
@@ -169,7 +169,7 @@
     <string name="home_featured">Destacados</string>
     <string name="home_nearby">Tiendas cerca de ti</string>
     <string name="home_nearby_count">4 tiendas a menos de 6 km</string>
-    <string name="home_nearby_detail">La más cercana: MotoCentro 80, a 2,1 km</string>
+    <string name="home_nearby_detail">Toca «Ver mapa» para abrir tu ubicación en Google Maps</string>
     <string name="home_see_map">Ver mapa</string>
     <string name="home_no_notifications">No tienes notificaciones nuevas</string>
     <string name="home_map_soon">El mapa interactivo se conecta con Google Maps en la siguiente fase</string>
@@ -254,7 +254,7 @@
 
     <!-- ===== Pago ===== -->
     <string name="payment_title">Pago</string>
-    <string name="payment_secure">Pago seguro con Wompi</string>
+    <string name="payment_secure">Pago seguro con ePayco</string>
     <string name="payment_method">Método de pago</string>
     <string name="payment_card">Tarjeta</string>
     <string name="payment_pse">PSE</string>
@@ -262,20 +262,20 @@
     <string name="card_number_placeholder">•••• •••• •••• ••••</string>
     <string name="card_name_placeholder">NOMBRE DEL TITULAR</string>
     <string name="card_exp_placeholder">MM/AA</string>
-    <string name="payment_token_note">Los datos de la tarjeta los procesa la pasarela; la app solo guarda el token.</string>
+    <string name="payment_token_note">Los datos de la tarjeta los recibe ePayco; la app nunca los ve.</string>
     <string name="payment_pse_note">Te llevaremos a la página de tu banco para autorizar el pago.</string>
     <string name="payment_nequi_note">Recibirás una notificación en tu app Nequi para aceptar el pago.</string>
     <string name="payment_total">Total a pagar</string>
     <string name="payment_pay">Pagar %1$s</string>
     <string name="payment_processing">Procesando el pago…</string>
     <string name="payment_ok_title">¡Pago aprobado!</string>
-    <string name="payment_ok_body">Te avisaremos cada vez que el vendedor actualice el estado del pedido. La factura electrónica queda en Mis compras.</string>
+    <string name="payment_ok_body">Te avisamos aquí mismo cada vez que la tienda actualice el estado del pedido.</string>
     <string name="payment_see_orders">Ver mis compras</string>
 
     <!-- ===== Órdenes ===== -->
     <string name="order_code">#%1$s</string>
     <string name="order_parties">%1$s → %2$s</string>
-    <string name="order_detail_msg">Vendedor: %1$s\nProductos: %2$s\nTotal: %3$s\nEstado: %4$s\nEntrega: %5$s</string>
+    <string name="order_detail_msg">Vendedor: %1$s\nProductos: %2$s\nTotal: %3$s\nEstado: %4$s\nEntrega: %5$s\nReferencia de pago: %6$s</string>
     <string name="order_retract">Solicitar retracto</string>
     <string name="order_retract_sent">Solicitud enviada. El reembolso se hace en máximo 15 días calendario.</string>
     <string name="orders_empty_title">Aún no tienes compras</string>
@@ -286,7 +286,7 @@
     <string name="order_status_changed">#%1$s ahora está: %2$s. Le avisamos al comprador.</string>
     <string name="order_reject_title">¿Rechazar el pedido?</string>
     <string name="order_reject_msg">El pedido #%1$s se cancelará y el pago se devolverá al comprador.</string>
-    <string name="order_admin_msg">Comprador: %1$s\nVendedor: %2$s\nProductos: %3$s\nTotal: %4$s\nEstado: %5$s</string>
+    <string name="order_admin_msg">Comprador: %1$s\nVendedor: %2$s\nProductos: %3$s\nTotal: %4$s\nEstado: %5$s\nReferencia ePayco: %6$s</string>
     <string name="order_admin_legal_msg">Comprador: %1$s\nProductos: %2$s\nValor: %3$s\n\n%4$s</string>
     <string name="legal_retract">Retracto (Ley 1480, art. 47): el dinero debe devolverse en máximo 15 días calendario por el medio que eligió el comprador (Ley 2439 de 2024).</string>
     <string name="legal_reversal">Reversión del pago (Ley 1480, art. 51 y Decreto 587 de 2016): se coordina con el emisor y la pasarela usando el ID de la transacción.</string>
@@ -344,7 +344,7 @@
     <string name="form_new_title">Nuevo producto</string>
     <string name="form_edit_title">Editar producto</string>
     <string name="form_photos_count">Fotos (%1$d de %2$d)</string>
-    <string name="form_take_photo">Tomar foto</string>
+    <string name="form_take_photo">Agregar foto</string>
     <string name="form_remove_photo">Quitar foto</string>
     <string name="form_max_photos">Puedes subir máximo 6 fotos</string>
     <string name="form_ref_helper">Toca el ícono para escanearla con la cámara</string>

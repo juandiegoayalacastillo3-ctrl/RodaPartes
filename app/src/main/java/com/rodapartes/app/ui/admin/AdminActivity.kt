@@ -9,7 +9,11 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rodapartes.app.R
 import com.rodapartes.app.databinding.ActivityAdminBinding
+import androidx.lifecycle.lifecycleScope
+import com.rodapartes.app.data.AuditRepository
+import com.rodapartes.app.util.Dates
 import com.rodapartes.app.util.Router
+import kotlinx.coroutines.launch
 import com.rodapartes.app.util.Session
 
 /**
@@ -34,10 +38,9 @@ class AdminActivity : AppCompatActivity() {
         binding = ActivityAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val session = Session(this)
         val header = binding.navView.getHeaderView(0)
-        header.findViewById<TextView>(R.id.tvAdminName).text = session.name
-        header.findViewById<TextView>(R.id.tvAdminEmail).text = session.email
+        header.findViewById<TextView>(R.id.tvAdminName).text = Session.user?.name
+        header.findViewById<TextView>(R.id.tvAdminEmail).text = Session.user?.email
 
         binding.toolbar.setNavigationOnClickListener { binding.drawerLayout.openDrawer(GravityCompat.START) }
 
@@ -93,13 +96,20 @@ class AdminActivity : AppCompatActivity() {
         binding.bottomNav.selectedItemId = itemId
     }
 
-    /** Bitácora de auditoría: solo lectura desde la app (RF-ADU-06). */
+    /** Bitácora de auditoría leída de Firestore: solo lectura desde la app (RF-ADU-06). */
     private fun showAudit() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(R.string.drawer_audit)
-            .setItems(resources.getStringArray(R.array.bitacora_demo), null)
-            .setPositiveButton(R.string.action_close, null)
-            .show()
+        lifecycleScope.launch {
+            val entries = runCatching { AuditRepository.recent() }.getOrDefault(emptyList())
+                .map { (date, action) -> "${Dates.short(date)} · $action" }
+            MaterialAlertDialogBuilder(this@AdminActivity)
+                .setTitle(R.string.drawer_audit)
+                .apply {
+                    if (entries.isEmpty()) setMessage(R.string.audit_empty)
+                    else setItems(entries.toTypedArray(), null)
+                }
+                .setPositiveButton(R.string.action_close, null)
+                .show()
+        }
     }
 
     private fun showPolicies() {

@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <!-- Firebase (Auth, Firestore, Storage) y validación del pago en ePayco -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- Ingreso con huella (BiometricPrompt) -->
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <!-- Ubicación para la dirección de entrega y la ubicación de la tienda -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- La cámara se usa a través de la app de cámara del sistema; no es obligatoria -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
+
+    <!-- Android 11+: permite encontrar la app de cámara y la de mapas -->
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="geo" />
+        </intent>
+    </queries>
 
     <application
         android:allowBackup="false"
@@ -37,10 +58,20 @@
         <!-- Rol Vendedor (verde azulado) -->
         <activity android:name=".ui.seller.SellerActivity" android:theme="@style/Theme.RodaPartes.Seller" />
         <activity android:name=".ui.seller.ProductFormActivity" android:theme="@style/Theme.RodaPartes.Seller" android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.seller.CameraActivity" android:theme="@style/Theme.RodaPartes.Camera" />
 
         <!-- Rol Administrador (azul pizarra) -->
         <activity android:name=".ui.admin.AdminActivity" android:theme="@style/Theme.RodaPartes.Admin" />
         <activity android:name=".ui.admin.UserFormActivity" android:theme="@style/Theme.RodaPartes.Admin" android:windowSoftInputMode="adjustResize" />
+
+        <!-- Comparte con la app de cámara el archivo donde debe guardar la foto -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 </manifest>

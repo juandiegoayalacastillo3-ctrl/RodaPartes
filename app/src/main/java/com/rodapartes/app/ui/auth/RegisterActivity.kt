@@ -3,6 +3,9 @@ package com.rodapartes.app.ui.auth
 import android.os.Bundle
 import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
+import com.rodapartes.app.data.AuthRepository
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rodapartes.app.R
 import com.rodapartes.app.data.Role
@@ -32,6 +35,7 @@ class RegisterActivity : AppCompatActivity() {
         binding.btnRegister.setOnClickListener { register() }
     }
 
+    /** Valida el formulario y registra la cuenta (RF-AUT-01). Los vendedores quedan pendientes. */
     private fun register() {
         val name = binding.etName.text.toString().trim()
         val email = binding.etEmail.text.toString().trim()
@@ -57,23 +61,38 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        val session = Session(this)
-        session.name = if (isSeller) binding.etStore.text.toString() else name
-        session.email = email
-        session.phone = phone
-        session.promos = binding.cbPromos.isChecked
-        session.role = if (isSeller) Role.SELLER else Role.BUYER
-        session.loggedIn = true
-
-        if (isSeller) {
-            MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.register_seller_dialog_title)
-                .setMessage(R.string.register_seller_dialog_msg)
-                .setPositiveButton(R.string.action_understood) { _, _ -> Router.goHome(this, Role.SELLER) }
-                .setCancelable(false)
-                .show()
-        } else {
-            Router.goHome(this, Role.BUYER)
+        // Crea la cuenta en Firebase Auth y el documento users/{uid} con el rol elegido
+        val role = if (isSeller) Role.SELLER else Role.BUYER
+        binding.btnRegister.isEnabled = false
+        binding.btnRegister.setText(R.string.loading)
+        lifecycleScope.launch {
+            try {
+                val user = AuthRepository.register(
+                    name = name,
+                    email = email,
+                    phone = phone,
+                    password = password,
+                    role = role,
+                    storeName = binding.etStore.text.toString().trim(),
+                    nit = binding.etNit.text.toString().trim(),
+                    promos = binding.cbPromos.isChecked
+                )
+                Session.user = user
+                if (isSeller) {
+                    MaterialAlertDialogBuilder(this@RegisterActivity)
+                        .setTitle(R.string.register_seller_dialog_title)
+                        .setMessage(R.string.register_seller_dialog_msg)
+                        .setPositiveButton(R.string.action_understood) { _, _ -> Router.goHome(this@RegisterActivity, Role.SELLER) }
+                        .setCancelable(false)
+                        .show()
+                } else {
+                    Router.goHome(this@RegisterActivity, Role.BUYER)
+                }
+            } catch (e: Exception) {
+                binding.btnRegister.isEnabled = true
+                binding.btnRegister.setText(R.string.register_button)
+                binding.root.snack(AuthRepository.friendlyMessage(e))
+            }
         }
     }
 }

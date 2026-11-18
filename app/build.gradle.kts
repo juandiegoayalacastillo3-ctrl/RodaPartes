@@ -3,6 +3,12 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+// Firebase se configura con google-services.json (proyecto "rodapartes").
+// Se aplica solo si el archivo existe para que el proyecto también compile sin él.
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
+}
+
 android {
     namespace = "com.rodapartes.app"
     compileSdk = 34
@@ -11,8 +17,14 @@ android {
         applicationId = "com.rodapartes.app"
         minSdk = 26          // Android 8.0 (RNF-ESC-04)
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0-frontend"
+        versionCode = 2
+        versionName = "2.0"
+
+        // Llave PÚBLICA de ePayco (gradle.properties). La llave privada nunca va en la app.
+        val epaycoKey = (project.findProperty("epaycoPublicKey") as String?) ?: ""
+        buildConfigField("String", "EPAYCO_PUBLIC_KEY", "\"$epaycoKey\"")
+        // true = modo pruebas de ePayco (tarjetas de prueba, no se cobra dinero real)
+        buildConfigField("boolean", "EPAYCO_TEST", "true")
     }
 
     buildTypes {
@@ -36,6 +48,7 @@ android {
     // ViewBinding: acceso tipado a las vistas de cada layout XML
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 }
 
@@ -48,4 +61,21 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.8.2")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
     implementation("androidx.biometric:biometric:1.1.0")
+
+    // Firebase: autenticación, base de datos Firestore y Storage para las fotos
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
+    implementation("com.google.firebase:firebase-storage")
+    // .await() para usar las tareas de Firebase dentro de corrutinas
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
+
+    // Geolocalización (Fused Location Provider de Google Play Services)
+    implementation("com.google.android.gms:play-services-location:21.3.0")
+
+    // Carga de imágenes desde URL (fotos de Storage)
+    implementation("io.coil-kt:coil:2.7.0")
+
+    // Guardado cifrado de credenciales para el ingreso con huella (Android Keystore)
+    implementation("androidx.security:security-crypto:1.0.0")
 }

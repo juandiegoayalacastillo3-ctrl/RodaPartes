@@ -7,7 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rodapartes.app.R
-import com.rodapartes.app.data.MockData
+import com.google.firebase.firestore.ListenerRegistration
+import com.rodapartes.app.data.OrderRepository
+import com.rodapartes.app.util.Session
+import com.rodapartes.app.util.safeLaunch
+import com.rodapartes.app.util.viewScope
 import com.rodapartes.app.data.Order
 import com.rodapartes.app.data.OrderStatus
 import com.rodapartes.app.databinding.FragmentListBinding
@@ -23,6 +27,8 @@ class OrdersFragment : Fragment(R.layout.fragment_list) {
     private val binding get() = _binding!!
     private lateinit var adapter: OrderAdapter
     private var filter = 0 // 0 todas, 1 en curso, 2 entregadas
+    private var orders: List<Order> = emptyList()
+    private var listener: ListenerRegistration? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,14 +53,20 @@ class OrdersFragment : Fragment(R.layout.fragment_list) {
         adapter = OrderAdapter(emptyList(), showBuyer = false) { showDetail(it) }
         binding.rvList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvList.adapter = adapter
-        refresh()
+
+        // Historial del comprador en tiempo real (orders donde buyerId = uid)
+        listener = OrderRepository.listenByBuyer(Session.user?.uid.orEmpty()) { list ->
+            orders = list
+            if (_binding != null) refresh()
+        }
     }
 
+    /** Aplica el filtro de estado a las órdenes recibidas. */
     private fun refresh() {
-        val list = MockData.myOrders.filter {
+        val list = orders.filter {
             when (filter) {
-                1 -> it.status in listOf(OrderStatus.NUEVO, OrderStatus.PREPARACION, OrderStatus.ENVIADO)
-                2 -> it.status == OrderStatus.ENTREGADO
+                1 -> it.statusEnum in listOf(OrderStatus.NUEVO, OrderStatus.PREPARACION, OrderStatus.ENVIADO)
+                2 -> it.statusEnum == OrderStatus.ENTREGADO
                 else -> true
             }
         }
@@ -65,24 +77,27 @@ class OrdersFragment : Fragment(R.layout.fragment_list) {
         binding.empty.tvEmptyBody.text = getString(R.string.orders_empty_body)
     }
 
+    /** Detalle de la compra; si ya fue enviada o entregada permite pedir el retracto (RF-COM-04). */
     private fun showDetail(order: Order) {
-        val canRetract = order.status == OrderStatus.ENTREGADO || order.status == OrderStatus.ENVIADO
+        val canRetract = order.statusEnum == OrderStatus.ENTREGADO || order.statusEnum == OrderStatus.ENVIADO
         val dialog = MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.order_code, order.code))
-            .setMessage(getString(R.string.order_detail_msg, order.seller, order.summary,
-                Money.format(order.total), order.status.label, order.address))
+            .setMessage(getString(R.string.order_detail_msg, order.sellerName, order.summary,
+                Money.format(order.total), order.statusEnum.label, order.address, order.paymentRef))
             .setPositiveButton(R.string.action_close, null)
         if (canRetract) {
             dialog.setNeutralButton(R.string.order_retract) { _, _ ->
-                order.status = OrderStatus.RETRACTO
-                refresh()
-                binding.root.snack(getString(R.string.order_retract_sent))
+                viewScope.safeLaunch(binding.root) {
+                    OrderRepository.setStatus(order.id, OrderStatus.RETRACTO)
+                    binding.root.snack(getString(R.string.order_retract_sent))
+                }
             }
         }
         dialog.show()
     }
 
     override fun onDestroyView() {
+        listener?.remove()
         super.onDestroyView()
         _binding = null
     }

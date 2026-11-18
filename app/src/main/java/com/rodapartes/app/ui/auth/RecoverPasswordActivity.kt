@@ -5,6 +5,8 @@ import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.rodapartes.app.R
+import com.rodapartes.app.data.AuthRepository
+import com.rodapartes.app.util.snack
 import com.rodapartes.app.databinding.ActivityRecoverPasswordBinding
 import com.rodapartes.app.util.visible
 import kotlinx.coroutines.Job
@@ -24,9 +26,15 @@ class RecoverPasswordActivity : AppCompatActivity() {
         binding.toolbar.setNavigationOnClickListener { finish() }
         binding.btnBackToLogin.setOnClickListener { finish() }
         binding.btnSend.setOnClickListener { send() }
-        binding.btnResend.setOnClickListener { startCountdown() }
+        binding.btnResend.setOnClickListener {
+            lifecycleScope.launch {
+                runCatching { AuthRepository.sendPasswordReset(binding.etEmail.text.toString().trim()) }
+                startCountdown()
+            }
+        }
     }
 
+    /** Valida el correo y pide a Firebase el correo de restablecimiento. */
     private fun send() {
         val email = binding.etEmail.text.toString().trim()
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -34,11 +42,22 @@ class RecoverPasswordActivity : AppCompatActivity() {
             return
         }
         binding.tilEmail.error = null
-        // Misma respuesta exista o no el correo (no revela cuentas)
-        binding.tvSentBody.text = getString(R.string.recover_sent_body, email)
-        binding.groupForm.visible(false)
-        binding.groupSent.visible(true)
-        startCountdown()
+        binding.btnSend.isEnabled = false
+        lifecycleScope.launch {
+            try {
+                // Firebase envía el enlace de un solo uso al correo (RF-AUT-05)
+                AuthRepository.sendPasswordReset(email)
+                // Misma respuesta exista o no el correo (no revela cuentas)
+                binding.tvSentBody.text = getString(R.string.recover_sent_body, email)
+                binding.groupForm.visible(false)
+                binding.groupSent.visible(true)
+                startCountdown()
+            } catch (e: Exception) {
+                binding.root.snack(AuthRepository.friendlyMessage(e))
+            } finally {
+                binding.btnSend.isEnabled = true
+            }
+        }
     }
 
     /** Evita reenvíos seguidos: el botón se habilita después de 30 s. */

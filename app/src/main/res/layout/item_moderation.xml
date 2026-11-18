@@ -30,6 +30,15 @@
                 app:tint="@color/asfalto_suave"
                 tools:src="@drawable/ic_cat_electrico" />
 
+            <!-- Foto real del producto (Firebase Storage); si no hay, se ve el degradado -->
+            <ImageView
+                android:id="@+id/ivPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                android:visibility="gone" />
+
             <TextView
                 android:id="@+id/tvStatus"
                 style="@style/RodaPartes.Badge"

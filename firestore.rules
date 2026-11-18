@@ -1,0 +1,85 @@
+// Reglas de seguridad de Cloud Firestore para RodaPartes.
+// Cada colección valida quién puede leer y escribir según su rol (users/{uid}.role).
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function me() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function hasProfile() { return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid)); }
+    function isAdmin() { return hasProfile() && me().role == 'ADMIN' && me().status == 'ACTIVO'; }
+    function isSeller() { return hasProfile() && me().role == 'SELLER'; }
+    function onlyChanges(keys) { return request.resource.data.diff(resource.data).affectedKeys().hasOnly(keys); }
+
+    // ---------- Usuarios ----------
+    match /users/{uid} {
+      // Los perfiles se leen para mostrar los datos públicos de la tienda
+      allow read: if signedIn();
+      // Registro propio: comprador ACTIVO o vendedor PENDIENTE. El admin crea cualquier rol.
+      allow create: if isAdmin() || (signedIn() && request.auth.uid == uid && (
+        (request.resource.data.role == 'BUYER' && request.resource.data.status == 'ACTIVO') ||
+        (request.resource.data.role == 'SELLER' && request.resource.data.status == 'PENDIENTE')));
+      // El usuario edita su perfil, pero no su rol ni su correo; solo puede pasar a ELIMINADO
+      allow update: if isAdmin() || (signedIn() && request.auth.uid == uid
+        && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'email'])
+        && (request.resource.data.status == resource.data.status || request.resource.data.status == 'ELIMINADO'));
+      allow delete: if false; // borrado lógico
+    }
+
+    // ---------- Productos ----------
+    match /products/{id} {
+      allow read: if resource.data.status == 'PUBLICADO'
+        || (signedIn() && (resource.data.sellerId == request.auth.uid || isAdmin()));
+      // Un vendedor crea productos propios que quedan en revisión o borrador
+      allow create: if isSeller() && request.resource.data.sellerId == request.auth.uid
+        && request.resource.data.status in ['EN_REVISION', 'BORRADOR']
+        && request.resource.data.price > 0 && request.resource.data.stock >= 0;
+      allow update: if isAdmin()
+        // El vendedor edita lo suyo; si cambia nombre o fotos vuelve a revisión
+        || (signedIn() && resource.data.sellerId == request.auth.uid
+            && request.resource.data.sellerId == request.auth.uid
+            && request.resource.data.price > 0 && request.resource.data.stock >= 0
+            && (request.resource.data.status in ['EN_REVISION', 'BORRADOR']
+                || (resource.data.status == 'PUBLICADO' && request.resource.data.status == 'PUBLICADO'
+                    && request.resource.data.name == resource.data.name
+                    && request.resource.data.photos == resource.data.photos)))
+        // Cualquier usuario puede reportar (+1)
+        || (signedIn() && onlyChanges(['reports']) && request.resource.data.reports == resource.data.reports + 1)
+        // Al comprar se descuenta el stock (nunca por debajo de cero)
+        || (signedIn() && onlyChanges(['stock']) && request.resource.data.stock < resource.data.stock
+            && request.resource.data.stock >= 0);
+      allow delete: if isAdmin() || (signedIn() && resource.data.sellerId == request.auth.uid);
+    }
+
+    // ---------- Carrito (cada usuario solo ve el suyo) ----------
+    match /carts/{uid}/items/{productId} {
+      allow read, write: if signedIn() && request.auth.uid == uid;
+    }
+
+    // ---------- Órdenes ----------
+    match /orders/{id} {
+      allow read: if signedIn() && (resource.data.buyerId == request.auth.uid
+        || resource.data.sellerId == request.auth.uid || isAdmin());
+      allow create: if signedIn() && request.resource.data.buyerId == request.auth.uid
+        && request.resource.data.status == 'NUEVO' && request.resource.data.paymentRef != '';
+      allow update: if isAdmin()
+        || (signedIn() && resource.data.sellerId == request.auth.uid && onlyChanges(['status', 'updatedAt']))
+        || (signedIn() && resource.data.buyerId == request.auth.uid && onlyChanges(['status', 'updatedAt'])
+            && request.resource.data.status == 'RETRACTO');
+      allow delete: if false;
+    }
+
+    // ---------- Comprobantes de pago ----------
+    match /payments/{ref} {
+      allow create: if signedIn() && request.resource.data.buyerId == request.auth.uid;
+      allow read: if isAdmin() || (signedIn() && resource.data.buyerId == request.auth.uid);
+      allow update, delete: if false;
+    }
+
+    // ---------- Bitácora de auditoría (solo administradores) ----------
+    match /audit/{id} {
+      allow read, create: if isAdmin();
+      allow update, delete: if false;
+    }
+  }
+}

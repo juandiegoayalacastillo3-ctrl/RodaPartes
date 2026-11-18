@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.rodapartes.app.R
-import com.rodapartes.app.data.MockData
+import com.google.firebase.firestore.ListenerRegistration
+import com.rodapartes.app.data.AppUser
+import com.rodapartes.app.data.UserRepository
 import com.rodapartes.app.data.Role
-import com.rodapartes.app.data.User
 import com.rodapartes.app.databinding.FragmentListBinding
 import com.rodapartes.app.databinding.ItemUserBinding
 import com.rodapartes.app.util.applyStatus
@@ -25,7 +26,9 @@ class AdminUsersFragment : Fragment(R.layout.fragment_list) {
 
     private var _binding: FragmentListBinding? = null
     private val binding get() = _binding!!
-    private var items: List<User> = emptyList()
+    private var items: List<AppUser> = emptyList()
+    private var all: List<AppUser> = emptyList()
+    private var listener: ListenerRegistration? = null
     private val adapter = Adapter()
     private var roleFilter: Role? = null
 
@@ -59,18 +62,20 @@ class AdminUsersFragment : Fragment(R.layout.fragment_list) {
         binding.fab.visible(true)
         binding.fab.contentDescription = getString(R.string.user_new_title)
         binding.fab.setOnClickListener { startActivity(Intent(requireContext(), UserFormActivity::class.java)) }
+
+        // Todos los usuarios en tiempo real (colección users)
+        listener = UserRepository.listenAll { list ->
+            all = list
+            if (_binding != null) refresh()
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        refresh()
-    }
-
+    /** Filtra por rol y por texto (nombre, correo o documento). */
     private fun refresh() {
         val q = binding.etSearch.text?.toString()?.trim().orEmpty()
-        items = MockData.users.filter {
-            (roleFilter == null || it.role == roleFilter) &&
-                (q.isEmpty() || it.name.contains(q, true) || it.email.contains(q, true) || it.document.contains(q, true))
+        items = all.filter {
+            (roleFilter == null || it.roleEnum == roleFilter) &&
+                (q.isEmpty() || it.displayName.contains(q, true) || it.email.contains(q, true) || it.document.contains(q, true))
         }
         adapter.notifyDataSetChanged()
         binding.empty.root.visible(items.isEmpty())
@@ -90,19 +95,20 @@ class AdminUsersFragment : Fragment(R.layout.fragment_list) {
         override fun onBindViewHolder(holder: VH, position: Int) {
             val u = items[position]
             with(holder.b) {
-                tvInitials.text = initials(u.name)
-                tvName.text = u.name
-                tvInfo.text = getString(R.string.user_line, u.role.label, maskEmail(u.email))
-                tvStatus.applyStatus(u.status)
+                tvInitials.text = initials(u.displayName)
+                tvName.text = u.displayName
+                tvInfo.text = getString(R.string.user_line, u.roleEnum.label, maskEmail(u.email))
+                tvStatus.applyStatus(u.statusEnum)
                 root.setOnClickListener {
                     startActivity(Intent(requireContext(), UserFormActivity::class.java)
-                        .putExtra(UserFormActivity.EXTRA_ID, u.id))
+                        .putExtra(UserFormActivity.EXTRA_ID, u.uid))
                 }
             }
         }
     }
 
     override fun onDestroyView() {
+        listener?.remove()
         super.onDestroyView()
         _binding = null
     }

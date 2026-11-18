@@ -189,10 +189,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/esp_m"
                 android:hint="@string/field_ref"
-                app:endIconContentDescription="@string/cd_scan"
-                app:endIconDrawable="@drawable/ic_scan"
-                app:endIconMode="custom"
-                app:endIconTint="?attr/colorPrimary"
                 app:helperText="@string/form_ref_helper">
 
                 <com.google.android.material.textfield.TextInputEditText

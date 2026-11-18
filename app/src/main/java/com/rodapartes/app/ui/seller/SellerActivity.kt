@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.rodapartes.app.R
-import com.rodapartes.app.data.MockData
+import com.google.firebase.firestore.ListenerRegistration
+import com.rodapartes.app.data.Order
+import com.rodapartes.app.data.OrderRepository
+import com.rodapartes.app.util.Session
 import com.rodapartes.app.data.OrderStatus
 import com.rodapartes.app.databinding.ActivitySellerBinding
 import com.rodapartes.app.util.color
@@ -13,6 +16,8 @@ import com.rodapartes.app.util.color
 class SellerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySellerBinding
+    private var orders: List<Order> = emptyList()
+    private var ordersListener: ListenerRegistration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,11 +39,17 @@ class SellerActivity : AppCompatActivity() {
         }
         binding.bottomNav.setOnItemReselectedListener { }
         if (savedInstanceState == null) binding.bottomNav.selectedItemId = R.id.nav_panel
+
+        // Pedidos de la tienda en tiempo real: alimentan el badge de "Pedidos"
+        ordersListener = OrderRepository.listenBySeller(Session.user?.uid.orEmpty()) { list ->
+            orders = list
+            updateOrdersBadge()
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        updateOrdersBadge()
+    override fun onDestroy() {
+        ordersListener?.remove()
+        super.onDestroy()
     }
 
     fun openTab(itemId: Int) {
@@ -47,7 +58,7 @@ class SellerActivity : AppCompatActivity() {
 
     /** Número de pedidos nuevos sobre el ícono de Pedidos. */
     fun updateOrdersBadge() {
-        val nuevos = MockData.sellerOrders().count { it.status == OrderStatus.NUEVO }
+        val nuevos = orders.count { it.statusEnum == OrderStatus.NUEVO }
         if (nuevos > 0) {
             binding.bottomNav.getOrCreateBadge(R.id.nav_seller_orders).apply {
                 number = nuevos

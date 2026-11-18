@@ -1,38 +1,38 @@
 package com.rodapartes.app.ui.buyer
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.chip.Chip
+import com.google.firebase.firestore.ListenerRegistration
 import com.rodapartes.app.R
 import com.rodapartes.app.data.Category
-import com.rodapartes.app.data.MockData
+import com.rodapartes.app.data.Product
+import com.rodapartes.app.data.ProductRepository
 import com.rodapartes.app.databinding.FragmentCatalogBinding
 import com.rodapartes.app.ui.common.ProductGridAdapter
-import com.rodapartes.app.ui.seller.CameraActivity
+import com.rodapartes.app.util.Session
 import com.rodapartes.app.util.visible
 
-/** Pestaña "Buscar": catálogo con búsqueda por texto/referencia y filtros. */
+/**
+ * Pestaña "Buscar": catálogo de publicaciones aprobadas (RF-INI-02).
+ * Los productos llegan de Firestore en tiempo real y se filtran en el celular por texto,
+ * referencia, categoría y compatibilidad con la moto del comprador.
+ */
 class CatalogFragment : Fragment(R.layout.fragment_catalog) {
 
     private var _binding: FragmentCatalogBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var adapter: ProductGridAdapter
+    private var listener: ListenerRegistration? = null
+    private var all: List<Product> = emptyList()
     private var selectedCategory: Category? = null
-
-    // Recibe la referencia leída con la cámara (escáner)
-    private val scanLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            result.data?.getStringExtra(CameraActivity.EXTRA_CODE)?.let { binding.etSearch.setText(it) }
-        }
-    }
+    private val myMoto get() = Session.user?.moto.orEmpty()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,9 +40,10 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
 
         selectedCategory = arguments?.getString(ARG_CATEGORY)?.let { Category.valueOf(it) }
         binding.swCompatible.isChecked = arguments?.getBoolean(ARG_COMPATIBLE) ?: false
-        binding.swCompatible.text = getString(R.string.catalog_only_compatible_moto, MockData.myMoto)
+        binding.swCompatible.visible(myMoto.isNotBlank())
+        binding.swCompatible.text = getString(R.string.catalog_only_compatible_moto, myMoto)
 
-        adapter = ProductGridAdapter(emptyList()) { product ->
+        adapter = ProductGridAdapter(emptyList(), myMoto) { product ->
             startActivity(Intent(requireContext(), ProductDetailActivity::class.java)
                 .putExtra(ProductDetailActivity.EXTRA_ID, product.id))
         }
@@ -50,26 +51,23 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
         binding.rvProducts.adapter = adapter
 
         buildChips()
-
         binding.etSearch.doAfterTextChanged { applyFilters() }
         binding.swCompatible.setOnCheckedChangeListener { _, _ -> applyFilters() }
-        binding.tilSearch.setEndIconOnClickListener {
-            scanLauncher.launch(Intent(requireContext(), CameraActivity::class.java)
-                .putExtra(CameraActivity.EXTRA_MODE, CameraActivity.MODE_SCAN))
-        }
 
-        applyFilters()
+        listener = ProductRepository.listenCatalog { products ->
+            all = products
+            if (_binding != null) applyFilters()
+        }
     }
 
     /** Crea un Chip por categoría (más "Todo") dentro del ChipGroup. */
     private fun buildChips() {
-        val all = Chip(requireContext()).apply {
+        binding.chipCategories.addView(Chip(requireContext()).apply {
             id = View.generateViewId()
             text = getString(R.string.filter_all)
             isCheckable = true
             isChecked = selectedCategory == null
-        }
-        binding.chipCategories.addView(all)
+        })
         Category.entries.forEach { category ->
             binding.chipCategories.addView(Chip(requireContext()).apply {
                 id = View.generateViewId()
@@ -85,26 +83,28 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
         }
     }
 
+    /** Aplica búsqueda, categoría y compatibilidad sobre la lista recibida de Firestore. */
     private fun applyFilters() {
         val query = binding.etSearch.text?.toString()?.trim().orEmpty()
-        val onlyCompatible = binding.swCompatible.isChecked
-        val result = MockData.catalog().filter { p ->
-            (selectedCategory == null || p.category == selectedCategory) &&
-                (!onlyCompatible || p.fits(MockData.myMoto)) &&
+        val onlyCompatible = binding.swCompatible.isChecked && myMoto.isNotBlank()
+        val result = all.filter { p ->
+            (selectedCategory == null || p.categoryEnum == selectedCategory) &&
+                (!onlyCompatible || p.fits(myMoto)) &&
                 (query.isEmpty() ||
                     p.name.contains(query, ignoreCase = true) ||
                     p.ref.contains(query, ignoreCase = true) ||
+                    p.sellerName.contains(query, ignoreCase = true) ||
                     p.compatible.any { it.contains(query, ignoreCase = true) })
         }
         adapter.submit(result)
         binding.tvCount.text = resources.getQuantityString(R.plurals.products_count, result.size, result.size)
-
         binding.empty.root.visible(result.isEmpty())
         binding.empty.tvEmptyTitle.text = getString(R.string.catalog_empty_title)
         binding.empty.tvEmptyBody.text = getString(R.string.catalog_empty_body)
     }
 
     override fun onDestroyView() {
+        listener?.remove()
         super.onDestroyView()
         _binding = null
     }

@@ -12,12 +12,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.rodapartes.app.R
-import com.rodapartes.app.data.MockData
+import com.google.firebase.firestore.ListenerRegistration
+import com.rodapartes.app.data.ProductRepository
+import com.rodapartes.app.util.Session
+import com.rodapartes.app.util.bindProductImage
+import com.rodapartes.app.util.safeLaunch
+import com.rodapartes.app.util.viewScope
 import com.rodapartes.app.data.Product
 import com.rodapartes.app.data.ProductStatus
 import com.rodapartes.app.databinding.FragmentListBinding
 import com.rodapartes.app.databinding.ItemSellerProductBinding
-import com.rodapartes.app.ui.common.bindTile
 import com.rodapartes.app.util.Money
 import com.rodapartes.app.util.applyStatus
 import com.rodapartes.app.util.snack
@@ -31,6 +35,8 @@ class SellerProductsFragment : Fragment(R.layout.fragment_list) {
     private var items: List<Product> = emptyList()
     private val adapter = Adapter()
     private var filter = 0 // 0 todos, 1 publicados, 2 en revisión/borrador, 3 sin stock
+    private var all: List<Product> = emptyList()
+    private var listener: ListenerRegistration? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,20 +68,22 @@ class SellerProductsFragment : Fragment(R.layout.fragment_list) {
         binding.fab.visible(true)
         binding.fab.contentDescription = getString(R.string.form_new_title)
         binding.fab.setOnClickListener { startActivity(Intent(requireContext(), ProductFormActivity::class.java)) }
+
+        // Inventario de la tienda en tiempo real (products donde sellerId = uid)
+        listener = ProductRepository.listenBySeller(Session.user?.uid.orEmpty()) { list ->
+            all = list
+            if (_binding != null) refresh()
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        refresh()
-    }
-
+    /** Aplica la búsqueda y el filtro de estado al inventario recibido. */
     private fun refresh() {
         val q = binding.etSearch.text?.toString()?.trim().orEmpty()
-        items = MockData.sellerProducts().filter { p ->
+        items = all.filter { p ->
             val byFilter = when (filter) {
-                1 -> p.status == ProductStatus.PUBLICADO
-                2 -> p.status == ProductStatus.EN_REVISION || p.status == ProductStatus.BORRADOR
-                3 -> p.stock == 0
+                1 -> p.statusEnum == ProductStatus.PUBLICADO
+                2 -> p.statusEnum == ProductStatus.EN_REVISION || p.statusEnum == ProductStatus.BORRADOR
+                3 -> p.stock == 0L
                 else -> true
             }
             byFilter && (q.isEmpty() || p.name.contains(q, true) || p.ref.contains(q, true))
@@ -87,20 +95,22 @@ class SellerProductsFragment : Fragment(R.layout.fragment_list) {
         binding.empty.tvEmptyBody.text = getString(R.string.seller_products_empty_body)
     }
 
+    /** Abre el formulario en modo edición. */
     private fun edit(p: Product) {
         startActivity(Intent(requireContext(), ProductFormActivity::class.java)
             .putExtra(ProductFormActivity.EXTRA_ID, p.id))
     }
 
-    /** Eliminar con confirmación. Si tuviera compras se haría borrado lógico (RF-PRO-06). */
+    /** Eliminar con confirmación. Borra el documento y sus fotos de Storage (RF-PRO-06); las órdenes conservan su copia. */
     private fun confirmDelete(p: Product) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.delete_product_title)
             .setMessage(getString(R.string.delete_product_msg, p.name))
             .setPositiveButton(R.string.action_delete) { _, _ ->
-                MockData.products.remove(p)
-                refresh()
-                binding.root.snack(getString(R.string.deleted_ok, p.name))
+                viewScope.safeLaunch(binding.root) {
+                    ProductRepository.delete(p)
+                    binding.root.snack(getString(R.string.deleted_ok, p.name))
+                }
             }
             .setNegativeButton(R.string.action_cancel, null)
             .show()
@@ -117,10 +127,10 @@ class SellerProductsFragment : Fragment(R.layout.fragment_list) {
         override fun onBindViewHolder(holder: VH, position: Int) {
             val p = items[position]
             with(holder.b) {
-                bindTile(tile, ivIcon, p)
+                bindProductImage(tile, ivIcon, ivPhoto, p.categoryEnum, p.mainPhoto)
                 tvName.text = p.name
                 tvInfo.text = getString(R.string.seller_product_info, Money.format(p.price), p.stock)
-                tvStatus.applyStatus(p.status)
+                tvStatus.applyStatus(p.statusEnum)
                 tvLowStock.visible(p.lowStock)
                 root.setOnClickListener { edit(p) }
                 btnEdit.setOnClickListener { edit(p) }
@@ -130,6 +140,7 @@ class SellerProductsFragment : Fragment(R.layout.fragment_list) {
     }
 
     override fun onDestroyView() {
+        listener?.remove()
         super.onDestroyView()
         _binding = null
     }
