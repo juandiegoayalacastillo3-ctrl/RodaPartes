@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "808621139303",
+    "project_id": "rodapartes",
+    "storage_bucket": "rodapartes.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808621139303:android:e1047a8b588274dad93bc2",
+        "android_client_info": {
+          "package_name": "com.rodapartes.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdR2MGk-iL_WvdjYsSGSCeeGcOYOBiKX4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
