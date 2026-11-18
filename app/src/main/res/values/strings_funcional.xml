@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Textos agregados en la Actividad 5 (app funcional con Firebase, ePayco y geolocalización) -->
+<!-- Textos agregados en la Actividad 5 (app funcional con Firebase, Wompi y geolocalización) -->
 <resources>
     <string name="loading">Un momento…</string>
 
@@ -34,21 +34,21 @@
     <string name="checkout_pickup_short">Recoge en la tienda</string>
     <string name="checkout_seller_legal_simple">Vende: %1$s</string>
 
-    <!-- Pago con ePayco -->
-    <string name="payment_methods_epayco">Tarjeta de crédito o débito, PSE, Nequi, Daviplata o efectivo. Eliges el medio en la ventana de ePayco.</string>
+    <!-- Pago con Wompi -->
+    <string name="payment_methods_wompi">Tarjeta de crédito o débito, PSE, Nequi o botón Bancolombia. Eliges el medio en la ventana de Wompi.</string>
     <string name="payment_invoice">Factura %1$s</string>
     <string name="payment_items_line">%1$s · %2$s</string>
     <string name="payment_description">Compra de %1$d repuestos en RodaPartes</string>
-    <string name="payment_pay_epayco">Pagar %1$s con ePayco</string>
-    <string name="payment_validating">Confirmando el pago con ePayco…</string>
-    <string name="payment_test_note">Modo pruebas de ePayco: usa la tarjeta 4575 6231 8229 0326, fecha 12/2030 y CVV 123. No se cobra dinero real.</string>
+    <string name="payment_pay_wompi">Pagar %1$s con Wompi</string>
+    <string name="payment_validating">Confirmando el pago con Wompi…</string>
+    <string name="payment_test_note">Modo pruebas de Wompi: usa la tarjeta 4242 4242 4242 4242 (aprobada) o 4111 1111 1111 1111 (rechazada), cualquier fecha futura y CVV de 3 dígitos. No se cobra dinero real.</string>
     <string name="payment_cancelled">Cerraste el pago sin terminarlo</string>
-    <string name="payment_load_error">No se pudo abrir ePayco: %1$s</string>
-    <string name="payment_ok_codes">Órdenes %1$s\nReferencia ePayco %2$s</string>
+    <string name="payment_load_error">No se pudo abrir Wompi: %1$s</string>
+    <string name="payment_ok_codes">Órdenes %1$s\nTransacción Wompi %2$s</string>
     <string name="payment_pending_title">Pago pendiente</string>
-    <string name="payment_pending_msg">ePayco todavía está procesando el pago (ref. %1$s). Tu carrito sigue guardado; cuando se apruebe vuelve a intentarlo.</string>
+    <string name="payment_pending_msg">Wompi todavía está procesando el pago (ref. %1$s). Tu carrito sigue guardado; cuando se apruebe vuelve a intentarlo.</string>
     <string name="payment_rejected_title">El pago no se aprobó</string>
-    <string name="payment_rejected_msg">ePayco respondió: %1$s (ref. %2$s). No se hizo ningún cobro y tu carrito sigue guardado.</string>
+    <string name="payment_rejected_msg">Wompi respondió: %1$s (ref. %2$s). No se hizo ningún cobro y tu carrito sigue guardado.</string>
 
     <!-- Vendedor -->
     <string name="seller_pending_subtitle">%1$s · en revisión</string>

@@ -85,7 +85,7 @@ class SellerOrdersFragment : Fragment(R.layout.fragment_list) {
         }
     }
 
-    /** Rechazar un pedido nuevo lo deja CANCELADO (el reembolso se gestiona con ePayco). */
+    /** Rechazar un pedido nuevo lo deja CANCELADO (el reembolso se gestiona con Wompi). */
     private fun reject(order: Order) {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.order_reject_title)

@@ -20,11 +20,12 @@ android {
         versionCode = 2
         versionName = "2.0"
 
-        // Llave PÚBLICA de ePayco (gradle.properties). La llave privada nunca va en la app.
-        val epaycoKey = (project.findProperty("epaycoPublicKey") as String?) ?: ""
-        buildConfigField("String", "EPAYCO_PUBLIC_KEY", "\"$epaycoKey\"")
-        // true = modo pruebas de ePayco (tarjetas de prueba, no se cobra dinero real)
-        buildConfigField("boolean", "EPAYCO_TEST", "true")
+        // Llaves de Wompi (gradle.properties). La llave privada nunca va en la app.
+        // pub_test_... = ambiente sandbox: tarjetas de prueba, no se cobra dinero real.
+        val wompiKey = (project.findProperty("wompiPublicKey") as String?) ?: ""
+        val wompiIntegrity = (project.findProperty("wompiIntegrity") as String?) ?: ""
+        buildConfigField("String", "WOMPI_PUBLIC_KEY", "\"$wompiKey\"")
+        buildConfigField("String", "WOMPI_INTEGRITY", "\"$wompiIntegrity\"")
     }
 
     buildTypes {

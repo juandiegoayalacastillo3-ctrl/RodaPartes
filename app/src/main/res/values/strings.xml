@@ -254,7 +254,7 @@
 
     <!-- ===== Pago ===== -->
     <string name="payment_title">Pago</string>
-    <string name="payment_secure">Pago seguro con ePayco</string>
+    <string name="payment_secure">Pago seguro con Wompi</string>
     <string name="payment_method">Método de pago</string>
     <string name="payment_card">Tarjeta</string>
     <string name="payment_pse">PSE</string>
@@ -262,7 +262,7 @@
     <string name="card_number_placeholder">•••• •••• •••• ••••</string>
     <string name="card_name_placeholder">NOMBRE DEL TITULAR</string>
     <string name="card_exp_placeholder">MM/AA</string>
-    <string name="payment_token_note">Los datos de la tarjeta los recibe ePayco; la app nunca los ve.</string>
+    <string name="payment_token_note">Los datos de la tarjeta los recibe Wompi; la app nunca los ve.</string>
     <string name="payment_pse_note">Te llevaremos a la página de tu banco para autorizar el pago.</string>
     <string name="payment_nequi_note">Recibirás una notificación en tu app Nequi para aceptar el pago.</string>
     <string name="payment_total">Total a pagar</string>
@@ -286,7 +286,7 @@
     <string name="order_status_changed">#%1$s ahora está: %2$s. Le avisamos al comprador.</string>
     <string name="order_reject_title">¿Rechazar el pedido?</string>
     <string name="order_reject_msg">El pedido #%1$s se cancelará y el pago se devolverá al comprador.</string>
-    <string name="order_admin_msg">Comprador: %1$s\nVendedor: %2$s\nProductos: %3$s\nTotal: %4$s\nEstado: %5$s\nReferencia ePayco: %6$s</string>
+    <string name="order_admin_msg">Comprador: %1$s\nVendedor: %2$s\nProductos: %3$s\nTotal: %4$s\nEstado: %5$s\nTransacción Wompi: %6$s</string>
     <string name="order_admin_legal_msg">Comprador: %1$s\nProductos: %2$s\nValor: %3$s\n\n%4$s</string>
     <string name="legal_retract">Retracto (Ley 1480, art. 47): el dinero debe devolverse en máximo 15 días calendario por el medio que eligió el comprador (Ley 2439 de 2024).</string>
     <string name="legal_reversal">Reversión del pago (Ley 1480, art. 51 y Decreto 587 de 2016): se coordina con el emisor y la pasarela usando el ID de la transacción.</string>

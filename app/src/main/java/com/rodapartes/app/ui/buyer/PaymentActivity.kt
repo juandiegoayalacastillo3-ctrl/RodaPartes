@@ -3,7 +3,6 @@ package com.rodapartes.app.ui.buyer
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
-import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -17,10 +16,10 @@ import com.rodapartes.app.R
 import com.rodapartes.app.data.AuthRepository
 import com.rodapartes.app.data.CartItem
 import com.rodapartes.app.data.CartRepository
-import com.rodapartes.app.data.EpaycoRepository
-import com.rodapartes.app.data.EpaycoResult
 import com.rodapartes.app.data.OrderRepository
 import com.rodapartes.app.data.Pricing
+import com.rodapartes.app.data.WompiRepository
+import com.rodapartes.app.data.WompiResult
 import com.rodapartes.app.databinding.ActivityPaymentBinding
 import com.rodapartes.app.databinding.DialogPaymentSuccessBinding
 import com.rodapartes.app.util.Money
@@ -30,12 +29,13 @@ import com.rodapartes.app.util.visible
 import kotlinx.coroutines.launch
 
 /**
- * Pasarela de pagos con ePayco (RF-PAG-03 y RF-PAG-04).
+ * Pasarela de pagos con Wompi (RF-PAG-03 y RF-PAG-04).
  *
- * 1. Muestra el total y genera un número de factura único.
- * 2. Abre el checkout oficial de ePayco en un WebView (tarjeta, PSE, Nequi, Daviplata...).
- * 3. Cuando ePayco redirige a la URL de respuesta, toma ref_payco y valida la transacción.
- * 4. Si quedó aceptada y el valor coincide, crea las órdenes en Firestore y vacía el carrito.
+ * 1. Muestra el total y genera una referencia de pago única.
+ * 2. Abre el Web Checkout oficial de Wompi en un WebView (tarjeta, PSE, Nequi, Bancolombia...).
+ * 3. Cuando Wompi redirige a la URL de respuesta, toma el id de la transacción y la valida.
+ * 4. Si quedó aprobada y el valor y la referencia coinciden, crea las órdenes en Firestore
+ *    y vacía el carrito.
  */
 class PaymentActivity : AppCompatActivity() {
 
@@ -51,7 +51,7 @@ class PaymentActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
         binding.tvInvoice.text = getString(R.string.payment_invoice, invoice)
-        binding.tvTestNote.visible(BuildConfig.EPAYCO_TEST)
+        binding.tvTestNote.visible(WompiRepository.isSandbox)
         binding.btnPay.isEnabled = false
 
         // Atrás: si el checkout está abierto, vuelve al resumen en lugar de salir
@@ -72,7 +72,7 @@ class PaymentActivity : AppCompatActivity() {
                 resources.getQuantityString(R.plurals.products_count, count, count),
                 if (CheckoutState.delivery) CheckoutState.address else getString(R.string.checkout_pickup_short)
             )
-            binding.btnPay.text = getString(R.string.payment_pay_epayco, Money.format(total))
+            binding.btnPay.text = getString(R.string.payment_pay_wompi, Money.format(total))
             binding.btnPay.isEnabled = cart.isNotEmpty()
         }
 
@@ -80,14 +80,13 @@ class PaymentActivity : AppCompatActivity() {
         binding.btnPay.setOnClickListener { openCheckout() }
     }
 
-    /** Configura el WebView: JavaScript para el script de ePayco e intercepción de la respuesta. */
+    /** Configura el WebView: JavaScript para el checkout de Wompi e intercepción de la respuesta. */
     @SuppressLint("SetJavaScriptEnabled")
     private fun setupWebView() = with(binding.webView) {
         settings.javaScriptEnabled = true
         settings.domStorageEnabled = true
         settings.javaScriptCanOpenWindowsAutomatically = true
         webChromeClient = WebChromeClient()
-        addJavascriptInterface(Bridge(), "RodaPartes")
         webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean =
                 interceptResponse(request.url)
@@ -98,43 +97,37 @@ class PaymentActivity : AppCompatActivity() {
         }
     }
 
-    /** Arma el HTML del checkout con los datos de la compra y lo carga en el WebView. */
+    /** Abre el checkout de Wompi con el valor, la referencia y los datos del comprador. */
     private fun openCheckout() {
         val user = Session.user ?: return
-        val html = assets.open("epayco_checkout.html").bufferedReader().use { it.readText() }
-            .replace("{{PUBLIC_KEY}}", BuildConfig.EPAYCO_PUBLIC_KEY)
-            .replace("{{TEST}}", BuildConfig.EPAYCO_TEST.toString())
-            .replace("{{DESCRIPTION}}", js(getString(R.string.payment_description, cart.sumOf { it.qty })))
-            .replace("{{INVOICE}}", invoice)
-            .replace("{{AMOUNT}}", total.toString())
-            .replace("{{RESPONSE_URL}}", EpaycoRepository.RESPONSE_URL)
-            .replace("{{NAME}}", js(user.name))
-            .replace("{{EMAIL}}", js(user.email))
-            .replace("{{PHONE}}", js(user.phone))
-            .replace("{{ADDRESS}}", js(CheckoutState.address))
+        if (BuildConfig.WOMPI_PUBLIC_KEY.isBlank()) {
+            binding.root.snack(getString(R.string.payment_load_error, "falta la llave pública")); return
+        }
         showCheckout(true)
         binding.progress.visible(true)
-        binding.webView.loadDataWithBaseURL("https://rodapartes.app/", html, "text/html", "utf-8", null)
+        binding.webView.loadUrl(
+            WompiRepository.checkoutUrl(invoice, total, user.email, user.name, user.phone)
+        )
     }
 
-    /** Si la URL es la de respuesta, toma ref_payco y valida el pago. */
+    /** Si la URL es la de respuesta, toma el id de la transacción y valida el pago. */
     private fun interceptResponse(url: Uri): Boolean {
-        if (!url.toString().startsWith(EpaycoRepository.RESPONSE_URL)) return false
-        val ref = url.getQueryParameter("ref_payco") ?: url.getQueryParameter("x_ref_payco")
-        if (ref.isNullOrBlank()) {
+        if (!url.toString().startsWith(WompiRepository.REDIRECT_URL)) return false
+        val id = url.getQueryParameter("id")
+        if (id.isNullOrBlank()) {
             showCheckout(false)
             binding.root.snack(getString(R.string.payment_cancelled))
         } else {
-            confirm(ref)
+            confirm(id)
         }
         return true
     }
 
     /**
-     * Valida la transacción en ePayco. Solo con estado "Aceptada", el mismo valor y la misma
-     * factura se registran las órdenes (evita que una respuesta alterada cree compras).
+     * Valida la transacción en Wompi. Solo con estado APPROVED, el mismo valor y la misma
+     * referencia se registran las órdenes (evita que una respuesta alterada cree compras).
      */
-    private fun confirm(refPayco: String) {
+    private fun confirm(transactionId: String) {
         if (handled) return
         handled = true
         showCheckout(false)
@@ -143,16 +136,16 @@ class PaymentActivity : AppCompatActivity() {
         binding.btnPay.setText(R.string.payment_validating)
         lifecycleScope.launch {
             try {
-                val result = EpaycoRepository.validate(refPayco)
+                val result = WompiRepository.validate(transactionId)
                 when {
-                    result.accepted && result.amount == total && result.invoice == invoice -> saveOrders(result)
-                    result.pending -> showResult(R.string.payment_pending_title, getString(R.string.payment_pending_msg, refPayco))
-                    else -> showResult(R.string.payment_rejected_title, getString(R.string.payment_rejected_msg, result.response, refPayco))
+                    result.accepted && result.amountInCents == total * 100 && result.reference == invoice -> saveOrders(result)
+                    result.pending -> showResult(R.string.payment_pending_title, getString(R.string.payment_pending_msg, transactionId))
+                    else -> showResult(R.string.payment_rejected_title, getString(R.string.payment_rejected_msg, result.status, transactionId))
                 }
             } catch (e: Exception) {
                 handled = false
                 binding.btnPay.isEnabled = true
-                binding.btnPay.text = getString(R.string.payment_pay_epayco, Money.format(total))
+                binding.btnPay.text = getString(R.string.payment_pay_wompi, Money.format(total))
                 binding.root.snack(AuthRepository.friendlyMessage(e))
             } finally {
                 binding.progress.visible(false)
@@ -161,7 +154,7 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     /** Crea las órdenes en Firestore (una por tienda), descuenta stock y vacía el carrito. */
-    private suspend fun saveOrders(result: EpaycoResult) {
+    private suspend fun saveOrders(result: WompiResult) {
         val user = Session.user ?: return
         val codes = OrderRepository.createFromCart(
             buyer = user,
@@ -172,11 +165,11 @@ class PaymentActivity : AppCompatActivity() {
             addressDetail = CheckoutState.addressDetail,
             lat = CheckoutState.lat,
             lng = CheckoutState.lng,
-            paymentRef = result.refPayco,
+            paymentRef = result.transactionId,
             paymentMethod = result.method
         )
         val dialog = DialogPaymentSuccessBinding.inflate(layoutInflater)
-        dialog.tvOrderCode.text = getString(R.string.payment_ok_codes, codes.joinToString(), result.refPayco)
+        dialog.tvOrderCode.text = getString(R.string.payment_ok_codes, codes.joinToString(), result.transactionId)
         MaterialAlertDialogBuilder(this)
             .setView(dialog.root)
             .setCancelable(false)
@@ -200,17 +193,5 @@ class PaymentActivity : AppCompatActivity() {
         binding.webView.visible(show)
         binding.groupSummary.visible(!show)
         binding.btnPay.visible(!show)
-    }
-
-    /** Escapa comillas y saltos para insertar texto dentro del JavaScript. */
-    private fun js(text: String) = text.replace("\\", "\\\\").replace("\"", "\\\"").replace("\n", " ")
-
-    /** Puente para que la página avise si el script de ePayco no cargó. */
-    private inner class Bridge {
-        @JavascriptInterface
-        fun onError(message: String) = runOnUiThread {
-            showCheckout(false)
-            binding.root.snack(getString(R.string.payment_load_error, message))
-        }
     }
 }
