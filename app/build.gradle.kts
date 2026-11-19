@@ -20,12 +20,11 @@ android {
         versionCode = 2
         versionName = "2.0"
 
-        // Llaves de Wompi (gradle.properties). La llave privada nunca va en la app.
-        // pub_test_... = ambiente sandbox: tarjetas de prueba, no se cobra dinero real.
-        val wompiKey = (project.findProperty("wompiPublicKey") as String?) ?: ""
-        val wompiIntegrity = (project.findProperty("wompiIntegrity") as String?) ?: ""
-        buildConfigField("String", "WOMPI_PUBLIC_KEY", "\"$wompiKey\"")
-        buildConfigField("String", "WOMPI_INTEGRITY", "\"$wompiIntegrity\"")
+        // Llave RESTRINGIDA de pruebas de Stripe (rk_test_...): solo crea y lee sesiones de
+        // Checkout y no cobra dinero real. No se guarda en el repositorio: llega por la variable
+        // de entorno STRIPE_KEY (secreto de GitHub Actions) o por gradle.properties local.
+        val stripeKey = System.getenv("STRIPE_KEY") ?: (project.findProperty("stripeKey") as String?) ?: ""
+        buildConfigField("String", "STRIPE_KEY", "\"$stripeKey\"")
     }
 
     buildTypes {

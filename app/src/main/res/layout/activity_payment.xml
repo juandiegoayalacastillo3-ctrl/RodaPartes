@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Pasarela de pagos Wompi (RF-PAG-03).
-    Arriba el resumen; al tocar "Pagar" se abre el checkout oficial de Wompi dentro del WebView.
-    Los datos de la tarjeta los recibe Wompi directamente: la app nunca los ve (RNF-SEG-02).
+    Pasarela de pagos Stripe (RF-PAG-03).
+    Arriba el resumen; al tocar "Pagar" se abre el checkout oficial de Stripe dentro del WebView.
+    Los datos de la tarjeta los recibe Stripe directamente: la app nunca los ve (RNF-SEG-02).
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -111,7 +111,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/payment_methods_wompi"
+                    android:text="@string/payment_methods_stripe"
                     android:textAppearance="@style/TextAppearance.RodaPartes.Body"
                     android:textColor="@color/texto_2" />
 
@@ -137,7 +137,7 @@
             </LinearLayout>
         </ScrollView>
 
-        <!-- Paso 2: checkout de Wompi -->
+        <!-- Paso 2: checkout de Stripe -->
         <WebView
             android:id="@+id/webView"
             android:layout_width="match_parent"
@@ -153,5 +153,5 @@
         app:icon="@drawable/ic_shield"
         app:iconGravity="textStart"
         app:iconTint="@color/blanco"
-        tools:text="Pagar $ 157.900 con Wompi" />
+        tools:text="Pagar $ 157.900 con Stripe" />
 </LinearLayout>
