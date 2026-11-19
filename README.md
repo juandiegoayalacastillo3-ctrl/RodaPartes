@@ -17,7 +17,7 @@ Actividad 5 de **Desarrollo de Aplicaciones Móviles** (Fundación Universitaria
 | CRUD de productos (vendedor) | Crear, editar, despublicar y eliminar productos. Las fotos se toman con la **cámara** o se eligen de la **galería** y se suben a **Firebase Storage**. El admin modera las publicaciones. | `ProductFormActivity`, `ProductRepository` |
 | Carrito y órdenes | El carrito se guarda en Firestore (`carts/{uid}/items`) y se sincroniza en tiempo real. Al pagar, una **transacción** crea una orden por tienda, descuenta el stock y vacía el carrito. Historial para comprador, vendedor y admin. | `CartRepository`, `OrderRepository` |
 | Geolocalización | La dirección de entrega se toma con **Fused Location Provider** y se convierte en dirección con **Geocoder**. Las coordenadas quedan en la orden y el vendedor las abre en Maps. | `LocationHelper`, `CheckoutActivity` |
-| Pagos | **Wompi** (Bancolombia) en modo sandbox: Web Checkout con firma de integridad SHA-256. Después del pago, la app consulta la transacción en el API de Wompi y solo crea las órdenes si el pago quedó `APPROVED` y el valor y la referencia coinciden. | `WompiRepository`, `PaymentActivity` |
+| Pagos | **Stripe** en modo de pruebas: la app crea una sesión de Stripe Checkout en pesos (COP) y abre la página de pago de Stripe. Después, consulta la sesión en el API de Stripe y solo crea las órdenes si quedó pagada (`paid`) y el valor y la factura coinciden. | `StripeRepository`, `PaymentActivity` |
 
 ## Tecnologías
 
@@ -33,7 +33,7 @@ Actividad 5 de **Desarrollo de Aplicaciones Móviles** (Fundación Universitaria
 
 ```
 app/src/main/java/com/rodapartes/app/
-├── data/        Modelos (Models.kt), repositorios de Firebase (Repositories.kt) y pasarela (WompiRepository.kt)
+├── data/        Modelos (Models.kt), repositorios de Firebase (Repositories.kt) y pasarela (StripeRepository.kt)
 ├── util/        Sesión y SecureStore, huella, ubicación, fotos de cámara, utilidades de interfaz
 └── ui/
     ├── auth/    Splash, login, registro, recuperar contraseña
@@ -53,7 +53,7 @@ Las pantallas no hablan con Firebase directamente: llaman a los **repositorios**
 | `products/{id}` | Producto, fotos (URLs de Storage), stock, estado de publicación y reportes |
 | `carts/{uid}/items/{productId}` | Carrito de cada usuario |
 | `orders/{id}` | Una orden por tienda, con dirección, coordenadas y referencia del pago |
-| `payments/{id}` | Comprobante de la transacción de Wompi |
+| `payments/{id}` | Comprobante del pago de Stripe |
 | `audit/{id}` | Bitácora de acciones del administrador |
 
 La seguridad por rol se aplica en el servidor con `firestore.rules` y `storage.rules` (en la raíz del repo), no solo ocultando botones.
@@ -62,23 +62,22 @@ La seguridad por rol se aplica en el servidor con `firestore.rules` y `storage.r
 
 1. Abrir la carpeta en Android Studio (Koala o superior) y esperar el *Gradle Sync*.
 2. `app/google-services.json` ya trae la configuración del proyecto de Firebase `rodapartes`.
-3. Para pagos, llenar en `gradle.properties` las llaves **sandbox** de Wompi (panel de comercios → Desarrolladores):
+3. Para pagos se usa una llave **restringida de pruebas** de Stripe (`rk_test_...`, solo permisos de Checkout Sessions). No está en el repositorio: GitHub Actions la toma del secreto `STRIPE_KEY`. Para compilar en Android Studio, agrega en `~/.gradle/gradle.properties`:
    ```
-   wompiPublicKey=pub_test_...
-   wompiIntegrity=test_integrity_...
+   stripeKey=rk_test_...
    ```
 4. `Build > Build APK(s)`. El APK también se compila solo con GitHub Actions (`.github/workflows/apk.yml`) y se publica en Releases.
 
-## Probar los pagos (sandbox)
+## Probar los pagos (modo de pruebas de Stripe)
 
 No se cobra dinero real.
 
 | Tarjeta | Resultado |
 |---|---|
 | `4242 4242 4242 4242` | Aprobada |
-| `4111 1111 1111 1111` | Rechazada |
+| `4000 0000 0000 0002` | Rechazada |
 
-Cualquier fecha futura y CVV de 3 dígitos.
+Cualquier fecha futura, CVC de 3 dígitos y cualquier código postal.
 
 ## Probar la huella
 
