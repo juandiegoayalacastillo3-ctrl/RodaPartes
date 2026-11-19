@@ -24,6 +24,7 @@ class ProductGridAdapter(
     private val onClick: (Product) -> Unit
 ) : RecyclerView.Adapter<ProductGridAdapter.VH>() {
 
+    /** Contenedor de las vistas de una tarjeta de producto. */
     class VH(val b: ItemProductGridBinding) : RecyclerView.ViewHolder(b.root)
 
     /** Reemplaza la lista (llega del listener de Firestore). */
@@ -61,8 +62,10 @@ class OrderAdapter(
     private val onClick: (Order) -> Unit
 ) : RecyclerView.Adapter<OrderAdapter.VH>() {
 
+    /** Contenedor de las vistas de una orden. */
     class VH(val b: ItemOrderBinding) : RecyclerView.ViewHolder(b.root)
 
+    /** Reemplaza la lista de órdenes y la vuelve a dibujar. */
     fun submit(newItems: List<Order>) {
         items = newItems
         notifyDataSetChanged()

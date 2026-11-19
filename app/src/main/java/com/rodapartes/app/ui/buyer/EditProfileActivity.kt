@@ -73,6 +73,7 @@ class EditProfileActivity : AppCompatActivity() {
             .show()
     }
 
+    /** Muestra la foto nueva antes de subirla a Storage. */
     private fun showNewPhoto(uri: Uri) {
         newPhoto = uri
         binding.ivAvatar.imageTintList = null

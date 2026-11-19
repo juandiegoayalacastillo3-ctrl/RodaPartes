@@ -26,6 +26,7 @@ enum class Role(val label: String) {
     companion object {
         /** Convierte el texto guardado en Firestore al enum; si no existe, comprador. */
         fun from(name: String?) = entries.firstOrNull { it.name == name } ?: BUYER
+        /** Busca el valor por el texto que se muestra en pantalla. */
         fun fromLabel(label: String) = entries.firstOrNull { it.label == label } ?: BUYER
     }
 }
@@ -40,7 +41,9 @@ enum class Category(val label: String, @DrawableRes val tileRes: Int, @DrawableR
     LLANTAS("Llantas", R.drawable.bg_tile_llantas, R.drawable.ic_cat_llantas);
 
     companion object {
+        /** Busca el valor por el texto que se muestra en pantalla. */
         fun fromLabel(label: String) = entries.firstOrNull { it.label == label } ?: FRENOS
+        /** Busca el valor por su nombre guardado en Firestore. */
         fun from(name: String?) = entries.firstOrNull { it.name == name } ?: FRENOS
     }
 }
@@ -64,6 +67,7 @@ enum class ProductStatus(
     RECHAZADO("Rechazado", R.color.peligro, R.color.peligro_claro);
 
     companion object {
+        /** Busca el valor por su nombre guardado en Firestore. */
         fun from(name: String?) = entries.firstOrNull { it.name == name } ?: EN_REVISION
     }
 }
@@ -91,6 +95,7 @@ enum class OrderStatus(
     }
 
     companion object {
+        /** Busca el valor por su nombre guardado en Firestore. */
         fun from(name: String?) = entries.firstOrNull { it.name == name } ?: NUEVO
     }
 }
@@ -107,7 +112,9 @@ enum class UserStatus(
     ELIMINADO("Eliminado", R.color.texto_2, R.color.fondo);
 
     companion object {
+        /** Busca el valor por su nombre guardado en Firestore. */
         fun from(name: String?) = entries.firstOrNull { it.name == name } ?: ACTIVO
+        /** Busca el valor por el texto que se muestra en pantalla. */
         fun fromLabel(label: String) = entries.firstOrNull { it.label == label } ?: ACTIVO
     }
 }

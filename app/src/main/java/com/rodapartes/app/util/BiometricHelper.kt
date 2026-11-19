@@ -14,9 +14,11 @@ import com.rodapartes.app.R
  */
 object BiometricHelper {
 
+    /** true si el celular tiene sensor de huella y al menos una huella registrada. */
     fun isAvailable(activity: FragmentActivity): Boolean =
         BiometricManager.from(activity).canAuthenticate(BIOMETRIC_STRONG) == BiometricManager.BIOMETRIC_SUCCESS
 
+    /** Muestra el diálogo de huella del sistema y avisa si la verificación fue correcta. */
     fun authenticate(
         activity: FragmentActivity,
         onSuccess: () -> Unit,
@@ -24,10 +26,12 @@ object BiometricHelper {
     ) {
         val executor = ContextCompat.getMainExecutor(activity)
         val prompt = BiometricPrompt(activity, executor, object : BiometricPrompt.AuthenticationCallback() {
+            /** La huella coincidió: se continúa con el ingreso. */
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 onSuccess()
             }
 
+            /** El usuario canceló o hubo un error del sensor. */
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 // Si el usuario toca "Usar contraseña" no se muestra error
                 if (errorCode != BiometricPrompt.ERROR_NEGATIVE_BUTTON &&

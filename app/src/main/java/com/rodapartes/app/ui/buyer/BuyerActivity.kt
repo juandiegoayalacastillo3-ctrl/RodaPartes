@@ -65,17 +65,20 @@ class BuyerActivity : AppCompatActivity() {
         }
     }
 
+    /** Si se abre de nuevo con una pestaña indicada, cambia a esa pestaña. */
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
         binding.bottomNav.selectedItemId = intent.getIntExtra(EXTRA_TAB, R.id.nav_home)
     }
 
+    /** Deja de escuchar el carrito en Firestore al cerrar la pantalla. */
     override fun onDestroy() {
         cartListener?.remove()
         super.onDestroy()
     }
 
+    /** Muestra el fragmento de la pestaña elegida. */
     private fun show(itemId: Int) {
         val fragment: Fragment = when (itemId) {
             R.id.nav_search -> CatalogFragment.newInstance(pendingCategory, pendingCompatible)
@@ -100,6 +103,7 @@ class BuyerActivity : AppCompatActivity() {
         else binding.bottomNav.selectedItemId = R.id.nav_search
     }
 
+    /** Cambia de pestaña desde otro fragmento. */
     fun openTab(itemId: Int) {
         binding.bottomNav.selectedItemId = itemId
     }

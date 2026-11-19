@@ -108,6 +108,7 @@ class AdminSalesFragment : Fragment(R.layout.fragment_admin_sales) {
         renderOrders()
     }
 
+    /** Crea los chips para filtrar las órdenes por estado. */
     private fun buildOrderFilters() {
         val filters = listOf(null, OrderStatus.NUEVO, OrderStatus.ENTREGADO, OrderStatus.RETRACTO, OrderStatus.REVERSION)
         filters.forEachIndexed { i, status ->

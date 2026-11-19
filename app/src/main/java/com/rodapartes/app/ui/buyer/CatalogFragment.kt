@@ -113,6 +113,7 @@ class CatalogFragment : Fragment(R.layout.fragment_catalog) {
         private const val ARG_CATEGORY = "category"
         private const val ARG_COMPATIBLE = "compatible"
 
+        /** Crea el catálogo ya filtrado por categoría o por compatibilidad con mi moto. */
         fun newInstance(category: Category?, onlyCompatible: Boolean) = CatalogFragment().apply {
             arguments = bundleOf(ARG_CATEGORY to category?.name, ARG_COMPATIBLE to onlyCompatible)
         }

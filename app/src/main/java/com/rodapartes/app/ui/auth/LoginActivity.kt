@@ -136,6 +136,7 @@ class LoginActivity : AppCompatActivity() {
             .show()
     }
 
+    /** Muestra la carga y bloquea los botones mientras se valida el ingreso. */
     private fun setLoading(loading: Boolean) {
         binding.btnLogin.isEnabled = !loading
         binding.btnFingerprint.isEnabled = !loading

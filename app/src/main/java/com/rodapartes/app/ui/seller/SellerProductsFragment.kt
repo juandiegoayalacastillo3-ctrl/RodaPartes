@@ -116,7 +116,9 @@ class SellerProductsFragment : Fragment(R.layout.fragment_list) {
             .show()
     }
 
+    /** Adaptador de la lista de productos del vendedor. */
     private inner class Adapter : RecyclerView.Adapter<Adapter.VH>() {
+        /** Contenedor de las vistas de una fila. */
         inner class VH(val b: ItemSellerProductBinding) : RecyclerView.ViewHolder(b.root)
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

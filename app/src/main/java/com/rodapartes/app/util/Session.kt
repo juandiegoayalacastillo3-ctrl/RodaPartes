@@ -21,6 +21,7 @@ object Session {
 
     val isLoggedIn get() = Fire.auth.currentUser != null && user != null
 
+    /** Borra el usuario en memoria al cerrar sesión. */
     fun clear() {
         user = null
     }
@@ -50,10 +51,12 @@ class SecureStore(context: Context) {
     val email: String? get() = prefs.getString(KEY_EMAIL, null)
     val password: String? get() = prefs.getString(KEY_PASSWORD, null)
 
+    /** Guarda cifrados el correo y la contraseña para entrar luego con huella. */
     fun enableBiometric(email: String, password: String) {
         prefs.edit().putString(KEY_EMAIL, email).putString(KEY_PASSWORD, password).apply()
     }
 
+    /** Desactiva el ingreso con huella y borra las credenciales guardadas. */
     fun disableBiometric() {
         prefs.edit().remove(KEY_EMAIL).remove(KEY_PASSWORD).apply()
     }

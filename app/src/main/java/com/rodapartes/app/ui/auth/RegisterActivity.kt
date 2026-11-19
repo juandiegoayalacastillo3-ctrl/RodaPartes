@@ -15,6 +15,7 @@ import com.rodapartes.app.util.Session
 import com.rodapartes.app.util.snack
 import com.rodapartes.app.util.visible
 
+/** Registro de cuenta (RF-AUT-01) como comprador o vendedor. El vendedor queda PENDIENTE hasta que el administrador lo apruebe. */
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding

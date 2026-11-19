@@ -111,7 +111,9 @@ class AdminProductsFragment : Fragment(R.layout.fragment_list) {
             .show()
     }
 
+    /** Adaptador de la lista de productos para moderar. */
     private inner class Adapter : RecyclerView.Adapter<Adapter.VH>() {
+        /** Contenedor de las vistas de una fila. */
         inner class VH(val b: ItemModerationBinding) : RecyclerView.ViewHolder(b.root)
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

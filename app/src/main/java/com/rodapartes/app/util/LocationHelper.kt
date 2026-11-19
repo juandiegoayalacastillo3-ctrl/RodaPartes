@@ -33,6 +33,7 @@ object LocationHelper {
         Manifest.permission.ACCESS_COARSE_LOCATION
     )
 
+    /** true si el usuario ya dio permiso de ubicación (precisa o aproximada). */
     fun hasPermission(context: Context) = PERMISSIONS.any {
         ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
     }

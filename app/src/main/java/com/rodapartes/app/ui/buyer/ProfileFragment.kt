@@ -86,8 +86,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile) {
         }
     }
 
+    /** Abre la edición de datos personales. */
     private fun openEdit() = startActivity(Intent(requireContext(), EditProfileActivity::class.java))
 
+    /** Muestra la política de tratamiento de datos (Ley 1581 de 2012). */
     private fun showPrivacy() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.profile_privacy)

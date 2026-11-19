@@ -1,89 +1,85 @@
-# RodaPartes · Frontend Android
+# RodaPartes · App Android funcional
 
-Tienda virtual Android de repuestos y accesorios para motocicletas.
-Actividad 3 de **Desarrollo de Aplicaciones Móviles** (Fundación Universitaria Compensar) — interfaces gráficas de los tres roles definidos en la Actividad 2.
+Tienda virtual Android de repuestos y accesorios para motocicletas con tres roles: **Comprador**, **Vendedor** y **Administrador**.
+Actividad 5 de **Desarrollo de Aplicaciones Móviles** (Fundación Universitaria Compensar).
 
 **Autor:** Juan Diego Ayala Castillo
 
+**APK:** [Releases → v2.0](https://github.com/juandiegoayalacastillo3-ctrl/RodaPartes/releases/tag/v2.0)
+
+## Funcionalidades
+
+| Módulo | Qué hace | Dónde está |
+|---|---|---|
+| Autenticación | Registro, login, cierre de sesión y recuperación de contraseña con **Firebase Authentication**. El rol se lee de Firestore y cada usuario entra a su interfaz. Bloqueo temporal después de 5 intentos fallidos. | `ui/auth/*`, `AuthRepository` |
+| Huella digital | Ingreso con huella (`BiometricPrompt`, `BIOMETRIC_STRONG`) para los 3 roles. Las credenciales se guardan cifradas con **EncryptedSharedPreferences** (Android Keystore). La huella nunca sale del celular. | `BiometricHelper`, `BiometricSetup`, `SecureStore` |
+| CRUD de usuarios (admin) | Listar, crear (cualquier rol), editar, aprobar vendedores, suspender y eliminar (borrado lógico). Todo queda en **Firestore** y en la bitácora de auditoría. | `ui/admin/*`, `UserRepository`, `AuditRepository` |
+| CRUD de productos (vendedor) | Crear, editar, despublicar y eliminar productos. Las fotos se toman con la **cámara** o se eligen de la **galería** y se suben a **Firebase Storage**. El admin modera las publicaciones. | `ProductFormActivity`, `ProductRepository` |
+| Carrito y órdenes | El carrito se guarda en Firestore (`carts/{uid}/items`) y se sincroniza en tiempo real. Al pagar, una **transacción** crea una orden por tienda, descuenta el stock y vacía el carrito. Historial para comprador, vendedor y admin. | `CartRepository`, `OrderRepository` |
+| Geolocalización | La dirección de entrega se toma con **Fused Location Provider** y se convierte en dirección con **Geocoder**. Las coordenadas quedan en la orden y el vendedor las abre en Maps. | `LocationHelper`, `CheckoutActivity` |
+| Pagos | **Wompi** (Bancolombia) en modo sandbox: Web Checkout con firma de integridad SHA-256. Después del pago, la app consulta la transacción en el API de Wompi y solo crea las órdenes si el pago quedó `APPROVED` y el valor y la referencia coinciden. | `WompiRepository`, `PaymentActivity` |
+
 ## Tecnologías
 
-- Kotlin + layouts XML (ViewBinding)
-- Material Components 3 con tema propio (sin colores por defecto)
+- Kotlin + layouts XML (ViewBinding) · Material Components 3
 - `minSdk 26` (Android 8.0) · `targetSdk 34`
-- AndroidX Biometric (`BiometricPrompt`, clase `BIOMETRIC_STRONG`)
-- Corrutinas (`lifecycleScope`) para splash, contadores y simulación del pago
+- Firebase BoM 33.7.0: Auth, Firestore, Storage
+- Corrutinas + `kotlinx-coroutines-play-services` (`await()`)
+- Play Services Location 21.3.0
+- Coil 2.7.0 para cargar las fotos desde Storage
+- AndroidX Biometric y Security Crypto
 
-## Cómo ejecutarlo
+## Arquitectura
+
+```
+app/src/main/java/com/rodapartes/app/
+├── data/        Modelos (Models.kt), repositorios de Firebase (Repositories.kt) y pasarela (WompiRepository.kt)
+├── util/        Sesión y SecureStore, huella, ubicación, fotos de cámara, utilidades de interfaz
+└── ui/
+    ├── auth/    Splash, login, registro, recuperar contraseña
+    ├── buyer/   Inicio, catálogo, detalle, carrito, entrega, pago, mis compras, perfil
+    ├── seller/  Panel, mis productos, formulario de producto, pedidos, mi tienda
+    ├── admin/   Dashboard, usuarios, moderación de productos, reporte de ventas
+    └── common/  Adaptadores, estadísticas y gráfica de barras
+```
+
+Las pantallas no hablan con Firebase directamente: llaman a los **repositorios** de `data/`, que usan corrutinas y listeners en tiempo real.
+
+### Colecciones de Firestore
+
+| Colección | Contenido |
+|---|---|
+| `users/{uid}` | Perfil, rol (`BUYER`, `SELLER`, `ADMIN`) y estado (`ACTIVO`, `PENDIENTE`, `SUSPENDIDO`, `ELIMINADO`) |
+| `products/{id}` | Producto, fotos (URLs de Storage), stock, estado de publicación y reportes |
+| `carts/{uid}/items/{productId}` | Carrito de cada usuario |
+| `orders/{id}` | Una orden por tienda, con dirección, coordenadas y referencia del pago |
+| `payments/{id}` | Comprobante de la transacción de Wompi |
+| `audit/{id}` | Bitácora de acciones del administrador |
+
+La seguridad por rol se aplica en el servidor con `firestore.rules` y `storage.rules` (en la raíz del repo), no solo ocultando botones.
+
+## Cómo compilarlo
 
 1. Abrir la carpeta en Android Studio (Koala o superior) y esperar el *Gradle Sync*.
-2. Ejecutar en un emulador o celular con Android 8.0+.
-3. **Generar el APK:** `Build > Build App Bundle(s) / APK(s) > Build APK(s)`. Queda en `app/build/outputs/apk/debug/app-debug.apk`.
+2. `app/google-services.json` ya trae la configuración del proyecto de Firebase `rodapartes`.
+3. Para pagos, llenar en `gradle.properties` las llaves **sandbox** de Wompi (panel de comercios → Desarrolladores):
+   ```
+   wompiPublicKey=pub_test_...
+   wompiIntegrity=test_integrity_...
+   ```
+4. `Build > Build APK(s)`. El APK también se compila solo con GitHub Actions (`.github/workflows/apk.yml`) y se publica en Releases.
 
-### Cuentas de prueba
+## Probar los pagos (sandbox)
 
-El rol se elige según el correo (en producción vendrá del *custom claim* del token de Firebase). Contraseña: cualquiera de 8 o más caracteres con letras y números, por ejemplo `moto2026`.
+No se cobra dinero real.
 
-| Rol | Correo |
+| Tarjeta | Resultado |
 |---|---|
-| Comprador | `comprador@rodapartes.co` |
-| Vendedor | `vendedor@rodapartes.co` |
-| Administrador | `admin@rodapartes.co` |
+| `4242 4242 4242 4242` | Aprobada |
+| `4111 1111 1111 1111` | Rechazada |
 
-Para probar la huella: iniciar sesión como comprador → Perfil → activar "Ingreso con huella" (en el emulador primero registrar una huella en *Ajustes > Seguridad*). Luego cerrar sesión y usar el botón **Huella** del login.
+Cualquier fecha futura y CVV de 3 dígitos.
 
-## Pantallas por rol
+## Probar la huella
 
-| Rol | Pantalla | Archivo de layout |
-|---|---|---|
-| Transversal | Splash screen | `activity_splash.xml` |
-| | Inicio de sesión (correo, Google, huella) | `activity_login.xml` |
-| | Registro con elección de rol | `activity_register.xml` |
-| | Recuperar contraseña | `activity_recover_password.xml` |
-| | Menús de navegación | `menu/bottom_nav_*.xml`, `menu/drawer_admin.xml` |
-| Comprador | Inicio | `fragment_home.xml` |
-| | Catálogo (Buscar) | `fragment_catalog.xml` |
-| | Detalle de producto | `activity_product_detail.xml` |
-| | Carrito | `fragment_cart.xml` |
-| | Entrega (checkout) | `activity_checkout.xml` |
-| | Pasarela de pagos | `activity_payment.xml` |
-| | Mis compras | `fragment_list.xml` (OrdersFragment) |
-| | Perfil y edición | `fragment_profile.xml`, `activity_edit_profile.xml` |
-| Vendedor | Panel de ventas | `fragment_seller_dashboard.xml` |
-| | Mis productos (CRUD) | `fragment_list.xml`, `activity_product_form.xml` |
-| | Cámara / escáner | `activity_camera.xml` |
-| | Pedidos recibidos | `fragment_list.xml` (SellerOrdersFragment) |
-| | Mi tienda | `fragment_seller_profile.xml` |
-| Administrador | Dashboard | `fragment_admin_dashboard.xml` |
-| | Usuarios (listar, crear, editar, eliminar) | `fragment_list.xml`, `activity_user_form.xml` |
-| | Productos (moderación y reportes) | `fragment_list.xml` (AdminProductsFragment) |
-| | Reporte de ventas | `fragment_admin_sales.xml` |
-
-## Estructura
-
-```
-app/src/main/
-├── java/com/rodapartes/app/
-│   ├── data/          Modelos y datos de prueba en memoria (MockData)
-│   ├── util/          Sesión, formato de pesos, navegación por rol, huella
-│   └── ui/
-│       ├── auth/      Splash, login, registro, recuperar contraseña
-│       ├── buyer/     Pantallas del comprador
-│       ├── seller/    Pantallas del vendedor + cámara
-│       ├── admin/     Pantallas del administrador
-│       └── common/    Adaptadores compartidos y BarChartView (vista propia)
-└── res/
-    ├── values/        colors, dimens, strings, styles, themes, arrays, attrs
-    ├── values-v31/    Splash del sistema en Android 12+
-    ├── color/         Selectores de color por estado (chips, navegación, campos)
-    ├── drawable/      Íconos vectoriales, formas y degradados
-    ├── anim/          Animaciones de la splash
-    ├── menu/          Bottom Navigation de cada rol y Navigation Drawer del admin
-    └── layout/        Activities, fragments, ítems de lista y vistas reutilizables
-```
-
-## Decisiones de diseño
-
-- **Un color por rol** (igual que en los mockups): naranja `#E8590C` comprador, verde azulado `#0E8A7B` vendedor y azul pizarra `#34466B` administrador. Cada rol tiene su tema (`Theme.RodaPartes.Buyer/Seller/Admin`) que solo cambia `colorPrimary`; los layouts usan `?attr/colorPrimary`, por eso una misma pantalla (por ejemplo `fragment_list.xml`) toma el color del rol que la abre.
-- **Tipografía:** títulos en `sans-serif-condensed` (estilo de catálogo técnico), cuerpo en `sans-serif` y referencias de piezas en `monospace`.
-- **Fotos de productos:** en esta fase son degradados por categoría con un ícono (`bg_tile_*.xml` + `ic_cat_*.xml`). Las fotos reales llegan de Cloud Storage en la fase de backend.
-- Lo que depende de servicios externos (Firebase, Wompi, Google Maps, CameraX/ML Kit) tiene la interfaz completa y una simulación para poder navegar; se conecta en la siguiente actividad.
+Inicia sesión con correo y contraseña. La app pregunta si quieres activar la huella (también se activa desde **Perfil**). Cierra sesión y entra con el botón **Huella**. Debe probarse en un celular físico con una huella registrada.

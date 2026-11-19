@@ -85,6 +85,7 @@ class AdminActivity : AppCompatActivity() {
         if (savedInstanceState == null) binding.bottomNav.selectedItemId = R.id.nav_admin_panel
     }
 
+    /** Reemplaza el contenido por la sección elegida en el menú lateral. */
     private fun show(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
@@ -92,6 +93,7 @@ class AdminActivity : AppCompatActivity() {
             .commit()
     }
 
+    /** Abre una sección del panel desde otra pantalla. */
     fun openTab(itemId: Int) {
         binding.bottomNav.selectedItemId = itemId
     }
@@ -112,6 +114,7 @@ class AdminActivity : AppCompatActivity() {
         }
     }
 
+    /** Muestra la política de tratamiento de datos (Ley 1581 de 2012). */
     private fun showPolicies() {
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.drawer_policies)

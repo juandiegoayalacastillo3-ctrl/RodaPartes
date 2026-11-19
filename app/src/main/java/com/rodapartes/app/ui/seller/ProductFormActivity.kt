@@ -233,6 +233,7 @@ class ProductFormActivity : AppCompatActivity() {
         }
     }
 
+    /** Bloquea los botones mientras se suben las fotos y se guarda. */
     private fun setSaving(saving: Boolean) {
         binding.btnPublish.isEnabled = !saving
         binding.btnDraft.isEnabled = !saving

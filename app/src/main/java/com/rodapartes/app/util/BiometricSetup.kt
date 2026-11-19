@@ -25,6 +25,7 @@ object BiometricSetup {
         askPassword(fragment.requireActivity(), title, onCancel, onPassword)
     }
 
+    /** Pide la contraseña en un diálogo antes de activar la huella. */
     fun askPassword(activity: FragmentActivity, title: Int, onCancel: () -> Unit = {}, onPassword: (String) -> Unit) {
         val dialog = DialogConfirmPasswordBinding.inflate(activity.layoutInflater)
         MaterialAlertDialogBuilder(activity)
@@ -80,6 +81,7 @@ object BiometricSetup {
     fun wasOffered(context: Context, email: String) =
         context.getSharedPreferences("rodapartes_prefs", Context.MODE_PRIVATE).getBoolean("bio_offered_$email", false)
 
+    /** Recuerda que ya se le ofreció la huella a este correo, para no repetir la pregunta. */
     fun markOffered(context: Context, email: String) =
         context.getSharedPreferences("rodapartes_prefs", Context.MODE_PRIVATE).edit()
             .putBoolean("bio_offered_$email", true).apply()

@@ -101,6 +101,7 @@ class SellerProfileFragment : Fragment(R.layout.fragment_seller_profile) {
         }
     }
 
+    /** Muestra las coordenadas guardadas del local o un aviso si no hay. */
     private fun showCoords() {
         val la = lat
         val lo = lng

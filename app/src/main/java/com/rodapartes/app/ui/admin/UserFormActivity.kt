@@ -164,6 +164,7 @@ class UserFormActivity : AppCompatActivity() {
         }
     }
 
+    /** Pide confirmación y cambia el usuario a SUSPENDIDO (o lo reactiva). */
     private fun confirmSuspend() {
         MaterialAlertDialogBuilder(this)
             .setTitle(R.string.user_suspend_title)

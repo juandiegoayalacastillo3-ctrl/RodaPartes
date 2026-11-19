@@ -180,6 +180,7 @@ class PaymentActivity : AppCompatActivity() {
             .show()
     }
 
+    /** Muestra el resultado (pendiente o rechazado) y cierra al aceptar. */
     private fun showResult(title: Int, message: String) {
         MaterialAlertDialogBuilder(this)
             .setTitle(title)
@@ -189,6 +190,7 @@ class PaymentActivity : AppCompatActivity() {
             .show()
     }
 
+    /** Alterna entre el resumen de la compra y el checkout de Wompi. */
     private fun showCheckout(show: Boolean) {
         binding.webView.visible(show)
         binding.groupSummary.visible(!show)

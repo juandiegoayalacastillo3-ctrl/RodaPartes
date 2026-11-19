@@ -47,6 +47,7 @@ class BarChartView @JvmOverloads constructor(
         importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_YES
     }
 
+    /** Recibe los valores y etiquetas de las barras y redibuja la gráfica. */
     fun setData(values: List<Float>, labels: List<String>) {
         this.values = values
         this.labels = labels

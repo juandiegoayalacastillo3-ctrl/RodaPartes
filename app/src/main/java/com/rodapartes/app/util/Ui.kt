@@ -31,7 +31,9 @@ import java.util.Locale
 /** Formato de pesos colombianos con separador de miles: $ 38.900 (RNF-USA-04). */
 object Money {
     private val format = DecimalFormat("#,###", DecimalFormatSymbols(Locale("es", "CO")))
+    /** Formatea un valor en pesos colombianos: $ 157.900 */
     fun format(value: Long): String = "$ " + format.format(value)
+    /** Igual que format(Long), para valores Int. */
     fun format(value: Int): String = format(value.toLong())
 
     /** Cifras grandes de los paneles: $ 2,4 M */
@@ -45,6 +47,7 @@ object Money {
 /** Fechas cortas en español: "6 nov., 9:12 a. m." */
 object Dates {
     private val format = SimpleDateFormat("d MMM, h:mm a", Locale("es", "CO"))
+    /** Fecha corta (dd/MM/yyyy) para listas. */
     fun short(date: Date?): String = date?.let { format.format(it) } ?: ""
 }
 
@@ -55,8 +58,10 @@ fun TextView.applyStatus(status: Status) {
     backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, status.bgColor))
 }
 
+/** Muestra un mensaje corto en la parte inferior de la pantalla. */
 fun View.snack(message: CharSequence) = Snackbar.make(this, message, Snackbar.LENGTH_LONG).show()
 
+/** Muestra u oculta la vista (VISIBLE / GONE). */
 fun View.visible(show: Boolean) {
     visibility = if (show) View.VISIBLE else View.GONE
 }
@@ -98,6 +103,7 @@ val Fragment.viewScope get() = viewLifecycleOwner.lifecycleScope
 
 /** Abre la interfaz del rol y limpia la pila de pantallas (RF-AUT-07). */
 object Router {
+    /** Abre la pantalla principal del rol del usuario (RF-AUT-07). */
     fun goHome(activity: Activity, role: Role) {
         val target = when (role) {
             Role.BUYER -> BuyerActivity::class.java
@@ -126,4 +132,5 @@ object Router {
 fun initials(name: String): String =
     name.split(" ").filter { it.isNotBlank() }.take(2).joinToString("") { it.first().uppercase() }
 
+/** Atajo para leer un color de los recursos. */
 fun Context.color(id: Int) = ContextCompat.getColor(this, id)

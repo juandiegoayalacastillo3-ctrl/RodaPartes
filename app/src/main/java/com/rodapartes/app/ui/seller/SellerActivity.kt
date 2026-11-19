@@ -47,11 +47,13 @@ class SellerActivity : AppCompatActivity() {
         }
     }
 
+    /** Deja de escuchar los pedidos en Firestore al cerrar la pantalla. */
     override fun onDestroy() {
         ordersListener?.remove()
         super.onDestroy()
     }
 
+    /** Cambia de pestaña desde otra pantalla del vendedor. */
     fun openTab(itemId: Int) {
         binding.bottomNav.selectedItemId = itemId
     }

@@ -127,6 +127,7 @@ object AuthRepository {
         }
     }
 
+    /** Cierra la sesión de Firebase (RF-AUT-06). */
     fun logout() = Fire.auth.signOut()
 
     /** Traduce los errores de Firebase Auth a mensajes claros en español. */
@@ -153,6 +154,7 @@ object UserRepository {
         return Fire.db.collection(Fire.USERS).document(uid).get().await().toObject(AppUser::class.java)
     }
 
+    /** Lee el perfil de un usuario por su uid. */
     suspend fun get(uid: String): AppUser? =
         Fire.db.collection(Fire.USERS).document(uid).get().await().toObject(AppUser::class.java)
 
@@ -246,6 +248,7 @@ object ProductRepository {
             onChange(snap?.toObjects(Product::class.java).orEmpty().sortedByDescending { it.createdAt })
         }
 
+    /** Lee un producto por su id. */
     suspend fun get(id: String): Product? = col.document(id).get().await().toObject(Product::class.java)
 
     /** Id nuevo para un producto antes de subir sus fotos. */
@@ -307,6 +310,7 @@ object ProductRepository {
  * ============================================================================================ */
 object CartRepository {
 
+    /** Subcolección carts/{uid}/items del usuario. */
     private fun items(uid: String) = Fire.db.collection(Fire.CARTS).document(uid).collection(Fire.ITEMS)
 
     /** Escucha el carrito del usuario en tiempo real. */
@@ -315,6 +319,7 @@ object CartRepository {
             onChange(snap?.toObjects(CartItem::class.java).orEmpty().sortedBy { it.name })
         }
 
+    /** Lee todo el carrito una sola vez (para pagar). */
     suspend fun getAll(uid: String): List<CartItem> =
         items(uid).get().await().toObjects(CartItem::class.java)
 
@@ -338,10 +343,12 @@ object CartRepository {
         }.await()
     }
 
+    /** Cambia la cantidad de un producto del carrito. */
     suspend fun updateQty(uid: String, productId: String, qty: Long) {
         items(uid).document(productId).update("qty", qty).await()
     }
 
+    /** Quita un producto del carrito. */
     suspend fun remove(uid: String, productId: String) {
         items(uid).document(productId).delete().await()
     }
@@ -362,21 +369,25 @@ object OrderRepository {
 
     private val col get() = Fire.db.collection(Fire.ORDERS)
 
+    /** Escucha en tiempo real las órdenes del comprador. */
     fun listenByBuyer(uid: String, onChange: (List<Order>) -> Unit): ListenerRegistration =
         col.whereEqualTo("buyerId", uid).addSnapshotListener { snap, _ ->
             onChange(snap?.toObjects(Order::class.java).orEmpty().sortedByDescending { it.createdAt })
         }
 
+    /** Escucha en tiempo real los pedidos que recibe el vendedor. */
     fun listenBySeller(uid: String, onChange: (List<Order>) -> Unit): ListenerRegistration =
         col.whereEqualTo("sellerId", uid).addSnapshotListener { snap, _ ->
             onChange(snap?.toObjects(Order::class.java).orEmpty().sortedByDescending { it.createdAt })
         }
 
+    /** Escucha todas las órdenes (solo administrador). */
     fun listenAll(onChange: (List<Order>) -> Unit): ListenerRegistration =
         col.addSnapshotListener { snap, _ ->
             onChange(snap?.toObjects(Order::class.java).orEmpty().sortedByDescending { it.createdAt })
         }
 
+    /** Cambia el estado de una orden (RF-COM-03). */
     suspend fun setStatus(id: String, status: OrderStatus) {
         col.document(id).update(mapOf("status" to status.name, "updatedAt" to Timestamp.now())).await()
     }
@@ -464,10 +475,14 @@ object Pricing {
     /** Costo del domicilio por cada tienda del pedido (RF-PAG-02). */
     const val SHIPPING_PER_STORE = 9_000L
 
+    /** Suma de precio × cantidad de todo el carrito. */
     fun subtotal(cart: List<CartItem>) = cart.sumOf { it.subtotal }
+    /** Cantidad de tiendas distintas en el carrito. */
     fun stores(cart: List<CartItem>) = cart.map { it.sellerId }.distinct().size
+    /** Envío: un valor fijo por cada tienda si es a domicilio. */
     fun shipping(cart: List<CartItem>, delivery: Boolean = true) =
         if (delivery) SHIPPING_PER_STORE * stores(cart) else 0L
+    /** Subtotal + envío. */
     fun total(cart: List<CartItem>, delivery: Boolean = true) = subtotal(cart) + shipping(cart, delivery)
 }
 

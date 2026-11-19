@@ -13,6 +13,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+/** Recuperar contraseña (RF-AUT-05): Firebase envía un enlace al correo para crear una nueva. */
 class RecoverPasswordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecoverPasswordBinding

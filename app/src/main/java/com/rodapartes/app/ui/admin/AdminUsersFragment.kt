@@ -84,7 +84,9 @@ class AdminUsersFragment : Fragment(R.layout.fragment_list) {
         binding.empty.tvEmptyBody.text = getString(R.string.users_empty_body)
     }
 
+    /** Adaptador de la lista de usuarios. */
     private inner class Adapter : RecyclerView.Adapter<Adapter.VH>() {
+        /** Contenedor de las vistas de una fila. */
         inner class VH(val b: ItemUserBinding) : RecyclerView.ViewHolder(b.root)
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

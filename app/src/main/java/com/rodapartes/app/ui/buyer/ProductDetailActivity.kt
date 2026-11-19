@@ -128,11 +128,13 @@ class ProductDetailActivity : AppCompatActivity() {
         else getString(R.string.detail_photo_counter, index + 1, p.photos.size)
     }
 
+    /** Pasa a la siguiente foto del producto. */
     private fun nextPhoto() {
         val count = product?.photos?.size ?: 0
         if (count > 1) showPhoto((photoIndex + 1) % count)
     }
 
+    /** Actualiza la cantidad elegida y el subtotal. */
     private fun updateQty() {
         binding.stepper.tvQty.text = qty.toString()
     }

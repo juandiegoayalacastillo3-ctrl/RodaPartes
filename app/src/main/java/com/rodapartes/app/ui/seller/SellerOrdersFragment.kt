@@ -95,7 +95,9 @@ class SellerOrdersFragment : Fragment(R.layout.fragment_list) {
             .show()
     }
 
+    /** Adaptador de la lista de pedidos recibidos. */
     private inner class Adapter : RecyclerView.Adapter<Adapter.VH>() {
+        /** Contenedor de las vistas de una fila. */
         inner class VH(val b: ItemSellerOrderBinding) : RecyclerView.ViewHolder(b.root)
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

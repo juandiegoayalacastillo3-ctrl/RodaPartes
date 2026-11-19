@@ -97,6 +97,7 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
     /** Adaptador del carrito con el selector de cantidad. Cada cambio se guarda en Firestore. */
     private inner class CartAdapter : RecyclerView.Adapter<CartAdapter.VH>() {
 
+        /** Contenedor de las vistas de un producto del carrito. */
         inner class VH(val b: ItemCartBinding) : RecyclerView.ViewHolder(b.root)
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -124,10 +125,12 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
             }
         }
 
+        /** Cambia la cantidad en Firestore (RF-CAR-03). */
         private fun update(item: CartItem, qty: Long) {
             viewScope.safeLaunch(binding.root) { CartRepository.updateQty(uid, item.productId, qty) }
         }
 
+        /** Quita el producto del carrito en Firestore (RF-CAR-04). */
         private fun remove(item: CartItem) {
             viewScope.safeLaunch(binding.root) {
                 CartRepository.remove(uid, item.productId)
