@@ -168,7 +168,7 @@
     <string name="home_categories">Categorías</string>
     <string name="home_featured">Destacados</string>
     <string name="home_nearby">Tiendas cerca de ti</string>
-    <string name="home_nearby_count">4 tiendas a menos de 6 km</string>
+    <string name="home_nearby_count">Buscando tiendas…</string>
     <string name="home_nearby_detail">Toca «Ver mapa» para abrir tu ubicación en Google Maps</string>
     <string name="home_see_map">Ver mapa</string>
     <string name="home_no_notifications">No tienes notificaciones nuevas</string>
@@ -297,7 +297,7 @@
     <string name="profile_my_data">Mis datos</string>
     <string name="profile_my_data_sub">Nombre, celular, foto y moto</string>
     <string name="profile_addresses">Mis direcciones</string>
-    <string name="profile_addresses_sub">2 guardadas</string>
+    <string name="profile_addresses_sub">Se toman con tu ubicación al pagar</string>
     <string name="profile_addresses_msg">Tus direcciones se eligen y editan en el paso de Entrega</string>
     <string name="profile_orders_sub">%1$d pedidos · %2$d en camino</string>
     <string name="profile_fingerprint">Ingreso con huella</string>
