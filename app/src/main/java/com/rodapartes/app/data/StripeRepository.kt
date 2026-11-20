@@ -55,7 +55,6 @@ object StripeRepository {
             val form = listOf(
                 "mode" to "payment",
                 "locale" to "es",
-                "payment_method_types[0]" to "card",
                 "client_reference_id" to reference,
                 "customer_email" to email,
                 "success_url" to "$SUCCESS_URL?session_id={CHECKOUT_SESSION_ID}",

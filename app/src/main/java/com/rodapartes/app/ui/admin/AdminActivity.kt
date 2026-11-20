@@ -82,7 +82,12 @@ class AdminActivity : AppCompatActivity() {
             }
         })
 
-        if (savedInstanceState == null) binding.bottomNav.selectedItemId = R.id.nav_admin_panel
+        if (savedInstanceState == null) {
+            // La pestaña inicial ya viene marcada en el menú, por eso se muestra directamente
+            show(AdminDashboardFragment())
+            binding.toolbar.setTitle(R.string.admin_title)
+            bottomToDrawer[R.id.nav_admin_panel]?.let { binding.navView.setCheckedItem(it) }
+        }
     }
 
     /** Reemplaza el contenido por la sección elegida en el menú lateral. */

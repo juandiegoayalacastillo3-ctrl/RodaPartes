@@ -61,7 +61,10 @@ class BuyerActivity : AppCompatActivity() {
         binding.bottomNav.setOnItemReselectedListener { }
 
         if (savedInstanceState == null) {
-            binding.bottomNav.selectedItemId = intent.getIntExtra(EXTRA_TAB, R.id.nav_home)
+            // La pestaña inicial ya viene marcada en el menú, por eso se muestra directamente
+            val startTab = intent.getIntExtra(EXTRA_TAB, R.id.nav_home)
+            binding.bottomNav.selectedItemId = startTab
+            show(startTab)
         }
     }
 

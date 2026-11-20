@@ -38,7 +38,12 @@ class SellerActivity : AppCompatActivity() {
             true
         }
         binding.bottomNav.setOnItemReselectedListener { }
-        if (savedInstanceState == null) binding.bottomNav.selectedItemId = R.id.nav_panel
+        if (savedInstanceState == null) {
+            // La pestaña inicial ya viene marcada en el menú, por eso se muestra directamente
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, SellerDashboardFragment())
+                .commit()
+        }
 
         // Pedidos de la tienda en tiempo real: alimentan el badge de "Pedidos"
         ordersListener = OrderRepository.listenBySeller(Session.user?.uid.orEmpty()) { list ->
