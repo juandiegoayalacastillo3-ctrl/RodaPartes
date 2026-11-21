@@ -68,6 +68,18 @@ La seguridad por rol se aplica en el servidor con `firestore.rules` y `storage.r
    ```
 4. `Build > Build APK(s)`. El APK también se compila solo con GitHub Actions (`.github/workflows/apk.yml`) y se publica en Releases.
 
+## Cuentas de prueba
+
+Contraseña de todas: `rodapartes2026`
+
+| Rol | Correo |
+|---|---|
+| Comprador | `comprador@rodapartes.test` |
+| Vendedor | `vendedor@rodapartes.test` |
+| Administrador | `admin@rodapartes.test` |
+
+Un usuario nuevo se registra desde la app como comprador o vendedor; el rol de administrador solo lo asigna otro administrador.
+
 ## Probar los pagos (modo de pruebas de Stripe)
 
 No se cobra dinero real.
